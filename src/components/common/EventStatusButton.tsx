@@ -1,10 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import React from 'react';
 import { css } from '@emotion/react';
-
-interface EventStatusButtonProps {
-	isRunning: boolean;
-}
+import { EventStatusButtonProps } from '../../@types/typs';
 
 export default function EventStatusButton({isRunning} : EventStatusButtonProps) {
 	const text = isRunning ? "진행 중인 이벤트" : "종료된 이벤트";

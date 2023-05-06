@@ -2,12 +2,7 @@
 import React from 'react';
 import { css } from '@emotion/react';
 import EventStatusButton from './EventStatusButton';
-
-interface CardProps {
-  title?: string;
-  subTitle?: string;
-  thumb: string;
-}
+import { CardProps } from '../../@types/typs';
 
 const Thumb = ({thumb} : CardProps) => {
 	return (
