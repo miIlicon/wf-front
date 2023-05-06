@@ -1,5 +1,6 @@
 import React from "react";
+import { Section } from "../../components/common/components";
 
 export default function Index() {
-  return <div>index</div>;
+  return <Section>vsdvdsvsd</Section>;
 }
