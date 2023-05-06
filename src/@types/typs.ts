@@ -13,3 +13,7 @@ export interface CardProps {
 export interface EventStatusButtonProps {
 	isRunning: boolean;
 }
+
+export interface contentTextProps {
+    text: string;
+}
