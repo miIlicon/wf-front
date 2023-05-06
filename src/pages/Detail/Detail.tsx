@@ -104,7 +104,7 @@ export default function Detail() {
               column-gap: 2em;
               background-color: #f8f8f8;
               box-sizing: border-box;
-              padding: 1em;
+              padding: 1.3em;
               border-radius: 0.5em;
             `}
           >
@@ -146,7 +146,7 @@ export default function Detail() {
             <div
               id="lv-container"
               data-id="city"
-              data-uid="MTAyMC81ODQ0MC8zNDkwMw=="
+              data-uid={process.env.REACT_APP_LIVERE_CODE}
               css={css`
                 width: 100%;
                 margin-bottom: 1em;
