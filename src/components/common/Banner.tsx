@@ -8,11 +8,9 @@ export default function Banner() {
   return (
     <div
       css={css`
-        position: relative;
         width: 100%;
         height: 7em;
         border: solid;
-
         display: flex;
         flex-direction: column;
         align-items: center;

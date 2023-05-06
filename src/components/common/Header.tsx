@@ -27,7 +27,8 @@ export default function Header() {
     <>
       <header
         css={css`
-          position: relative;
+          position: sticky;
+          top: 0;
           z-index: 999;
           width: 100%;
           display: flex;
@@ -108,6 +109,8 @@ export default function Header() {
           </Link>
         </nav>
       </header>
+      <Banner />
+      <Outlet />
     </>
   );
 }
