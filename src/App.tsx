@@ -13,11 +13,12 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <GlobalStyles />
-        <Header />
-        <Banner />
         <Routes>
-          <Route path="/" element={<Index />}></Route>
-          <Route path="/detail" element={<Detail />}></Route>
+          <Route element={<Header />}>
+            <Route element={<Banner />}></Route>
+            <Route path="/" element={<Index />}></Route>
+            <Route path="/detail" element={<Detail />}></Route>
+          </Route>
         </Routes>
       </BrowserRouter>
     </div>

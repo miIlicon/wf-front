@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React from "react";
+import React, { useEffect } from "react";
 import { Section } from "../../components/common/components";
 import dummy from "../../images/detail/dummy.png";
 import EventStatusButton from "../../components/common/EventStatusButton";
@@ -11,6 +11,24 @@ import { Thumb } from "../../components/common/Card";
 import ContentCards from "../../components/common/ContentCards";
 
 export default function Detail() {
+  useEffect(() => {
+    (function (d, s) {
+      let j: any,
+        e: any = d.getElementsByTagName(s)[0];
+      let LivereTower: any;
+
+      if (typeof LivereTower === "function") {
+        return;
+      }
+
+      j = d.createElement(s);
+      j.src = "https://cdn-city.livere.com/js/embed.dist.js";
+      j.async = true;
+
+      e.parentNode.insertBefore(j, e);
+    })(document, "script");
+  }, []);
+
   return (
     <Section>
       <div
@@ -18,7 +36,7 @@ export default function Detail() {
           width: 100%;
           display: flex;
           flex-direction: column;
-          row-gap: 2em;
+          row-gap: 2.3em;
         `}
       >
         <article
@@ -51,7 +69,7 @@ export default function Detail() {
             flex-direction: column;
             align-items: left;
             text-align: left;
-            row-gap: 1em;
+            row-gap: 2.68em;
           `}
         >
           <ContentTitle text="관련된 더 많은 사진을 보여드릴게요" />
@@ -74,7 +92,7 @@ export default function Detail() {
             flex-direction: column;
             align-items: left;
             text-align: left;
-            row-gap: 1em;
+            row-gap: 2.3em;
           `}
         >
           <ContentTitle text="상세 설명" />
@@ -103,6 +121,37 @@ export default function Detail() {
               publishing software like Aldus PageMaker including versions of
               Lorem Ipsum.
             </span>
+          </div>
+        </div>
+        <div
+          css={css`
+            display: flex;
+            flex-direction: column;
+            align-items: left;
+            text-align: left;
+            row-gap: 1em;
+          `}
+        >
+          <ContentTitle text="해당 이벤트에 대해 같이 이야기를 나눠봐요" />
+          <div
+            css={css`
+              display: flex;
+              width: 100%;
+              height: 20em;
+              column-gap: 2em;
+              box-sizing: border-box;
+              border-radius: 0.5em;
+            `}
+          >
+            <div
+              id="lv-container"
+              data-id="city"
+              data-uid="MTAyMC81ODQ0MC8zNDkwMw=="
+              css={css`
+                width: 100%;
+                margin-bottom: 1em;
+              `}
+            />
           </div>
         </div>
       </div>
