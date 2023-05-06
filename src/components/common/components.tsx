@@ -4,15 +4,24 @@ import { WrapperProps } from "../../@types/typs";
 
 export const Section = ({ children }: WrapperProps) => {
   return (
-    <section
+    <div
       css={css`
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+        width: 100%;
+        height: 100%;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 7em;
       `}
     >
-      {children}
-    </section>
+      <section
+        css={css`
+          width: 63.12em;
+        `}
+      >
+        {children}
+      </section>
+    </div>
   );
 };
