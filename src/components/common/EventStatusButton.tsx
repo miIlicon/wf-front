@@ -10,9 +10,10 @@ export default function EventStatusButton({
   return (
     <button
       css={css`
-        width: 10em;
-        height: 2.5em;
+        width: 90px;
+        height: 20px;
         color: #3182f6;
+        opacity: ${isRunning ? "1" : "80%"};
         background-color: ${isRunning
           ? "rgba(49, 130, 246, 0.16)"
           : "rgba(124, 124, 124, 0.4)"};
@@ -24,7 +25,7 @@ export default function EventStatusButton({
         display: flex;
         justify-content: center;
         align-items: center;
-        font-family: "Pretendard-Bold";
+        font-family: "Pretendard-Regular";
       `}
     >
       {text}

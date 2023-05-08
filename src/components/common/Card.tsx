@@ -8,8 +8,8 @@ export const Thumb = ({ thumb }: CardProps) => {
   return (
     <img
       css={css`
-        width: 18em;
-        height: auto;
+        width: 210px;
+        height: 300px;
         border-radius: 0.5em;
       `}
       src={thumb}
@@ -18,7 +18,7 @@ export const Thumb = ({ thumb }: CardProps) => {
   );
 };
 
-export default function Card({ title, subTitle, thumb }: CardProps) {
+export default function Card({ title, subTitle, thumb, isRunning }: CardProps) {
   return (
     <div
       css={css`
@@ -32,7 +32,7 @@ export default function Card({ title, subTitle, thumb }: CardProps) {
           margin-top: 10px;
         `}
       >
-        <EventStatusButton isRunning={true} />
+        <EventStatusButton isRunning={isRunning ? true : false} />
         <p
           css={css`
             font-size: 16px;
