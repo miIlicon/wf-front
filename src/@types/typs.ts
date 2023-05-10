@@ -15,6 +15,17 @@ export interface CardListProps {
   dataList: CardProps[];
 }
 
+export interface VideoProps {
+  title: string;
+  subTitle: string;
+  artist: string;
+  thumb: string;
+}
+
+export interface VideoListProps {
+  dataList: VideoProps[];
+}
+
 export interface EventStatusButtonProps {
 	isRunning: boolean;
 }
