@@ -10,6 +10,10 @@ export default function PageSubTitle({text} : contentTextProps) {
 				font-size: 16px;
 				font-weight: 500;
 				font-family: "Pretendard-Regular";
+				font-style: normal;
+				line-height: 19px;
+				letter-spacing: -0.03em;
+				color: #4E5968;
 				margin-bottom: 69px;
 			`}
 		>

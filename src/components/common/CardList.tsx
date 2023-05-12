@@ -8,7 +8,7 @@ export default function CardList({dataList} : CardListProps) {
 	return (
 		<div
 			css={css`
-				width: 744px;
+				width: 1065px;
 				display: flex;
 				flex-wrap: wrap;
 				justify-content: center;
@@ -18,7 +18,7 @@ export default function CardList({dataList} : CardListProps) {
 		{dataList.map((data) => (
 			<div
 				css={css`
-					margin: 15px 19px;
+					margin: 18px 27px;
 				`}
 			>
 				<Card title={data.title} subTitle={data.subTitle} isRunning={data.isRunning} thumb={data.thumb} />

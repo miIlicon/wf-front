@@ -10,12 +10,12 @@ const NameLabel = ({ text } : contentTextProps) => {
 	return (
 		<label
 			css={css`
-				width: 90px;
-				height: 20px;
+				width: 127px;
+				height: 27px;
 				color: #3182f6;
 				background-color: rgba(49, 130, 246, 0.16);
 				border: none;
-				border-radius: 0.3em;
+				border-radius: 6px;
 				font-size: 11px;
 				font-weight: 600;
 
@@ -42,21 +42,34 @@ const VideoCard = ({ title, subTitle, thumb, artist }: VideoProps) => {
 			<Thumb thumb={thumb} />
 			<div
 				css={css`
-					margin-top: 10px;
+					margin-top: 17px;
 				`}
 			>
 				<NameLabel text={artist} />
 				<p
 					css={css`
-						font-size: 16px;
+						font-size: 24px;
 						font-weight: 700;
+						font-style: normal;
+						line-height: 29px;
+						letter-spacing: -0.03em;
+						color: #4E5968;
+
+						margin: 11px 0;
 					`}
 				>
 					{title}
 				</p>
 				<p
 					css={css`
-						font-size: 11px;
+						font-size: 16px;
+						font-weight: 500;
+						font-style: normal;
+						line-height: 19px;
+						letter-spacing: -0.03em;
+						color: #4E5968;
+
+						margin: 0;
 					`}
 				>
 					{subTitle}
@@ -71,7 +84,7 @@ const VideoCardList = ({dataList} : VideoListProps) => {
 	return (
 		<div
 			css={css`
-				width: 744px;
+				width: 1065px;
 				display: flex;
 				flex-wrap: wrap;
 				justify-content: center;
@@ -81,7 +94,7 @@ const VideoCardList = ({dataList} : VideoListProps) => {
 		{dataList.map((data) => (
 			<div
 				css={css`
-					margin: 15px 19px;
+					margin: 18px 27px;
 				`}
 			>
 				<VideoCard title={data.title} subTitle={data.subTitle} artist={data.artist} thumb={data.thumb} />
@@ -143,8 +156,14 @@ export default function FestivalVideoPage() {
 		>
 			<PageTitle text="축제영상" />
 			<PageSubTitle text="위드 페스티벌에서 다시 보고 싶거나 혹인 놓친 축제를 다시 연결시켜드려요." />
-
-			<VideoCardList dataList={videoListTest} />
+			
+			<div
+        css={css`
+          margin-top: 33px;
+        `}
+      >
+				<VideoCardList dataList={videoListTest} />
+			</div>
 		</div>
 	);
 }
