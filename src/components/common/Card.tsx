@@ -40,7 +40,7 @@ export default function Card({ title, subTitle, thumb, isRunning }: CardProps) {
             font-style: normal;
             line-height: 29px;
             letter-spacing: -0.03em;
-            color:  #4E5968;
+            color: #4e5968;
 
             margin: 11px 0;
           `}
@@ -54,7 +54,7 @@ export default function Card({ title, subTitle, thumb, isRunning }: CardProps) {
             font-style: normal;
             line-height: 19px;
             letter-spacing: -0.03em;
-            color: #4E5968;
+            color: #4e5968;
 
             margin: 0;
           `}
