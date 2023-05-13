@@ -18,6 +18,13 @@ export default function EventStatusButton({
           ? "rgba(49, 130, 246, 0.16)"
           : "rgba(124, 124, 124, 0.4)"};
         border: none;
+        ${isRunning
+          ? css`
+              filter: grayscale(0%);
+            `
+          : css`
+              filter: grayscale(100%);
+            `}
         border-radius: 0.3em;
         font-size: 12px;
         font-weight: 600;
