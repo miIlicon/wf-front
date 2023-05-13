@@ -13,6 +13,7 @@ export interface CardProps {
 
 export interface CardListProps {
   dataList: CardProps[];
+  isRunning?: boolean;
 }
 
 export interface VideoProps {
@@ -38,4 +39,5 @@ export interface ButtonProps {
 	text: string;
 	isSelect: boolean;
 	value: string;
+  onClick: (value : string) => void;
 }

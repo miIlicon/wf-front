@@ -4,18 +4,19 @@ import { css } from '@emotion/react';
 import { CardListProps } from '../../@types/typs';
 import Card from './Card';
 
-export default function CardList({dataList} : CardListProps) {
+export default function CardList({dataList, isRunning} : CardListProps) {
 	return (
 		<div
 			css={css`
 				width: 1065px;
 				display: flex;
 				flex-wrap: wrap;
-				justify-content: center;
+				justify-content: left;
 				align-items: center;
 		`}
 	>
 		{dataList.map((data) => (
+			(isRunning === undefined || isRunning === data.isRunning) &&
 			<div
 				css={css`
 					margin: 18px 27px;
