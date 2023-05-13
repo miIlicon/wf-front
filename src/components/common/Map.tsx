@@ -2,9 +2,9 @@
 import { css } from "@emotion/react";
 import React, { useEffect, useState } from "react";
 
-const { kakao }: any = window;
-
 export default function Map() {
+  const { kakao }: any = window;
+
   useEffect(() => {
     let mapContainer = document.getElementById("map"); // 지도를 표시할 div
     let mapOption = {

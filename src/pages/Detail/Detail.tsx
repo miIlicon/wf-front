@@ -9,6 +9,7 @@ import ContentSubTitle from "../../components/common/ContentSubTitle";
 import Map from "../../components/common/Map";
 import { Thumb } from "../../components/common/Card";
 import ContentCards from "../../components/common/ContentCards";
+import { DetailThumb } from "../../components/common/DetailCard";
 
 export default function Detail() {
   useEffect(() => {
@@ -46,7 +47,7 @@ export default function Detail() {
             box-sizing: border-box;
           `}
         >
-          <Thumb thumb={dummy} />
+          <DetailThumb thumb={dummy} />
           <div
             css={css`
               width: 100%;
@@ -104,8 +105,8 @@ export default function Detail() {
               column-gap: 2em;
               background-color: #f8f8f8;
               box-sizing: border-box;
-              padding: 1.3em;
-              border-radius: 0.5em;
+              padding: 1.5em;
+              border-radius: 0.7em;
             `}
           >
             <span>

@@ -12,7 +12,7 @@ export const Section = ({ children }: WrapperProps) => {
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-top: 7em;
+        margin-top: 3em;
       `}
     >
       <section
