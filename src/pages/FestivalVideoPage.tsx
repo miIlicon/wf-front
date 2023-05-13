@@ -151,7 +151,7 @@ export default function FestivalVideoPage() {
 			flex-direction: column;
 			justify-content: center;
 			align-items: center;
-			font-family: "Pretendard-Regular";
+			margin-top: 59px;
 		`}
 		>
 			<PageTitle text="축제영상" />

@@ -59,7 +59,7 @@ export default function FoodtruckPage() {
 			flex-direction: column;
 			justify-content: center;
 			align-items: center;
-			font-family: "Pretendard-Regular";
+			margin-top: 59px;
 		`}
 		>
 			<PageTitle text="푸드트럭" />

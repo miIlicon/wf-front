@@ -59,7 +59,7 @@ export default function FleamarketPage() {
 			flex-direction: column;
 			justify-content: center;
 			align-items: center;
-			font-family: "Pretendard-Regular";
+			margin-top: 59px;
 		`}
 		>
 			<PageTitle text="플리마켓" />
