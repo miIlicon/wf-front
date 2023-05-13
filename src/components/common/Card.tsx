@@ -27,7 +27,7 @@ export default function Card({ title, subTitle, thumb, isRunning }: CardProps) {
         line-height: 10px;
       `}
     >
-      <Thumb thumb={thumb} isRunning={isRunning}/>
+      <Thumb thumb={thumb} isRunning={isRunning} />
       <div
         css={css`
           margin-top: 17px;
