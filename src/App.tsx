@@ -11,6 +11,7 @@ import FestivalPage from "./pages/FestivalPage";
 import FleamarketPage from "./pages/FleamarketPage";
 import FoodtruckPage from "./pages/FoodtruckPage";
 import FestivalVideoPage from "./pages/FestivalVideoPage";
+import Login from "./pages/Login/Login";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
             <Route path="/foodtruck" element={<FoodtruckPage />}></Route>
             <Route path="/video" element={<FestivalVideoPage />}></Route>
           </Route>
+          <Route path="/login" element={<Login />} />
         </Routes>
       </BrowserRouter>
     </div>

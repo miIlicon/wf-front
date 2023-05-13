@@ -98,19 +98,34 @@ export default function Index() {
               `}
             />
           </div>
-          <div className="guide">
-            오늘 우리 학교에
-            <span
-              css={css`
-                color: #1b64da;
-                margin-left: 0.2em;
-                margin-right: 0.2em;
-              `}
-            >
-              {artist}
-            </span>
-            가 방문해요
-          </div>
+          {artist && (
+            <div className="guide">
+              오늘 우리 학교에
+              <span
+                css={css`
+                  color: #1b64da;
+                  margin-left: 0.2em;
+                  margin-right: 0.2em;
+                `}
+              >
+                {artist}
+              </span>
+              가 방문해요
+            </div>
+          )}
+          {!artist && (
+            <div className="guide">
+              <span
+                css={css`
+                  color: #1b64da;
+                  margin-left: 0.2em;
+                  margin-right: 0.2em;
+                `}
+              >
+                오늘은 아쉽게도 학교 축제에 참가하는 가수가 없어요
+              </span>
+            </div>
+          )}
           <div className="guide">
             위드 페스티벌 서비스를 현재{" "}
             <span
@@ -129,7 +144,7 @@ export default function Index() {
           src={location}
           alt="축제 위치 한 눈에 보기"
           css={css`
-            width: 100%;
+            width: 63.12em;
             height: auto;
             filter: drop-shadow(10px 10px 10px rgb(0, 0, 0, 0.16));
           `}

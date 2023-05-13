@@ -45,3 +45,8 @@ export interface ButtonProps {
 export interface TextProps {
   text: string;
 }
+
+export interface InputProps {
+  type: string;
+  placeholder: string;
+}
