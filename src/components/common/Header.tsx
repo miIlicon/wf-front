@@ -2,11 +2,12 @@
 import { css } from "@emotion/react";
 import React, { useEffect, useState } from "react";
 import logo from "../../images/logo.png";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import Banner from "./Banner";
 
 export default function Header() {
   const [scrollState, setScrollState] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   const handleScroll = () => {
     if (window.scrollY || document.documentElement.scrollTop > 0) {
@@ -86,6 +87,7 @@ export default function Header() {
               opacity: 70%;
             }
           `}
+          onClick={() => navigate("/")}
         />
         <nav
           css={css`

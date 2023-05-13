@@ -3,8 +3,11 @@ import { css } from "@emotion/react";
 import React from "react";
 import { ReactComponent as BannerArrow } from "../../images/bannerArrow.svg";
 import { ReactComponent as Rocket } from "../../images/rocket.svg";
+import { useNavigate } from "react-router-dom";
 
 export default function Banner() {
+  const navigate = useNavigate();
+
   return (
     <div
       css={css`
@@ -51,7 +54,14 @@ export default function Banner() {
               display: flex;
               justify-content: left;
               align-items: center;
+              transition: 0.4s all;
+              cursor: pointer;
+
+              &:hover {
+                opacity: 80%;
+              }
             `}
+            onClick={() => navigate("/detail")}
           >
             <span
               css={css`
