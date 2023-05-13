@@ -95,16 +95,16 @@ export default function Header() {
             transition: 0.4s all;
           `}
         >
-          <Link to={""} tabIndex={-1}>
+          <Link to={"festivalInfo"} tabIndex={-1}>
             축제정보
           </Link>
-          <Link to={""} tabIndex={-1}>
+          <Link to={"fleamarket"} tabIndex={-1}>
             플리마켓
           </Link>
-          <Link to={""} tabIndex={-1}>
+          <Link to={"foodtruck"} tabIndex={-1}>
             푸드트럭
           </Link>
-          <Link to={""} tabIndex={-1}>
+          <Link to={"video"} tabIndex={-1}>
             축제영상
           </Link>
         </nav>

@@ -3,35 +3,15 @@ import React, { useState } from 'react';
 import { css } from '@emotion/react';
 import PageTitle from '../components/common/PageTitle';
 import PageSubTitle from '../components/common/PageSubTitle';
-import { ButtonProps } from '../@types/typs';
 import CardList from '../components/common/CardList';
-
-const Button = ({text, isSelect, value} : ButtonProps) => {
-	return (
-		<button
-			css={css`
-				width: 200px;
-				height: 41px;
-				color: ${isSelect ? "white" : "black"};
-				background-color: ${isSelect ? "#3182F6" : "#F2F4F6"};
-				border: none;
-				border-radius: 8px;
-				font-size: 13px;
-				font-weight: 600;
-				font-family: "Pretendard-Regular";
-				cursor: pointer;
-				margin: 0 6px;
-			`}
-
-			value={value}
-		>
-			{text}
-		</button>
-	);
-}
+import DefaultButton from '../components/common/DefaultButton';
 
 export default function FoodtruckPage() {
 	const [selectMenu, setSelectMenu] = useState<string>("running");
+
+	const onClickButton = (value : string) => {
+		setSelectMenu(value);
+	}
 
 	const foodtruckListTest = [
 		{
@@ -79,20 +59,20 @@ export default function FoodtruckPage() {
 			flex-direction: column;
 			justify-content: center;
 			align-items: center;
-			font-family: "Pretendard-Regular";
+			margin-top: 59px;
 		`}
 		>
 			<PageTitle text="푸드트럭" />
 			<PageSubTitle text="지금 현재 진행되고 있는 우리 학교 푸드트럭에 대한 다양한 정보를 얻을 수 있어요." />
 			<div
 				css={css`
-				margin-bottom: 67px;
+				margin-bottom: 77px;
 			`}
 			>
-				<Button text="활발하게 진행 중인 푸드트럭" isSelect={"running" === selectMenu} value="running" />
-				<Button text="종료된 푸드트럭" isSelect={"ended" === selectMenu} value="ended" />
+				<DefaultButton text="활발하게 진행 중인 푸드트럭" isSelect={"running" === selectMenu} value="running" onClick={onClickButton}/>
+				<DefaultButton text="종료된 푸드트럭" isSelect={"ended" === selectMenu} value="ended" onClick={onClickButton}/>
 			</div>
-			<CardList dataList={foodtruckListTest} />
+			<CardList dataList={foodtruckListTest} isRunning={selectMenu === "running"}/>
 		</div>
 	);
 }

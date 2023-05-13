@@ -10,15 +10,15 @@ export default function EventStatusButton({
   return (
     <button
       css={css`
-        width: 90px;
-        height: 20px;
+        width: 127px;
+        height: 27px;
         color: #3182f6;
         opacity: ${isRunning ? "1" : "80%"};
         background-color: ${isRunning
           ? "rgba(49, 130, 246, 0.16)"
           : "rgba(124, 124, 124, 0.4)"};
         border: none;
-        border-radius: 0.3em;
+        border-radius: 6px;
         font-size: 11px;
         font-weight: 600;
 
