@@ -4,13 +4,14 @@ import { css } from "@emotion/react";
 import EventStatusButton from "./EventStatusButton";
 import { CardProps } from "../../@types/typs";
 
-export const Thumb = ({ thumb }: CardProps) => {
+export const Thumb = ({ thumb, isRunning }: CardProps) => {
   return (
     <img
       css={css`
         width: 301px;
         height: 427px;
         border-radius: 11px;
+        filter: ${isRunning ? "grayscale(0)" : "grayscale(100%)"};
       `}
       src={thumb}
       alt=""
@@ -26,7 +27,7 @@ export default function Card({ title, subTitle, thumb, isRunning }: CardProps) {
         line-height: 10px;
       `}
     >
-      <Thumb thumb={thumb} />
+      <Thumb thumb={thumb} isRunning={isRunning}/>
       <div
         css={css`
           margin-top: 17px;
