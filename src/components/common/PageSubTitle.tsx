@@ -7,14 +7,25 @@ export default function PageSubTitle({ text }: contentTextProps) {
   return (
     <p
       css={css`
-        font-size: 16px;
-        font-weight: 500;
         font-family: "Pretendard-Regular";
         font-style: normal;
-        line-height: 19px;
+        line-height: 1.18em;
         letter-spacing: -0.03em;
         color: #4e5968;
-        margin-bottom: 69px;
+        margin-bottom: 3em;
+
+        @media (max-width: 479px) {
+          font-size: 10px;
+        }
+        @media all and (min-width: 480px) and (max-width: 767px) {
+          font-size: 12px;
+        }
+        @media all and (min-width: 768px) and (max-width: 1099px) {
+          font-size: 14px;
+        }
+        @media all and (min-width: 1100px) {
+          font-size: 16px;
+        }
       `}
     >
       {text}

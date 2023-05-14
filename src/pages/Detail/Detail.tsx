@@ -38,24 +38,66 @@ export default function Detail() {
           display: flex;
           flex-direction: column;
           row-gap: 2.3em;
+
+          @media (max-width: 479px) {
+            font-size: 10px;
+          }
+          @media all and (min-width: 480px) and (max-width: 767px) {
+            font-size: 12px;
+          }
+          @media all and (min-width: 768px) and (max-width: 1099px) {
+            font-size: 14px;
+          }
+          @media all and (min-width: 1100px) {
+            font-size: 16px;
+          }
         `}
       >
         <article
           css={css`
             display: flex;
+            height: 25em;
             column-gap: 4.43em;
             box-sizing: border-box;
+
+            @media (max-width: 479px) {
+              column-gap: 1em;
+            }
+            @media all and (min-width: 480px) and (max-width: 767px) {
+              font-size: 10px;
+            }
+            @media all and (min-width: 768px) and (max-width: 1099px) {
+              font-size: 14px;
+            }
+            @media all and (min-width: 1100px) {
+              font-size: 16px;
+            }
           `}
         >
           <DetailThumb thumb={dummy} />
           <div
             css={css`
               width: 100%;
+              height: 100%;
               display: flex;
               flex-direction: column;
               justify-content: left;
               text-align: left;
-              row-gap: 0.7em;
+              row-gap: 0.85em;
+
+              @media (max-width: 479px) {
+                font-size: 10px;
+              }
+
+              @media all and (min-width: 480px) and (max-width: 767px) {
+                font-size: 12px;
+              }
+              @media all and (min-width: 768px) and (max-width: 1099px) {
+                font-size: 14px;
+              }
+              @media all and (min-width: 1100px) {
+                font-size: 16px;
+              }
             `}
           >
             <ContentTitle text="과연 누가 우리 학교의 가왕이 될까요?" />
@@ -71,6 +113,22 @@ export default function Detail() {
             align-items: left;
             text-align: left;
             row-gap: 2.68em;
+            width: 85vw;
+            overflow: auto;
+            white-space: nowrap;
+
+            @media (max-width: 479px) {
+              font-size: 10px;
+            }
+            @media all and (min-width: 480px) and (max-width: 767px) {
+              font-size: 12px;
+            }
+            @media all and (min-width: 768px) and (max-width: 1099px) {
+              font-size: 14px;
+            }
+            @media all and (min-width: 1100px) {
+              font-size: 16px;
+            }
           `}
         >
           <ContentTitle text="관련된 더 많은 사진을 보여드릴게요" />
@@ -79,9 +137,21 @@ export default function Detail() {
               display: flex;
               width: 100%;
               column-gap: 2em;
+
+              @media (max-width: 479px) {
+                font-size: 10px;
+              }
+              @media all and (min-width: 480px) and (max-width: 767px) {
+                font-size: 12px;
+              }
+              @media all and (min-width: 768px) and (max-width: 1099px) {
+                font-size: 14px;
+              }
+              @media all and (min-width: 1100px) {
+                font-size: 16px;
+              }
             `}
           >
-            <ContentCards thumb={dummy} />
             <ContentCards thumb={dummy} />
             <ContentCards thumb={dummy} />
             <ContentCards thumb={dummy} />
@@ -94,6 +164,19 @@ export default function Detail() {
             align-items: left;
             text-align: left;
             row-gap: 2.3em;
+
+            @media (max-width: 479px) {
+              font-size: 10px;
+            }
+            @media all and (min-width: 480px) and (max-width: 767px) {
+              font-size: 12px;
+            }
+            @media all and (min-width: 768px) and (max-width: 1099px) {
+              font-size: 14px;
+            }
+            @media all and (min-width: 1100px) {
+              font-size: 16px;
+            }
           `}
         >
           <ContentTitle text="상세 설명" />
@@ -131,6 +214,19 @@ export default function Detail() {
             align-items: left;
             text-align: left;
             row-gap: 1em;
+
+            @media (max-width: 479px) {
+              font-size: 10px;
+            }
+            @media all and (min-width: 480px) and (max-width: 767px) {
+              font-size: 12px;
+            }
+            @media all and (min-width: 768px) and (max-width: 1099px) {
+              font-size: 14px;
+            }
+            @media all and (min-width: 1100px) {
+              font-size: 16px;
+            }
           `}
         >
           <ContentTitle text="해당 이벤트에 대해 같이 이야기를 나눠봐요" />

@@ -37,16 +37,28 @@ export default function Header() {
           align-items: center;
           padding-top: 1.2em;
           padding-bottom: 1.2em;
+
+          margin-left: auto;
+          margin-right: auto;
+
           @media (max-width: 1099px) {
-            display: none;
+            column-gap: 10%;
+            padding-left: 1.5em;
+            padding-right: 1.5em;
+            box-sizing: border-box;
+          }
+          @media (max-width: 479px) {
+            font-size: 11px;
+          }
+          @media all and (min-width: 480px) and (max-width: 767px) {
+            font-size: 14px;
           }
           @media all and (min-width: 768px) and (max-width: 1099px) {
+            font-size: 16px;
+          }
+          @media all and (min-width: 1100px) {
             font-size: 18px;
           }
-          @media all and (min-width: 1100px) and (max-width: 2000px) {
-            font-size: 18px;
-          }
-          column-gap: 30em;
           background-color: white;
 
           ${scrollState &&
@@ -74,42 +86,67 @@ export default function Header() {
           }
         `}
       >
-        <img
-          alt="로고"
-          src={logo}
+        <div
           css={css`
-            height: auto;
-            width: 8em;
-            cursor: pointer;
-            transition: 0.4s all;
-
-            &:hover {
-              opacity: 70%;
-            }
-          `}
-          onClick={() => navigate("/")}
-        />
-        <nav
-          css={css`
-            height: 100%;
             display: flex;
-            column-gap: 2.5em;
-            transition: 0.4s all;
+            jusitify-content: center;
+            align-items: center;
+            width: 56.5em;
           `}
         >
-          <Link to={"festivalInfo"} tabIndex={-1}>
-            축제정보
-          </Link>
-          <Link to={"fleamarket"} tabIndex={-1}>
-            플리마켓
-          </Link>
-          <Link to={"foodtruck"} tabIndex={-1}>
-            푸드트럭
-          </Link>
-          <Link to={"video"} tabIndex={-1}>
-            축제영상
-          </Link>
-        </nav>
+          <img
+            alt="로고"
+            src={logo}
+            css={css`
+              height: auto;
+              width: 8em;
+              cursor: pointer;
+              transition: 0.4s all;
+
+              &:hover {
+                opacity: 70%;
+              }
+            `}
+            onClick={() => navigate("/")}
+          />
+          <nav
+            css={css`
+              height: 100%;
+              display: flex;
+              column-gap: 2.5em;
+              transition: 0.4s all;
+              margin-left: auto;
+              justify-content: space-between;
+
+              @media (max-width: 479px) {
+                font-size: 10px;
+                column-gap: 1em;
+              }
+              @media all and (min-width: 480px) and (max-width: 767px) {
+                font-size: 12px;
+              }
+              @media all and (min-width: 768px) and (max-width: 1099px) {
+                font-size: 14px;
+              }
+              @media all and (min-width: 1100px) {
+                font-size: 16px;
+              }
+            `}
+          >
+            <Link to={"festivalInfo"} tabIndex={-1}>
+              축제정보
+            </Link>
+            <Link to={"fleamarket"} tabIndex={-1}>
+              플리마켓
+            </Link>
+            <Link to={"foodtruck"} tabIndex={-1}>
+              푸드트럭
+            </Link>
+            <Link to={"video"} tabIndex={-1}>
+              축제영상
+            </Link>
+          </nav>
+        </div>
       </header>
       <Banner />
       <Outlet />

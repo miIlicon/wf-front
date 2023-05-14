@@ -20,10 +20,23 @@ export default function Map() {
     <div
       css={css`
         display: flex;
-        width: 40.69em;
-        height: 17.08em;
+        width: 100%;
+        height: 100%;
         background-color: #d9d9d9;
         border-radius: 0.5em;
+
+        @media (max-width: 479px) {
+          font-size: 10px;
+        }
+        @media all and (min-width: 480px) and (max-width: 767px) {
+          font-size: 12px;
+        }
+        @media all and (min-width: 768px) and (max-width: 1099px) {
+          font-size: 14px;
+        }
+        @media all and (min-width: 1100px) {
+          font-size: 16px;
+        }
       `}
     >
       <div

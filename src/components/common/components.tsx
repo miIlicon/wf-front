@@ -17,7 +17,9 @@ export const Section = ({ children }: WrapperProps) => {
     >
       <section
         css={css`
-          width: 63.12em;
+          width: 63.5em;
+          padding-left: 1em;
+          padding-right: 1em;
         `}
       >
         {children}

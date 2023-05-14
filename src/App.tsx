@@ -13,11 +13,13 @@ import FoodtruckPage from "./pages/FoodtruckPage";
 import FestivalVideoPage from "./pages/FestivalVideoPage";
 import Editor from "./pages/Editor";
 import Login from "./pages/Login/Login";
+import ScrollToTop from "./hooks/ScrollToTop";
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
+        <ScrollToTop />
         <GlobalStyles />
         <Routes>
           <Route element={<Header />}>
