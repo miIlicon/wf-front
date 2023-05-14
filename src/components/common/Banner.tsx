@@ -11,7 +11,6 @@ export default function Banner() {
   return (
     <div
       css={css`
-        width: 100%;
         height: 7em;
         border: solid;
         display: flex;
@@ -42,8 +41,21 @@ export default function Banner() {
           <span
             css={css`
               display: block;
-              font-size: 1.2em;
+              font-size: 19.2px;
               font-family: "Pretendard-ExtraBold";
+
+              @media (max-width: 479px) {
+                font-size: 15px;
+              }
+              @media all and (min-width: 480px) and (max-width: 767px) {
+                font-size: 16px;
+              }
+              @media all and (min-width: 768px) and (max-width: 1099px) {
+                font-size: 17px;
+              }
+              @media all and (min-width: 1100px) {
+                font-size: 18px;
+              }
             `}
           >
             지금 진행중인 축제를 보러가볼까요?
@@ -68,12 +80,37 @@ export default function Banner() {
                 display: flex;
                 align-items: center;
                 justify-content: center;
+
+                @media (max-width: 479px) {
+                  font-size: 13px;
+                }
+                @media all and (min-width: 480px) and (max-width: 767px) {
+                  font-size: 14px;
+                }
+                @media all and (min-width: 768px) and (max-width: 1099px) {
+                  font-size: 15px;
+                }
+                @media all and (min-width: 1100px) {
+                  font-size: 16px;
+                }
               `}
             >
               자세히 보러가기
             </span>
             <BannerArrow
               css={css`
+                @media (max-width: 479px) {
+                  font-size: 13px;
+                }
+                @media all and (min-width: 480px) and (max-width: 767px) {
+                  font-size: 14px;
+                }
+                @media all and (min-width: 768px) and (max-width: 1099px) {
+                  font-size: 15px;
+                }
+                @media all and (min-width: 1100px) {
+                  font-size: 16px;
+                }
                 width: 0.9em;
               `}
             />
@@ -83,6 +120,19 @@ export default function Banner() {
           css={css`
             width: 3.3em;
             height: auto;
+
+            @media (max-width: 479px) {
+              font-size: 13px;
+            }
+            @media all and (min-width: 480px) and (max-width: 767px) {
+              font-size: 14px;
+            }
+            @media all and (min-width: 768px) and (max-width: 1099px) {
+              font-size: 15px;
+            }
+            @media all and (min-width: 1100px) {
+              font-size: 16px;
+            }
           `}
         />
       </div>

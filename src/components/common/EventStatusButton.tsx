@@ -27,7 +27,19 @@ export default function EventStatusButton({
             `}
         border-radius: 0.3em;
         font-size: 12px;
-        font-weight: 600;
+
+        @media (max-width: 479px) {
+          font-size: 9px;
+        }
+        @media all and (min-width: 480px) and (max-width: 767px) {
+          font-size: 10px;
+        }
+        @media all and (min-width: 768px) and (max-width: 1099px) {
+          font-size: 11px;
+        }
+        @media all and (min-width: 1100px) {
+          font-size: 12px;
+        }
 
         display: flex;
         justify-content: center;

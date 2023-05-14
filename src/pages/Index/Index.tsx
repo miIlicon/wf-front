@@ -45,22 +45,34 @@ export default function Index() {
             .guide {
               font-size: 15px;
               display: block;
-              font-family: "Pretendard-Regular";
+              font-family: "Pretendard-Bold";
               letter-spacing: -0.03em;
 
               color: #4e5968;
               background-color: rgba(49, 130, 246, 0.16);
               border: none;
               border-radius: 0.5em;
-              font-weight: 600;
               padding-top: 1em;
               padding-bottom: 1em;
-              padding-left: 2.3em;
-              padding-right: 2.3em;
+              padding-left: 1.5em;
+              padding-right: 1.5em;
 
               display: flex;
               justify-content: center;
               align-items: center;
+
+              @media (max-width: 479px) {
+                font-size: 11px;
+              }
+              @media all and (min-width: 480px) and (max-width: 767px) {
+                font-size: 12px;
+              }
+              @media all and (min-width: 768px) and (max-width: 1099px) {
+                font-size: 14px;
+              }
+              @media all and (min-width: 1100px) {
+                font-size: 15px;
+              }
             }
           `}
         >
@@ -87,6 +99,19 @@ export default function Index() {
             <span
               css={css`
                 color: #1b64da;
+
+                @media (max-width: 479px) {
+                  font-size: 11px;
+                }
+                @media all and (min-width: 480px) and (max-width: 767px) {
+                  font-size: 12px;
+                }
+                @media all and (min-width: 768px) and (max-width: 1099px) {
+                  font-size: 14px;
+                }
+                @media all and (min-width: 1100px) {
+                  font-size: 15px;
+                }
               `}
             >
               공연 정보 더 보러가기
@@ -95,6 +120,19 @@ export default function Index() {
               css={css`
                 width: 1em;
                 height: auto;
+
+                @media (max-width: 479px) {
+                  font-size: 10px;
+                }
+                @media all and (min-width: 480px) and (max-width: 767px) {
+                  font-size: 11px;
+                }
+                @media all and (min-width: 768px) and (max-width: 1099px) {
+                  font-size: 13px;
+                }
+                @media all and (min-width: 1100px) {
+                  font-size: 14px;
+                }
               `}
             />
           </div>
@@ -106,6 +144,19 @@ export default function Index() {
                   color: #1b64da;
                   margin-left: 0.2em;
                   margin-right: 0.2em;
+
+                  @media (max-width: 479px) {
+                    font-size: 11px;
+                  }
+                  @media all and (min-width: 480px) and (max-width: 767px) {
+                    font-size: 12px;
+                  }
+                  @media all and (min-width: 768px) and (max-width: 1099px) {
+                    font-size: 14px;
+                  }
+                  @media all and (min-width: 1100px) {
+                    font-size: 15px;
+                  }
                 `}
               >
                 {artist}
@@ -126,7 +177,7 @@ export default function Index() {
               </span>
             </div>
           )}
-          <div className="guide">
+          <div className="guide" css={css``}>
             위드 페스티벌 서비스를 현재{" "}
             <span
               css={css`
@@ -144,7 +195,7 @@ export default function Index() {
           src={location}
           alt="축제 위치 한 눈에 보기"
           css={css`
-            width: 63.12em;
+            width: 100%;
             height: auto;
             filter: drop-shadow(10px 10px 10px rgb(0, 0, 0, 0.16));
           `}

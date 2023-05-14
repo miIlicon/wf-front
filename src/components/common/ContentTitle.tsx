@@ -7,11 +7,23 @@ export default function ContentTitle({ text }: contentTextProps) {
   return (
     <span
       css={css`
-        font-size: 24px;
         display: block;
         color: #4e5968;
         font-family: "Pretendard-Bold";
         letter-spacing: -0.03em;
+
+        @media (max-width: 479px) {
+          font-size: 16px;
+        }
+        @media all and (min-width: 480px) and (max-width: 767px) {
+          font-size: 18px;
+        }
+        @media all and (min-width: 768px) and (max-width: 1099px) {
+          font-size: 20px;
+        }
+        @media all and (min-width: 1100px) {
+          font-size: 24px;
+        }
       `}
     >
       {text}
