@@ -32,7 +32,7 @@ function App() {
             <Route path="/video" element={<FestivalVideoPage />}></Route>
             <Route path="/edit" element={<Editor />}></Route>
           </Route>
-          <Route path="/login" element={<Login />} />
+          <Route path="/admin" element={<Login />} />
         </Routes>
       </BrowserRouter>
     </div>
