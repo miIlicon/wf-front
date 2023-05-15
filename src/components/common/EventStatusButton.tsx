@@ -8,7 +8,7 @@ export default function EventStatusButton({
 }: EventStatusButtonProps) {
   const text = isRunning ? "진행 중인 이벤트" : "종료된 이벤트";
   return (
-    <button
+    <label
       css={css`
         width: 9em;
         height: 2em;
@@ -48,6 +48,6 @@ export default function EventStatusButton({
       `}
     >
       {text}
-    </button>
+    </label>
   );
 }
