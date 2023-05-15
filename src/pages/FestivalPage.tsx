@@ -6,6 +6,7 @@ import PageSubTitle from "../components/common/PageSubTitle";
 import CardList from "../components/common/CardList";
 import DefaultButton from "../components/common/DefaultButton";
 import API from "../utils/api";
+import Notice from "../components/common/Notice";
 
 export default function FestivalPage() {
   const [eventList, setEventList] = useState<any>([]);
@@ -13,17 +14,20 @@ export default function FestivalPage() {
   const [subTitle, setSubTitle] = useState<string>(
     "축제 정보에서 지금 현재 진행되고 있는 축제에 대한 다양한 정보를 얻을 수 있어요"
   );
+  const [notice, setNotice] = useState<string>("진행 중인 이벤트가 없어요");
   const [selectMenu, setSelectMenu] = useState<string>("festivalEvent");
 
   const onClickButton = (value: string) => {
     setSelectMenu(value);
-    if (value === "event") {
+    if (value === "festivalEvent") {
       setTitle("축제 정보");
+      setNotice("진행 중인 이벤트가 없어요");
       setSubTitle(
         "축제 정보에서 지금 현재 진행되고 있는 축제에 대한 다양한 정보를 얻을 수 있어요."
       );
     } else if (value === "pub") {
       setTitle("축제 주점");
+      setNotice("진행 중인 주점이 없어요");
       setSubTitle(
         "축제 주점에서 지금 현재 진행되고 있는 축제 주점에 대한 정보를 얻을 수 있어요."
       );
@@ -77,7 +81,11 @@ export default function FestivalPage() {
           onClick={onClickButton}
         />
       </div>
-      <CardList dataList={eventList} />
+      {
+        eventList.length 
+          ? <CardList dataList={eventList} /> 
+          : <Notice text={notice}/>
+      }
     </div>
   );
 }
