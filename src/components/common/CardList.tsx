@@ -57,10 +57,11 @@ export default function CardList({ dataList, isRunning }: CardListProps) {
             (isRunning === undefined || isRunning === data.isRunning) && (
               <div css={css``}>
                 <Card
+                  id={data.id}
                   title={data.title}
                   subTitle={data.subTitle}
-                  isRunning={data.isRunning}
-                  thumb={data.thumb}
+                  isRunning={data.foodTruckState}
+                  thumb={data.mainFilePath}
                 />
               </div>
             )
