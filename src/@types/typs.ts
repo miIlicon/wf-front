@@ -49,8 +49,13 @@ export interface TextProps {
 }
 
 export interface InputProps {
-  type: string;
-  placeholder: string;
+  type?: string;
+  placeholder?: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  value: string;
+}
+
+export interface TextareaProps {
+  onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
   value: string;
 }

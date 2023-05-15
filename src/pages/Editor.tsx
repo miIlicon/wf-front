@@ -1,12 +1,12 @@
 /** @jsxImportSource @emotion/react */
-import React from "react";
+import React, { useState } from "react";
 import { css } from "@emotion/react";
 import EventStatusButton from "../components/common/EventStatusButton";
-import { contentTextProps } from "../@types/typs";
+import { InputProps, TextareaProps, contentTextProps } from "../@types/typs";
 import Map from "../components/common/Map";
 import { ReactComponent as AddButton } from "../images/addButton.svg";
 
-const TitleInput = () => {
+const TitleInput = ({ onChange }: InputProps) => {
   return (
     <input
       css={css`
@@ -34,12 +34,14 @@ const TitleInput = () => {
           color: #8b95a1;
         }
       `}
+      type="text"
       placeholder="제목을 입력해주세요"
+      onChange={onChange}
     ></input>
   );
 };
 
-const SubTitleInput = () => {
+const SubTitleInput = ({ onChange }: InputProps) => {
   return (
     <input
       css={css`
@@ -67,7 +69,9 @@ const SubTitleInput = () => {
           color: #8b95a1;
         }
       `}
+      name="subTItle"
       placeholder="소제목을 입력해주세요"
+      onChange={onChange}
     ></input>
   );
 };
@@ -93,7 +97,7 @@ const Label = ({ text }: contentTextProps) => {
   );
 };
 
-const Detail = () => {
+const Detail = ({ onChange} : TextareaProps) => {
   return (
     <textarea
       css={css`
@@ -108,7 +112,9 @@ const Detail = () => {
         padding: 27px;
         resize: none;
       `}
+      name="content"
       placeholder="상세 설명을 입력해주세요"
+      onChange={onChange}
     />
   );
 };
@@ -138,31 +144,18 @@ const Button = ({ text }: contentTextProps) => {
   );
 };
 
-const PlusButton = () => {
-  return (
-    <div
-      css={css`
-        width: 4em;
-        height: 4em;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border: 1px solid #6e6e6e;
-        border-radius: 50%;
-      `}
-    >
-      <p
-        css={css`
-          font-size: 45px;
-        `}
-      >
-        +
-      </p>
-    </div>
-  );
-};
-
 export default function Editor() {
+  const [formData, setFormData] = useState({
+    title: "",
+    subTitle: "",
+    content: "",
+    latitude: 0,
+    longitude: 0,
+    state: true,
+    mainFile: File,
+    subFile: FileList
+  })
+
   return (
     <div
       css={css`
@@ -203,6 +196,8 @@ export default function Editor() {
             `}
             type="file"
             id="input-file"
+            name="mainFile"
+            onChange={(e) => {}}
           />
           <div
             css={css`
@@ -212,8 +207,18 @@ export default function Editor() {
               justify-content: space-between;
             `}
           >
-            <TitleInput />
-            <SubTitleInput />
+            <TitleInput 
+              onChange={(event) => {
+                setFormData({...formData, title:event.target.value});
+              }}
+              value={formData.title}
+            />
+            <SubTitleInput 
+              onChange={(event) => {
+                setFormData({...formData, subTitle:event.target.value});
+              }}
+              value={formData.subTitle}
+            />
             <div
               css={css`
                 width: 100%;
@@ -223,8 +228,24 @@ export default function Editor() {
                 column-gap: 1em;
               `}
             >
-              <EventStatusButton isRunning={true} />
-              <EventStatusButton isRunning={false} />
+              <label
+                css={css`
+                  border-radius: 0.3em;
+                  border: ${formData.state ? "0.1em solid #8b95a1" : "none"};
+                `}
+                onClick={() => setFormData({...formData, state:true})}
+              >
+                <EventStatusButton isRunning={true} />
+              </label>
+              <label
+                css={css`
+                  border-radius: 0.3em;
+                  border: ${formData.state ? "none" : "0.1em solid #8b95a1"};
+                `}
+                onClick={() => setFormData({...formData, state:false})}
+              >
+                <EventStatusButton isRunning={false} />
+              </label>
             </div>
             <Map />
           </div>
@@ -258,12 +279,18 @@ export default function Editor() {
               display: none;
             `}
             type="file"
+            name="subFile"
             id="input-file"
           />
         </div>
         <div>
           <Label text="상세 설명" />
-          <Detail />
+          <Detail
+            onChange={(event) => {
+              setFormData({...formData, content:event.target.value});
+            }}
+            value={formData.content}
+          />
         </div>
         <div
           css={css`
