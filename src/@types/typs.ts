@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 
 export interface WrapperProps {
   children: React.ReactNode;
@@ -51,4 +51,6 @@ export interface TextProps {
 export interface InputProps {
   type: string;
   placeholder: string;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  value: string;
 }
