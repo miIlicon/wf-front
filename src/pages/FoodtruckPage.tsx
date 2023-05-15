@@ -1,56 +1,35 @@
 /** @jsxImportSource @emotion/react */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { css } from "@emotion/react";
 import PageTitle from "../components/common/PageTitle";
 import PageSubTitle from "../components/common/PageSubTitle";
 import CardList from "../components/common/CardList";
 import DefaultButton from "../components/common/DefaultButton";
+import API from "../utils/api";
 
 export default function FoodtruckPage() {
+  const [foodtruckList, setFoodtruckList] = useState<any>([]);
   const [selectMenu, setSelectMenu] = useState<string>("running");
 
   const onClickButton = (value: string) => {
     setSelectMenu(value);
   };
 
-  const foodtruckListTest = [
-    {
-      title: "축제 이름은 무엇일까요",
-      subTitle: "축제에 대한 간단한 한 줄 내용이 들어가요.",
-      isRunning: true,
-      thumb: "https://img.stibee.com/70081_1679016813.jpg",
-    },
-    {
-      title: "축제 이름은 무엇일까요",
-      subTitle: "축제에 대한 간단한 한 줄 내용이 들어가요.",
-      isRunning: true,
-      thumb: "https://img.stibee.com/70081_1679016813.jpg",
-    },
-    {
-      title: "축제 이름은 무엇일까요",
-      subTitle: "축제에 대한 간단한 한 줄 내용이 들어가요.",
-      isRunning: false,
-      thumb: "https://img.stibee.com/70081_1679016813.jpg",
-    },
-    {
-      title: "축제 이름은 무엇일까요",
-      subTitle: "축제에 대한 간단한 한 줄 내용이 들어가요.",
-      isRunning: true,
-      thumb: "https://img.stibee.com/70081_1679016813.jpg",
-    },
-    {
-      title: "축제 이름은 무엇일까요",
-      subTitle: "축제에 대한 간단한 한 줄 내용이 들어가요.",
-      isRunning: false,
-      thumb: "https://img.stibee.com/70081_1679016813.jpg",
-    },
-    {
-      title: "축제 이름은 무엇일까요",
-      subTitle: "축제에 대한 간단한 한 줄 내용이 들어가요.",
-      isRunning: true,
-      thumb: "https://img.stibee.com/70081_1679016813.jpg",
-    },
-  ];
+  const getFoodtruck= async () => {
+    const isRunning = selectMenu === "running";
+
+		await API.get(
+			"/api/v1/food-truck/list",
+			{params: { "page": 0, "state": isRunning}}
+		)
+		.then((res) => {
+			setFoodtruckList(res.data.content);
+		})
+	};
+
+  useEffect(() => {
+		getFoodtruck();
+	}, [selectMenu])
 
   return (
     <div
@@ -86,7 +65,7 @@ export default function FoodtruckPage() {
         />
       </div>
       <CardList
-        dataList={foodtruckListTest}
+        dataList={foodtruckList}
         isRunning={selectMenu === "running"}
       />
     </div>

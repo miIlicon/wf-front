@@ -1,18 +1,19 @@
 /** @jsxImportSource @emotion/react */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { css } from "@emotion/react";
 import PageTitle from "../components/common/PageTitle";
 import PageSubTitle from "../components/common/PageSubTitle";
 import CardList from "../components/common/CardList";
 import DefaultButton from "../components/common/DefaultButton";
+import API from "../utils/api";
 
 export default function FestivalPage() {
-  // const [eventList, setEventList] = useState<CardListProps>([]);
+  const [eventList, setEventList] = useState<any>([]);
   const [title, setTitle] = useState<string>("축제 정보");
   const [subTitle, setSubTitle] = useState<string>(
     "축제 정보에서 지금 현재 진행되고 있는 축제에 대한 다양한 정보를 얻을 수 있어요"
   );
-  const [selectMenu, setSelectMenu] = useState<string>("event");
+  const [selectMenu, setSelectMenu] = useState<string>("festivalEvent");
 
   const onClickButton = (value: string) => {
     setSelectMenu(value);
@@ -29,44 +30,19 @@ export default function FestivalPage() {
     }
   };
 
-  const eventListTest = [
-    {
-      title: "축제 이름은 무엇일까요",
-      subTitle: "축제에 대한 간단한 한 줄 내용이 들어가요.",
-      isRunning: true,
-      thumb: "https://img.stibee.com/70081_1679016813.jpg",
-    },
-    {
-      title: "축제 이름은 무엇일까요",
-      subTitle: "축제에 대한 간단한 한 줄 내용이 들어가요.",
-      isRunning: true,
-      thumb: "https://img.stibee.com/70081_1679016813.jpg",
-    },
-    {
-      title: "축제 이름은 무엇일까요",
-      subTitle: "축제에 대한 간단한 한 줄 내용이 들어가요.",
-      isRunning: false,
-      thumb: "https://img.stibee.com/70081_1679016813.jpg",
-    },
-    {
-      title: "축제 이름은 무엇일까요",
-      subTitle: "축제에 대한 간단한 한 줄 내용이 들어가요.",
-      isRunning: true,
-      thumb: "https://img.stibee.com/70081_1679016813.jpg",
-    },
-    {
-      title: "축제 이름은 무엇일까요",
-      subTitle: "축제에 대한 간단한 한 줄 내용이 들어가요.",
-      isRunning: false,
-      thumb: "https://img.stibee.com/70081_1679016813.jpg",
-    },
-    {
-      title: "축제 이름은 무엇일까요",
-      subTitle: "축제에 대한 간단한 한 줄 내용이 들어가요.",
-      isRunning: true,
-      thumb: "https://img.stibee.com/70081_1679016813.jpg",
-    },
-  ];
+  const getFestivalInfo = async () => {
+		await API.get(
+			`/api/v1/${selectMenu}/list`,
+			{params: { "page": 0, "state": true}}
+		)
+		.then((res) => {
+			setEventList(res.data.content);
+		})
+	};
+
+	useEffect(() => {
+		getFestivalInfo();
+	}, [selectMenu])
 
   return (
     <div
@@ -90,8 +66,8 @@ export default function FestivalPage() {
       >
         <DefaultButton
           text="축제 이벤트"
-          isSelect={"event" === selectMenu}
-          value="event"
+          isSelect={"festivalEvent" === selectMenu}
+          value="festivalEvent"
           onClick={onClickButton}
         />
         <DefaultButton
@@ -101,7 +77,7 @@ export default function FestivalPage() {
           onClick={onClickButton}
         />
       </div>
-      <CardList dataList={eventListTest} />
+      <CardList dataList={eventList} />
     </div>
   );
 }

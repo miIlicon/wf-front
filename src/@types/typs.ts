@@ -5,6 +5,7 @@ export interface WrapperProps {
 }
 
 export interface CardProps {
+  id?: number;
   title?: string;
   subTitle?: string;
   isRunning?: boolean;
@@ -12,7 +13,7 @@ export interface CardProps {
 }
 
 export interface CardListProps {
-  dataList: CardProps[];
+  dataList: any[];
   isRunning?: boolean;
 }
 
@@ -21,6 +22,7 @@ export interface VideoProps {
   subTitle: string;
   artist: string;
   thumb: string;
+  videoUrl?: string;
 }
 
 export interface VideoListProps {

@@ -1,10 +1,11 @@
 /** @jsxImportSource @emotion/react */
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { css } from "@emotion/react";
 import PageTitle from "../components/common/PageTitle";
 import PageSubTitle from "../components/common/PageSubTitle";
 import { contentTextProps, VideoProps, VideoListProps } from "../@types/typs";
 import { Thumb } from "../components/common/Card";
+import API from "../utils/api";
 
 const NameLabel = ({ text }: contentTextProps) => {
   return (
@@ -187,44 +188,21 @@ const VideoCardList = ({ dataList }: VideoListProps) => {
 };
 
 export default function FestivalVideoPage() {
-  const videoListTest = [
-    {
-      title: "OO일차 아티스트가 왔다?",
-      subTitle: "축제에 대한 간단한 한 줄 내용이 들어가요.",
-      artist: "아티스트 이름",
-      thumb: "https://img.stibee.com/70081_1679016813.jpg",
-    },
-    {
-      title: "OO일차 아티스트가 왔다?",
-      subTitle: "축제에 대한 간단한 한 줄 내용이 들어가요.",
-      artist: "아티스트 이름",
-      thumb: "https://img.stibee.com/70081_1679016813.jpg",
-    },
-    {
-      title: "OO일차 아티스트가 왔다?",
-      subTitle: "축제에 대한 간단한 한 줄 내용이 들어가요.",
-      artist: "아티스트 이름",
-      thumb: "https://img.stibee.com/70081_1679016813.jpg",
-    },
-    {
-      title: "OO일차 아티스트가 왔다?",
-      subTitle: "축제에 대한 간단한 한 줄 내용이 들어가요.",
-      artist: "아티스트 이름",
-      thumb: "https://img.stibee.com/70081_1679016813.jpg",
-    },
-    {
-      title: "OO일차 아티스트가 왔다?",
-      subTitle: "축제에 대한 간단한 한 줄 내용이 들어가요.",
-      artist: "아티스트 이름",
-      thumb: "https://img.stibee.com/70081_1679016813.jpg",
-    },
-    {
-      title: "OO일차 아티스트가 왔다?",
-      subTitle: "축제에 대한 간단한 한 줄 내용이 들어가요.",
-      artist: "아티스트 이름",
-      thumb: "https://img.stibee.com/70081_1679016813.jpg",
-    },
-  ];
+  const [festivalVideoList, setFestivalVideoList] = useState<any>([]);
+
+  const getFestivalVideo= async () => {
+		await API.get(
+			"/api/v1/film/list",
+			{params: { "page": 0 }}
+		)
+		.then((res) => {
+			setFestivalVideoList(res.data.content);
+		})
+	};
+
+  useEffect(() => {
+		getFestivalVideo();
+	}, [])
 
   return (
     <div
@@ -240,7 +218,7 @@ export default function FestivalVideoPage() {
       <PageSubTitle text="위드 페스티벌 팀에서 다시 보고 싶거나 혹은 놓친 축제를 다시 연결시켜드려요" />
 
       <div css={css``}>
-        <VideoCardList dataList={videoListTest} />
+        <VideoCardList dataList={festivalVideoList} />
       </div>
     </div>
   );
