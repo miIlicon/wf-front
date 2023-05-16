@@ -66,8 +66,8 @@ export default function FleamarketPage() {
         />
       </div>
       {
-        (selectMenu === "running" && fleamarketList.length < 1)
-          ? <Notice text="진행 중인 플리마켓이 없어요"/>
+        (fleamarketList.length < 1)
+          ? <Notice text= {selectMenu === "running" ? "진행 중인 플리마켓이 없어요" : "종료된 플리마켓이 없어요"} />
           : <CardList
               dataList={fleamarketList}
               category="flea-market"
