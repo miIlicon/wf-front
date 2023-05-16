@@ -66,8 +66,8 @@ export default function FoodtruckPage() {
         />
       </div>
       {
-        (selectMenu === "running" && foodtruckList.length < 1)
-          ? <Notice text="진행 중인 푸드트럭이 없어요"/>
+        (foodtruckList.length < 1)
+          ? <Notice text={selectMenu === "running" ? "진행 중인 푸드트럭이 없어요" : "종료된 푸드트럭이 없어요"} />
           : <CardList
               dataList={foodtruckList}
               category="food-truck"
