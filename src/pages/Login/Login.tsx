@@ -15,18 +15,7 @@ export default function Login() {
   const handleSubmit = () => {
     console.log(id, password);
     axios
-      .post(
-        "/admin",
-        JSON.stringify({
-          username: id,
-          password: password,
-        }),
-        {
-          headers: {
-            "Content-type": "application/json",
-          },
-        }
-      )
+      .get(`/admin?username=${id}&password=${password}`)
       .then((res) => {
         alert("로그인을 성공적으로 했어요!");
         navigate("/");

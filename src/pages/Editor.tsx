@@ -1,10 +1,20 @@
 /** @jsxImportSource @emotion/react */
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
+import Map from "../components/common/Map";
 import { css } from "@emotion/react";
 import EventStatusButton from "../components/common/EventStatusButton";
-import { InputProps, TextareaProps, contentTextProps } from "../@types/typs";
-import Map from "../components/common/Map";
+import {
+  FileProps,
+  InputProps,
+  TextProps,
+  TextareaProps,
+  contentTextProps,
+} from "../@types/typs";
 import { ReactComponent as AddButton } from "../images/addButton.svg";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import { ReduxType } from "../app/store";
+import { ButtonProps } from "style-components/dist/components/Botton/Button";
 
 const TitleInput = ({ onChange }: InputProps) => {
   return (
@@ -97,7 +107,7 @@ const Label = ({ text }: contentTextProps) => {
   );
 };
 
-const Detail = ({ onChange} : TextareaProps) => {
+const Detail = ({ onChange }: TextareaProps) => {
   return (
     <textarea
       css={css`
@@ -119,7 +129,7 @@ const Detail = ({ onChange} : TextareaProps) => {
   );
 };
 
-const Button = ({ text }: contentTextProps) => {
+const Button = ({ text, onClick }: TextProps) => {
   return (
     <input
       css={css`
@@ -140,21 +150,122 @@ const Button = ({ text }: contentTextProps) => {
       `}
       type="submit"
       value={text}
+      onClick={onClick}
     ></input>
   );
 };
 
 export default function Editor() {
-  const [formData, setFormData] = useState({
-    title: "",
-    subTitle: "",
-    content: "",
-    latitude: 0,
-    longitude: 0,
-    state: true,
-    mainFile: File,
-    subFile: FileList
-  })
+  const [title, setTitle] = useState("");
+  const [subTitle, setSubTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [state, setState] = useState(false);
+
+  const [imgFile, setImgFile] = useState("");
+  const [subfirstFile, setsubfirstFile] = useState("");
+  const [subtwiceFile, setsubtwiceFile] = useState("");
+  const [subthirdFile, setsubthirdFile] = useState("");
+  const latitude = useSelector((state: ReduxType) => state.fetcher.latitude);
+  const longtitude = useSelector((state: ReduxType) => state.fetcher.longitude);
+
+  const imgRef = useRef<any>(null);
+  const imgfirstRef = useRef<any>(null);
+  const imgtwiceRef = useRef<any>(null);
+  const imgthirdRef = useRef<any>(null);
+
+  const data = new FormData();
+
+  const handleSubmit = async (event: Event) => {
+    event.preventDefault();
+    const dataSet: any = {
+      title: title,
+      subTitle: subTitle,
+      content: content,
+      latitude: latitude,
+      longtitude: longtitude,
+      state: state,
+    };
+    const subFile: any = [subfirstFile, subtwiceFile, subthirdFile];
+
+    data.append("dto", JSON.stringify(dataSet));
+    data.append("main-file", imgFile);
+
+    for (let i = 0; i < subFile.length; i++) {
+      data.append("sub-file", subFile[i]);
+    }
+    // data.append("sub-file", subFile);
+    // data.append("sub-file", subtwiceFile);
+    // data.append("sub-file", subthirdFile);
+    console.log("formdata", data);
+
+    for (let key of data.entries()) {
+      console.log(key);
+    }
+
+    await axios
+      .post(`/api/v1/flea-market`, {
+        data,
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+          "Content-Type": "multipart/form-data",
+          "Access-Control-Allow-Origin": "*",
+        },
+      })
+      .then((res) => {
+        alert(res);
+      })
+      .catch((error) => {
+        alert("에러 발생!");
+      });
+  };
+
+  const tempImgFile = (e: React.FormEvent<HTMLInputElement>) => {
+    let file;
+    if (imgRef.current) {
+      file = imgRef.current?.files[0];
+    }
+    const reader: any = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setImgFile(reader.result);
+    };
+  };
+
+  const subImgFile1 = () => {
+    let file;
+    if (imgfirstRef.current) {
+      file = imgfirstRef.current?.files[0];
+    }
+    const reader: any = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setsubfirstFile(reader.result);
+    };
+  };
+
+  const subImgFile2 = () => {
+    let file;
+    if (imgtwiceRef.current) {
+      file = imgtwiceRef.current?.files[0];
+    }
+    const reader: any = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setsubtwiceFile(reader.result);
+    };
+  };
+
+  const subImgFile3 = () => {
+    let file;
+    if (imgthirdRef.current) {
+      file = imgthirdRef.current?.files[0];
+    }
+    const reader: any = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setsubthirdFile(reader.result);
+    };
+  };
 
   return (
     <div
@@ -185,10 +296,39 @@ export default function Editor() {
               border-radius: 21px;
               cursor: pointer;
               margin-right: 70px;
+              ${imgFile &&
+              css`
+                background: url(${imgFile});
+                box-shadow: inset 0 0 0 1px rgba(0, 27, 55, 0.1);
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                background-position: center;
+                background-repeat: no-repeat;
+
+                &:hover {
+                  svg {
+                    opacity: 80%;
+                    path {
+                      fill: white;
+                    }
+                    circle {
+                      stroke: white;
+                    }
+                  }
+                }
+              `}
             `}
             htmlFor="input-file"
           >
-            <AddButton />
+            <AddButton
+              css={css`
+                ${imgFile &&
+                css`
+                  opacity: 0%;
+                  transition: 0.05s all;
+                `}
+              `}
+            />
           </label>
           <input
             css={css`
@@ -197,27 +337,29 @@ export default function Editor() {
             type="file"
             id="input-file"
             name="mainFile"
-            onChange={(e) => {}}
+            onChange={tempImgFile}
+            ref={imgRef}
+            accept="image/*"
           />
           <div
             css={css`
               height: 426px;
               display: flex;
               flex-direction: column;
-              justify-content: space-between;
+              row-gap: 0.7em;
             `}
           >
-            <TitleInput 
+            <TitleInput
               onChange={(event) => {
-                setFormData({...formData, title:event.target.value});
+                setTitle(event.target.value);
               }}
-              value={formData.title}
+              value={title}
             />
-            <SubTitleInput 
+            <SubTitleInput
               onChange={(event) => {
-                setFormData({...formData, subTitle:event.target.value});
+                setSubTitle(event.target.value);
               }}
-              value={formData.subTitle}
+              value={subTitle}
             />
             <div
               css={css`
@@ -230,19 +372,19 @@ export default function Editor() {
             >
               <label
                 css={css`
-                  border-radius: 0.3em;
-                  border: ${formData.state ? "0.1em solid #8b95a1" : "none"};
+                  border-radius: 0.2em;
+                  outline: ${state ? "0.07em solid #8b95a1" : "none"};
                 `}
-                onClick={() => setFormData({...formData, state:true})}
+                onClick={() => setState(true)}
               >
                 <EventStatusButton isRunning={true} />
               </label>
               <label
                 css={css`
-                  border-radius: 0.3em;
-                  border: ${formData.state ? "none" : "0.1em solid #8b95a1"};
+                  border-radius: 0.2em;
+                  outline: ${state ? "none" : "0.07em solid #8b95a1"};
                 `}
-                onClick={() => setFormData({...formData, state:false})}
+                onClick={() => setState(false)}
               >
                 <EventStatusButton isRunning={false} />
               </label>
@@ -258,38 +400,189 @@ export default function Editor() {
           `}
         >
           <Label text="관련된 더 많은 사진을 보여드릴게요" />
-          <label
+          {/* 첫번째 사진 */}
+          <div
             css={css`
-              width: 169px;
-              height: 164px;
               display: flex;
-              justify-content: center;
-              align-items: center;
-              background: #ebecf0;
-              border-radius: 21px;
-              cursor: pointer;
-              margin-right: 70px;
+              column-gap: 2em;
             `}
-            htmlFor="input-file"
           >
-            <AddButton />
-          </label>
-          <input
-            css={css`
-              display: none;
-            `}
-            type="file"
-            name="subFile"
-            id="input-file"
-          />
+            <label
+              css={css`
+                width: 169px;
+                height: 164px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background: #ebecf0;
+                border-radius: 21px;
+                cursor: pointer;
+                ${subfirstFile &&
+                css`
+                  background: url(${subfirstFile});
+                  box-shadow: inset 0 0 0 1px rgba(0, 27, 55, 0.1);
+                  background-repeat: no-repeat;
+                  background-size: 100% 100%;
+                  background-position: center;
+                  background-repeat: no-repeat;
+
+                  &:hover {
+                    svg {
+                      opacity: 80%;
+                      path {
+                        fill: white;
+                      }
+                      circle {
+                        stroke: white;
+                      }
+                    }
+                  }
+                `}
+              `}
+              htmlFor="input-file1"
+            >
+              <AddButton
+                css={css`
+                  ${subfirstFile &&
+                  css`
+                    opacity: 0%;
+                    transition: 0.05s all;
+                  `}
+                `}
+              />
+            </label>
+            <input
+              css={css`
+                display: none;
+              `}
+              type="file"
+              name="subFile"
+              id="input-file1"
+              onChange={subImgFile1}
+              ref={imgfirstRef}
+              accept="image/*"
+            />
+            {/* 두번째 사진 */}
+            <label
+              css={css`
+                width: 169px;
+                height: 164px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background: #ebecf0;
+                border-radius: 21px;
+                cursor: pointer;
+                ${subtwiceFile &&
+                css`
+                  background: url(${subtwiceFile});
+                  box-shadow: inset 0 0 0 1px rgba(0, 27, 55, 0.1);
+                  background-repeat: no-repeat;
+                  background-size: 100% 100%;
+                  background-position: center;
+                  background-repeat: no-repeat;
+
+                  &:hover {
+                    svg {
+                      opacity: 80%;
+                      path {
+                        fill: white;
+                      }
+                      circle {
+                        stroke: white;
+                      }
+                    }
+                  }
+                `}
+              `}
+              htmlFor="input-file2"
+            >
+              <AddButton
+                css={css`
+                  ${subtwiceFile &&
+                  css`
+                    opacity: 0%;
+                    transition: 0.05s all;
+                  `}
+                `}
+              />
+            </label>
+            <input
+              css={css`
+                display: none;
+              `}
+              type="file"
+              name="subFile"
+              id="input-file2"
+              onChange={subImgFile2}
+              ref={imgtwiceRef}
+              accept="image/*"
+            />
+            {/* 세번째 사진 */}
+            <label
+              css={css`
+                width: 169px;
+                height: 164px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background: #ebecf0;
+                border-radius: 21px;
+                cursor: pointer;
+                ${subthirdFile &&
+                css`
+                  background: url(${subthirdFile});
+                  box-shadow: inset 0 0 0 1px rgba(0, 27, 55, 0.1);
+                  background-repeat: no-repeat;
+                  background-size: 100% 100%;
+                  background-position: center;
+                  background-repeat: no-repeat;
+
+                  &:hover {
+                    svg {
+                      opacity: 80%;
+                      path {
+                        fill: white;
+                      }
+                      circle {
+                        stroke: white;
+                      }
+                    }
+                  }
+                `}
+              `}
+              htmlFor="input-file3"
+            >
+              <AddButton
+                css={css`
+                  ${subthirdFile &&
+                  css`
+                    opacity: 0%;
+                    transition: 0.05s all;
+                  `}
+                `}
+              />
+            </label>
+            <input
+              css={css`
+                display: none;
+              `}
+              type="file"
+              name="subFile"
+              id="input-file3"
+              onChange={subImgFile3}
+              ref={imgthirdRef}
+              accept="image/*"
+            />
+          </div>
         </div>
         <div>
           <Label text="상세 설명" />
           <Detail
             onChange={(event) => {
-              setFormData({...formData, content:event.target.value});
+              setContent(event.target.value);
             }}
-            value={formData.content}
+            value={content}
           />
         </div>
         <div
@@ -301,7 +594,7 @@ export default function Editor() {
             margin-top: 58px;
           `}
         >
-          <Button text="이벤트 발행하기" />
+          <Button text="이벤트 발행하기" onClick={handleSubmit} />
         </div>
       </form>
     </div>
