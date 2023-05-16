@@ -58,7 +58,7 @@ const VideoCard = ({ title, subTitle, thumb, artist }: VideoProps) => {
         }
       `}
     >
-      <Thumb thumb={thumb} />
+      <Thumb thumb={thumb} isRunning={true}/>
       <div
         css={css`
           margin-top: 17px;
