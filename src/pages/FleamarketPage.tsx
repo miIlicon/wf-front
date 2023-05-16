@@ -6,6 +6,7 @@ import PageSubTitle from "../components/common/PageSubTitle";
 import CardList from "../components/common/CardList";
 import DefaultButton from "../components/common/DefaultButton";
 import API from "../utils/api";
+import Notice from "../components/common/Notice";
 
 export default function FleamarketPage() {
   const [fleamarketList, setFleamarketList] = useState<any>([]);
@@ -64,10 +65,14 @@ export default function FleamarketPage() {
           onClick={onClickButton}
         />
       </div>
-      <CardList
-        dataList={fleamarketList}
-        isRunning={selectMenu === "running"}
-      />
+      {
+        (selectMenu === "running" && fleamarketList.length < 1)
+          ? <Notice text="진행 중인 플리마켓이 없어요"/>
+          : <CardList
+            dataList={fleamarketList}
+            isRunning={selectMenu === "running"}
+            />
+      }
     </div>
   );
 }

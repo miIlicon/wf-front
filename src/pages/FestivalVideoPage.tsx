@@ -6,6 +6,7 @@ import PageSubTitle from "../components/common/PageSubTitle";
 import { contentTextProps, VideoProps, VideoListProps } from "../@types/typs";
 import { Thumb } from "../components/common/Card";
 import API from "../utils/api";
+import Notice from "../components/common/Notice";
 
 const NameLabel = ({ text }: contentTextProps) => {
   return (
@@ -218,7 +219,12 @@ export default function FestivalVideoPage() {
       <PageSubTitle text="위드 페스티벌 팀에서 다시 보고 싶거나 혹은 놓친 축제를 다시 연결시켜드려요" />
 
       <div css={css``}>
-        <VideoCardList dataList={festivalVideoList} />
+        {
+          festivalVideoList.length
+            ? <Notice text="현재 등록된 축제 영상이 없어요"/>
+            : <VideoCardList dataList={festivalVideoList} />
+        }
+        
       </div>
     </div>
   );

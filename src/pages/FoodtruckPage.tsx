@@ -6,6 +6,7 @@ import PageSubTitle from "../components/common/PageSubTitle";
 import CardList from "../components/common/CardList";
 import DefaultButton from "../components/common/DefaultButton";
 import API from "../utils/api";
+import Notice from "../components/common/Notice";
 
 export default function FoodtruckPage() {
   const [foodtruckList, setFoodtruckList] = useState<any>([]);
@@ -64,10 +65,14 @@ export default function FoodtruckPage() {
           onClick={onClickButton}
         />
       </div>
-      <CardList
-        dataList={foodtruckList}
-        isRunning={selectMenu === "running"}
-      />
+      {
+        (selectMenu === "running" && foodtruckList.length < 1)
+          ? <Notice text="진행 중인 푸드트럭이 없어요"/>
+          : <CardList
+            dataList={foodtruckList}
+            isRunning={selectMenu === "running"}
+            />
+      }
     </div>
   );
 }
