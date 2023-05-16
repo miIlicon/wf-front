@@ -20,7 +20,7 @@ export const Thumb = ({ thumb, isRunning }: CardProps) => {
   );
 };
 
-export default function Card({ title, subTitle, thumb, isRunning }: CardProps) {
+export default function Card({ id, category, title, subTitle, thumb, isRunning }: CardProps) {
   const navigate = useNavigate();
 
   return (
@@ -35,7 +35,7 @@ export default function Card({ title, subTitle, thumb, isRunning }: CardProps) {
           transform: translateY(-2%);
         }
       `}
-      onClick={() => navigate("/detail")}
+      onClick={() => navigate("/detail", {state: {category:{category}, id:{id}}})}
     >
       <Thumb thumb={thumb} isRunning={isRunning} />
       <div
