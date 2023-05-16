@@ -48,6 +48,16 @@ export interface ButtonProps {
 
 export interface TextProps {
   text: string;
+  onClick?: (value: any) => void;
+  onSubmit?: (value: any) => void;
+}
+
+export interface FileProps {
+  files: [];
+}
+
+export interface readerProps {
+  result: any;
 }
 
 export interface InputProps {

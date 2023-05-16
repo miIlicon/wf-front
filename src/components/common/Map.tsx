@@ -2,9 +2,13 @@
 import { css } from "@emotion/react";
 import React, { useEffect, useState } from "react";
 import { MapProps } from "../../@types/typs";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../app/store";
+import { saveLocation } from "../../features/fetcherSlice";
 
-export default function Map({lat, lon} : MapProps) {
+export default function Map({ lat = 37.27574, lon = 127.13249 }: MapProps) {
   const { kakao }: any = window;
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     let mapContainer = document.getElementById("map"); // 지도를 표시할 div
@@ -16,15 +20,32 @@ export default function Map({lat, lon} : MapProps) {
     // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
     let map = new kakao.maps.Map(mapContainer, mapOption);
 
-    var markerPosition  = new kakao.maps.LatLng(lat, lon); 
+    var markerPosition = new kakao.maps.LatLng(lat, lon);
 
     // 마커를 생성합니다
     var marker = new kakao.maps.Marker({
-      position: markerPosition
+      position: markerPosition,
     });
 
     // 마커가 지도 위에 표시되도록 설정합니다
     marker.setMap(map);
+
+    kakao.maps.event.addListener(map, "click", function (mouseEvent: any) {
+      // 클릭한 위도, 경도 정보를 가져옵니다
+      var latlng = mouseEvent.latLng;
+
+      // 마커 위치를 클릭한 위치로 옮깁니다
+      marker.setPosition(latlng);
+
+      dispatch(
+        saveLocation({ latitude: latlng.getLat(), longitude: latlng.getLng() })
+      );
+
+      var message = "클릭한 위치의 위도는 " + latlng.getLat() + " 이고, ";
+      message += "경도는 " + latlng.getLng() + " 입니다";
+
+      console.log(message);
+    });
   }, []);
 
   return (
