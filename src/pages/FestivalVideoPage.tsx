@@ -221,7 +221,7 @@ export default function FestivalVideoPage() {
       <div css={css``}>
         {
           festivalVideoList.length
-            ? <Notice text="축제 영상이 없어요"/>
+            ? <Notice text="현재 등록된 축제 영상이 없어요"/>
             : <VideoCardList dataList={festivalVideoList} />
         }
         
