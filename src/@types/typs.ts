@@ -6,6 +6,7 @@ export interface WrapperProps {
 
 export interface CardProps {
   id?: number;
+  category?: string;
   title?: string;
   subTitle?: string;
   isRunning?: boolean;
@@ -14,6 +15,7 @@ export interface CardProps {
 
 export interface CardListProps {
   dataList: any[];
+  category: string;
   isRunning?: boolean;
 }
 
@@ -58,4 +60,9 @@ export interface InputProps {
 export interface TextareaProps {
   onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
   value: string;
+}
+
+export interface MapProps {
+  lat?: number;
+  lon?: number;
 }

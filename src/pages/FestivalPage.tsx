@@ -83,8 +83,8 @@ export default function FestivalPage() {
       </div>
       {
         eventList.length 
-          ? <CardList dataList={eventList} /> 
-          : <Notice text={notice}/>
+          ? <CardList dataList={eventList} category={selectMenu} /> 
+          : <Notice text={notice} />
       }
     </div>
   );

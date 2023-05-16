@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Section } from "../../components/common/components";
 import dummy from "../../images/detail/dummy.png";
 import EventStatusButton from "../../components/common/EventStatusButton";
@@ -10,8 +10,26 @@ import Map from "../../components/common/Map";
 import { Thumb } from "../../components/common/Card";
 import ContentCards from "../../components/common/ContentCards";
 import { DetailThumb } from "../../components/common/DetailCard";
+import { useLocation } from "react-router-dom";
+import API from "../../utils/api";
 
 export default function Detail() {
+  const location = useLocation();
+  const [detailData, setDetailData] = useState({
+    title: "",
+    subTitle: "",
+    content: "",
+    mainFilePath: "",
+    subFilePaths: [],
+    latitude: 0,
+    longitude: 0,
+    state: true
+  });
+
+  const state = location.state as { category: string, id: number} 
+  const category = state.category;
+  const id = state.id;
+
   useEffect(() => {
     (function (d, s) {
       let j: any,
@@ -29,6 +47,22 @@ export default function Detail() {
       e.parentNode.insertBefore(j, e);
     })(document, "script");
   }, []);
+
+  const getDetailInfo = async () => {
+		await API.get(
+			`/api/v1/${category}/${id}`
+		)
+		.then((res) => {
+			setDetailData(res.data.content);
+		})
+    .catch((error) => {
+      alert(`알 수 없는 오류가 발생했어요!`);
+    });
+	};
+
+	useEffect(() => {
+		getDetailInfo();
+	}, [])
 
   return (
     <Section>
@@ -74,7 +108,7 @@ export default function Detail() {
             }
           `}
         >
-          <DetailThumb thumb={dummy} />
+          <DetailThumb thumb={detailData.mainFilePath} />
           <div
             css={css`
               width: 100%;
@@ -100,10 +134,10 @@ export default function Detail() {
               }
             `}
           >
-            <ContentTitle text="과연 누가 우리 학교의 가왕이 될까요?" />
-            <ContentSubTitle text="축제 기념 복면 가왕 시리즈" />
-            <EventStatusButton isRunning={true} />
-            <Map />
+            <ContentTitle text={detailData.title} />
+            <ContentSubTitle text={detailData.subTitle} />
+            <EventStatusButton isRunning={detailData.state} />
+            <Map lat={detailData.latitude} lon={detailData.longitude}/>
           </div>
         </article>
         <div
@@ -152,9 +186,9 @@ export default function Detail() {
               }
             `}
           >
-            <ContentCards thumb={dummy} />
-            <ContentCards thumb={dummy} />
-            <ContentCards thumb={dummy} />
+            {detailData.subFilePaths.map(
+              (path : string) => <ContentCards thumb={path} />
+            )}
           </div>
         </div>
         <div
@@ -194,16 +228,7 @@ export default function Detail() {
           >
             <span>
               {" "}
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book. It has
-              survived not only five centuries, but also the leap into
-              electronic typesetting, remaining essentially unchanged. It was
-              popularised in the 1960s with the release of Letraset sheets
-              containing Lorem Ipsum passages, and more recently with desktop
-              publishing software like Aldus PageMaker including versions of
-              Lorem Ipsum.
+              {detailData.content}
             </span>
           </div>
         </div>

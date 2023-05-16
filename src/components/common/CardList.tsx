@@ -4,7 +4,7 @@ import { css } from "@emotion/react";
 import { CardListProps } from "../../@types/typs";
 import Card from "./Card";
 
-export default function CardList({ dataList, isRunning }: CardListProps) {
+export default function CardList({ dataList, category, isRunning }: CardListProps) {
   return (
     <div
       css={css`
@@ -58,6 +58,7 @@ export default function CardList({ dataList, isRunning }: CardListProps) {
               <div css={css``}>
                 <Card
                   id={data.id}
+                  category={category}
                   title={data.title}
                   subTitle={data.subTitle}
                   isRunning={data.foodTruckState}
