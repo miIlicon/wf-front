@@ -54,14 +54,14 @@ export default function CardList({ dataList, category, isRunning }: CardListProp
       >
         {dataList.map(
           (data) =>
-            (isRunning === undefined || isRunning === data.isRunning) && (
+            (data.state) && (
               <div css={css``}>
                 <Card
                   id={data.id}
                   category={category}
                   title={data.title}
                   subTitle={data.subTitle}
-                  isRunning={data.foodTruckState}
+                  isRunning={data.state}
                   thumb={data.mainFilePath}
                 />
               </div>

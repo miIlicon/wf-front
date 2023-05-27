@@ -35,7 +35,7 @@ export default function Card({ id, category, title, subTitle, thumb, isRunning }
           transform: translateY(-2%);
         }
       `}
-      onClick={() => navigate("/detail", {state: {category:{category}, id:{id}}})}
+      onClick={() => navigate("/detail", {state: { category: category, id: id }})}
     >
       <Thumb thumb={thumb} isRunning={isRunning} />
       <div
