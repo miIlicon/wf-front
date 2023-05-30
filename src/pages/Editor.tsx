@@ -14,7 +14,6 @@ import { ReactComponent as AddButton } from "../images/addButton.svg";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { ReduxType } from "../app/store";
-import { ButtonProps } from "style-components/dist/components/Botton/Button";
 
 const TitleInput = ({ onChange }: InputProps) => {
   return (
