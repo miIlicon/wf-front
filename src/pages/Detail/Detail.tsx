@@ -2,12 +2,10 @@
 import { css } from "@emotion/react";
 import React, { useEffect, useState } from "react";
 import { Section } from "../../components/common/components";
-import dummy from "../../images/detail/dummy.png";
 import EventStatusButton from "../../components/common/EventStatusButton";
 import ContentTitle from "../../components/common/ContentTitle";
 import ContentSubTitle from "../../components/common/ContentSubTitle";
 import Map from "../../components/common/Map";
-import { Thumb } from "../../components/common/Card";
 import ContentCards from "../../components/common/ContentCards";
 import { DetailThumb } from "../../components/common/DetailCard";
 import { useLocation } from "react-router-dom";
