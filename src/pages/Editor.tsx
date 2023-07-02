@@ -14,6 +14,7 @@ import { ReactComponent as AddButton } from "../images/addButton.svg";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { ReduxType } from "../app/store";
+import API from "../utils/api";
 
 const TitleInput = ({ onChange }: InputProps) => {
   return (
@@ -160,6 +161,11 @@ export default function Editor() {
   const [content, setContent] = useState("");
   const [state, setState] = useState(false);
 
+  const [thumnail, setThumnail] = useState("");
+  const [test1, setTest1] = useState("");
+  const [test2, setTest2] = useState("");
+  const [test3, setTest3] = useState("");
+
   const [imgFile, setImgFile] = useState("");
   const [subfirstFile, setsubfirstFile] = useState("");
   const [subtwiceFile, setsubtwiceFile] = useState("");
@@ -184,37 +190,54 @@ export default function Editor() {
       longtitude: longtitude,
       state: state,
     };
-    const subFile: any = [subfirstFile, subtwiceFile, subthirdFile];
 
-    data.append("dto", JSON.stringify(dataSet));
-    data.append("main-file", imgFile);
+    const subFile: any = [test1, test2, test3];
 
-    for (let i = 0; i < subFile.length; i++) {
-      data.append("sub-file", subFile[i]);
-    }
+    // data.append("dto", JSON.stringify(dataSet));
+    data.append("title", title);
+    data.append("subTitle", subTitle);
+    data.append("content", content);
+    data.append("latitude", latitude);
+    data.append("longitude", longtitude);
+    data.append("state", state.toString());
+    data.append("mainFile", thumnail);
+
+    // for (let i = 0; i < subFile.length; i++) {
+    //   data.append("sub-file", subFile[i]);
+    // }
+
+    Array.from(subFile).forEach((img: any) => {
+      data.append("subFiles", img);
+      // console.log(img);
+    });
+
     // data.append("sub-file", subFile);
     // data.append("sub-file", subtwiceFile);
     // data.append("sub-file", subthirdFile);
-    console.log("formdata", data);
+    // console.log("formdata", data);
 
     for (let key of data.entries()) {
       console.log(key);
     }
 
-    await axios
-      .post(`/api/v1/flea-market`, {
-        data,
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-          "Content-Type": "multipart/form-data",
-          "Access-Control-Allow-Origin": "*",
-        },
-      })
+    console.log(data);
+
+    await API.post(`/api/v1/festivalEvent/integrated`, data, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+        "Content-Type": "multipart/form-data",
+        "Access-Control-Allow-Origin": "*",
+      },
+    })
       .then((res) => {
         alert(res);
       })
       .catch((error) => {
         alert("에러 발생!");
+
+        // for (let i of data) {
+        //   console.log("!!", i);
+        // }
       });
   };
 
@@ -223,6 +246,7 @@ export default function Editor() {
     if (imgRef.current) {
       file = imgRef.current?.files[0];
     }
+    setThumnail(file);
     const reader: any = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
@@ -235,6 +259,7 @@ export default function Editor() {
     if (imgfirstRef.current) {
       file = imgfirstRef.current?.files[0];
     }
+    setTest1(file);
     const reader: any = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
@@ -247,6 +272,7 @@ export default function Editor() {
     if (imgtwiceRef.current) {
       file = imgtwiceRef.current?.files[0];
     }
+    setTest2(file);
     const reader: any = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
@@ -259,6 +285,7 @@ export default function Editor() {
     if (imgthirdRef.current) {
       file = imgthirdRef.current?.files[0];
     }
+    setTest3(file);
     const reader: any = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
