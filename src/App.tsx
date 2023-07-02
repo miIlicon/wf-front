@@ -14,6 +14,7 @@ import FestivalVideoPage from "./pages/FestivalVideoPage";
 import Editor from "./pages/Editor";
 import Login from "./pages/Login/Login";
 import ScrollToTop from "./hooks/ScrollToTop";
+import VideoPost from "./pages/Video/VideoPost";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
             <Route path="/foodtruck" element={<FoodtruckPage />}></Route>
             <Route path="/video" element={<FestivalVideoPage />}></Route>
             <Route path="/edit" element={<Editor />}></Route>
+            <Route path="/videoPost" element={<VideoPost />}></Route>
           </Route>
           <Route path="/admin" element={<Login />} />
         </Routes>

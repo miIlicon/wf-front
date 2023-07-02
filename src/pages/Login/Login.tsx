@@ -6,6 +6,7 @@ import { InputProps, TextProps } from "../../@types/typs";
 import logo from "../../images/logo.png";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import axios from "axios";
+import API from "../../utils/api";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -14,8 +15,10 @@ export default function Login() {
 
   const handleSubmit = () => {
     console.log(id, password);
-    axios
-      .get(`/admin?username=${id}&password=${password}`)
+    API.post(`/admin`, {
+      username: id,
+      password: password,
+    })
       .then((res) => {
         alert("로그인을 성공적으로 했어요!");
         navigate("/");

@@ -37,7 +37,7 @@
       "react-app/jest"
     ]
   },
-  "proxy": "http://api.withfestival.site:8080",
+  "proxy": "https://api.withfestival.site",
   "browserslist": {
     "production": [
       ">0.2%",
