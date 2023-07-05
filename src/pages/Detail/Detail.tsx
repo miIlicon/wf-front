@@ -185,7 +185,7 @@ export default function Detail() {
             `}
           >
             {detailData.subFilePaths.map(
-              (path : string) => <ContentCards thumb={path} />
+              (path : string, i : number) => <ContentCards thumb={path} idx={i} dataList={detailData.subFilePaths}/>
             )}
           </div>
         </div>

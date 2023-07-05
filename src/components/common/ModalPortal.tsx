@@ -71,7 +71,6 @@ export default function ModalPortal({children, closePortal} : ModalPortalProps) 
           <div
             css={css`
               display: flex;
-              background-color: black;
             `}
           >
             {children}
