@@ -76,3 +76,9 @@ export interface MapProps {
   lat?: number;
   lon?: number;
 }
+
+export interface ContentCardsProps {
+  thumb: string;
+  idx: number;
+  dataList: string[];
+}
