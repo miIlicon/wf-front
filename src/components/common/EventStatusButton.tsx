@@ -4,21 +4,21 @@ import { css } from "@emotion/react";
 import { EventStatusButtonProps } from "../../@types/typs";
 
 export default function EventStatusButton({
-  isRunning,
+  status,
 }: EventStatusButtonProps) {
-  const text = isRunning ? "진행 중인 이벤트" : "종료된 이벤트";
+  const text = status ? "진행 중인 이벤트" : "종료된 이벤트";
   return (
     <label
       css={css`
         width: 9em;
         height: 2em;
         color: #3182f6;
-        opacity: ${isRunning ? "1" : "80%"};
-        background-color: ${isRunning
+        opacity: ${status ? "1" : "80%"};
+        background-color: ${status
           ? "rgba(49, 130, 246, 0.16)"
           : "rgba(124, 124, 124, 0.4)"};
         border: none;
-        ${isRunning
+        ${status
           ? css`
               filter: grayscale(0%);
             `

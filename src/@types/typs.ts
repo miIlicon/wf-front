@@ -9,14 +9,14 @@ export interface CardProps {
   category?: string;
   title?: string;
   subTitle?: string;
-  isRunning?: boolean;
+  status?: boolean;
   thumb: string;
 }
 
 export interface CardListProps {
   dataList: any[];
   category: string;
-  isRunning?: boolean;
+  status?: boolean;
 }
 
 export interface VideoProps {
@@ -32,7 +32,7 @@ export interface VideoListProps {
 }
 
 export interface EventStatusButtonProps {
-	isRunning: boolean;
+	status: boolean;
 }
 
 export interface contentTextProps {
