@@ -21,7 +21,7 @@ export default function Detail() {
     subFilePaths: [],
     latitude: 0,
     longitude: 0,
-    state: true
+    status: ""
   });
 
   const state = location.state as { category: string, id: number} 
@@ -48,7 +48,7 @@ export default function Detail() {
 
   const getDetailInfo = async () => {
 		await API.get(
-			`/api/v1/${category}/${id}`
+			`/api/v2/${category}/${id}`
 		)
 		.then((res) => {
 			setDetailData(res.data.content);
@@ -134,7 +134,7 @@ export default function Detail() {
           >
             <ContentTitle text={detailData.title} />
             <ContentSubTitle text={detailData.subTitle} />
-            <EventStatusButton isRunning={detailData.state} />
+            <EventStatusButton status={detailData.status === "OPERATE"} />
             <Map lat={detailData.latitude} lon={detailData.longitude}/>
           </div>
         </article>
