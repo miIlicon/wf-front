@@ -10,27 +10,15 @@ import Notice from "../components/common/Notice";
 
 export default function FestivalPage() {
   const [programList, setProgramList] = useState<any>([]);
-  const [title, setTitle] = useState<string>("프로그램");
-  const [subTitle, setSubTitle] = useState<string>(
-    "프로그램에서 지금 현재 진행되고 있는 이벤트에 대한 다양한 정보를 얻을 수 있어요"
-  );
   const [notice, setNotice] = useState<string>("진행 중인 이벤트가 없어요");
   const [selectMenu, setSelectMenu] = useState<string>("EVENT");
 
   const onClickButton = (value: string) => {
     setSelectMenu(value);
     if (value === "EVENT") {
-      setTitle("학교 주최 이벤트");
       setNotice("진행 중인 이벤트가 없어요");
-      setSubTitle(
-        "프로그램에서 지금 현재 진행되고 있는 이벤트에 대한 다양한 정보를 얻을 수 있어요."
-      );
     } else if (value === "GAME") {
-      setTitle("경기 일정/결과");
       setNotice("진행 중인 경기가 없어요");
-      setSubTitle(
-        "프로그램에서 지금 현재 진행되고 있는 경기에 대한 정보를 얻을 수 있어요."
-      );
     }
   };
 
@@ -58,8 +46,8 @@ export default function FestivalPage() {
         margin-top: 2em;
       `}
     >
-      <PageTitle text={title} />
-      <PageSubTitle text={subTitle} />
+      <PageTitle text="프로그램" />
+      <PageSubTitle text="프로그램에서 지금 현재 진행되고 있는 축제에 대한 다양한 정보를 얻을 수 있어요" />
       <div
         css={css`
           display: flex;
