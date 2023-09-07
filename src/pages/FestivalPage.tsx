@@ -9,43 +9,31 @@ import API from "../utils/api";
 import Notice from "../components/common/Notice";
 
 export default function FestivalPage() {
-  const [eventList, setEventList] = useState<any>([]);
-  const [title, setTitle] = useState<string>("축제 정보");
-  const [subTitle, setSubTitle] = useState<string>(
-    "축제 정보에서 지금 현재 진행되고 있는 축제에 대한 다양한 정보를 얻을 수 있어요"
-  );
+  const [programList, setProgramList] = useState<any>([]);
   const [notice, setNotice] = useState<string>("진행 중인 이벤트가 없어요");
-  const [selectMenu, setSelectMenu] = useState<string>("festivalEvent");
+  const [selectMenu, setSelectMenu] = useState<string>("EVENT");
 
   const onClickButton = (value: string) => {
     setSelectMenu(value);
-    if (value === "festivalEvent") {
-      setTitle("축제 정보");
+    if (value === "EVENT") {
       setNotice("진행 중인 이벤트가 없어요");
-      setSubTitle(
-        "축제 정보에서 지금 현재 진행되고 있는 축제에 대한 다양한 정보를 얻을 수 있어요."
-      );
-    } else if (value === "pub") {
-      setTitle("축제 주점");
-      setNotice("진행 중인 주점이 없어요");
-      setSubTitle(
-        "축제 주점에서 지금 현재 진행되고 있는 축제 주점에 대한 정보를 얻을 수 있어요."
-      );
+    } else if (value === "GAME") {
+      setNotice("진행 중인 경기가 없어요");
     }
   };
 
-  const getFestivalInfo = async () => {
+  const getProgramInfo = async () => {
 		await API.get(
-			`/api/v1/${selectMenu}/list`,
-			{params: { "page": 0, "state": true}}
+			`/api/v2/program/list`,
+			{params: { "page": 0, "type": selectMenu}}
 		)
 		.then((res) => {
-			setEventList(res.data.content);
+			setProgramList(res.data.content);
 		})
 	};
 
 	useEffect(() => {
-		getFestivalInfo();
+		getProgramInfo();
 	}, [selectMenu])
 
   return (
@@ -58,8 +46,8 @@ export default function FestivalPage() {
         margin-top: 2em;
       `}
     >
-      <PageTitle text={title} />
-      <PageSubTitle text={subTitle} />
+      <PageTitle text="프로그램" />
+      <PageSubTitle text="프로그램에서 지금 현재 진행되고 있는 축제에 대한 다양한 정보를 얻을 수 있어요" />
       <div
         css={css`
           display: flex;
@@ -69,21 +57,21 @@ export default function FestivalPage() {
         `}
       >
         <DefaultButton
-          text="축제 이벤트"
-          isSelect={"festivalEvent" === selectMenu}
-          value="festivalEvent"
+          text="학교 주최 이벤트"
+          isSelect={"EVENT" === selectMenu}
+          value="EVENT"
           onClick={onClickButton}
         />
         <DefaultButton
-          text="축제 주점"
-          isSelect={"pub" === selectMenu}
-          value="pub"
+          text="경기 일정/결과"
+          isSelect={"GAME" === selectMenu}
+          value="GAME"
           onClick={onClickButton}
         />
       </div>
       {
-        eventList.length 
-          ? <CardList dataList={eventList} category={selectMenu} /> 
+        programList.length 
+          ? <CardList dataList={programList} category="program" /> 
           : <Notice text={notice} />
       }
     </div>

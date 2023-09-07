@@ -5,14 +5,14 @@ import EventStatusButton from "./EventStatusButton";
 import { CardProps } from "../../@types/typs";
 import { useNavigate } from "react-router-dom";
 
-export const Thumb = ({ thumb, isRunning }: CardProps) => {
+export const Thumb = ({ thumb, status }: CardProps) => {
   return (
     <img
       css={css`
         width: 100%;
         height: auto;
         border-radius: 11px;
-        filter: ${isRunning ? "grayscale(0)" : "grayscale(100%)"};
+        filter: ${status ? "grayscale(0)" : "grayscale(100%)"};
       `}
       src={thumb}
       alt=""
@@ -20,7 +20,7 @@ export const Thumb = ({ thumb, isRunning }: CardProps) => {
   );
 };
 
-export default function Card({ id, category, title, subTitle, thumb, isRunning }: CardProps) {
+export default function Card({ id, category, title, subTitle, thumb, status }: CardProps) {
   const navigate = useNavigate();
 
   return (
@@ -37,13 +37,13 @@ export default function Card({ id, category, title, subTitle, thumb, isRunning }
       `}
       onClick={() => navigate("/detail", {state: { category: category, id: id }})}
     >
-      <Thumb thumb={thumb} isRunning={isRunning} />
+      <Thumb thumb={thumb} status={status} />
       <div
         css={css`
           margin-top: 17px;
         `}
       >
-        <EventStatusButton isRunning={isRunning ? true : false} />
+        <EventStatusButton status={status? true : false} />
         <p
           css={css`
             font-weight: 700;
