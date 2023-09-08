@@ -82,3 +82,8 @@ export interface ContentCardsProps {
   idx: number;
   dataList: string[];
 }
+
+export interface QandAProps {
+  Q: string;
+  A: string;
+}
