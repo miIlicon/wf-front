@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { css } from "@emotion/react";
 import { ButtonProps } from "../@types/typs";
 import PageTitle from "../components/common/PageTitle";
+import QandA from "./Notice/QandA";
 
 const Menu = ({ text, isSelect, value, onClick }: ButtonProps) => {
   return (
@@ -24,7 +25,7 @@ const Menu = ({ text, isSelect, value, onClick }: ButtonProps) => {
   );
 }
 
-export default function NoticePage() {
+export default function InformPage() {
   const [selectMenu, setSelectMenu] = useState<string>("Q&A");
 
   const onClickMenu = (value: string) => {
@@ -59,6 +60,13 @@ export default function NoticePage() {
           value="bus"
           onClick={onClickMenu}
         />
+      </div>
+      <div>
+        {
+          (selectMenu === "Q&A" && <QandA />) ||
+          (selectMenu === "notice" && <div />) ||
+          (selectMenu === "bus" && <div />)
+        }
       </div>
     </div>
   );
