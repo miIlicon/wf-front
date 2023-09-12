@@ -3,7 +3,8 @@ import React, { useState } from "react";
 import { css } from "@emotion/react";
 import { ButtonProps } from "../@types/typs";
 import PageTitle from "../components/common/PageTitle";
-import QandA from "./Notice/QandA";
+import QandA from "./Inform/QandA";
+import Notice from "./Inform/Notice";
 
 const Menu = ({ text, isSelect, value, onClick }: ButtonProps) => {
   return (
@@ -64,7 +65,7 @@ export default function InformPage() {
       <div>
         {
           (selectMenu === "Q&A" && <QandA />) ||
-          (selectMenu === "notice" && <div />) ||
+          (selectMenu === "notice" && <Notice />) ||
           (selectMenu === "bus" && <div />)
         }
       </div>
