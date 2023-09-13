@@ -5,6 +5,7 @@ import { ButtonProps } from "../@types/typs";
 import PageTitle from "../components/common/PageTitle";
 import QandA from "./Inform/QandA";
 import Notice from "./Inform/Notice";
+import Bus from "./Inform/Bus";
 
 const Menu = ({ text, isSelect, value, onClick }: ButtonProps) => {
   return (
@@ -66,7 +67,7 @@ export default function InformPage() {
         {
           (selectMenu === "Q&A" && <QandA />) ||
           (selectMenu === "notice" && <Notice />) ||
-          (selectMenu === "bus" && <div />)
+          (selectMenu === "bus" && <Bus />)
         }
       </div>
     </div>
