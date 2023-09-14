@@ -82,3 +82,24 @@ export interface ContentCardsProps {
   idx: number;
   dataList: string[];
 }
+
+export interface QandAProps {
+  Q: string;
+  A: string;
+}
+
+export interface ProfileProps {
+  name: string;
+  date: string;
+}
+
+export interface NoticeProps {
+  icon: string;
+  name: string;
+  date: string;
+  content: string;
+}
+
+export interface ImageProps {
+  src: string;
+}
