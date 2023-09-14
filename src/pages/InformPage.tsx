@@ -15,9 +15,25 @@ const Menu = ({ text, isSelect, value, onClick }: ButtonProps) => {
         background-color: transparent;
         border: none;
         outline: none;
-        cursor: pointer;
         padding: 0;
-        margin: 0 135px;
+        cursor: pointer;
+        
+        @media (max-width: 479px) {
+          font-size: 28px;
+          margin: 0 25px;
+        }
+        @media all and (min-width: 480px) and (max-width: 767px) {
+          font-size: 30px;
+          margin: 0 40px
+        }
+        @media all and (min-width: 768px) and (max-width: 1099px) {
+          font-size: 32px;
+          margin: 0 85px
+        }
+        @media all and (min-width: 1100px) {
+          font-size: 34px;
+          margin: 0 110px;
+        }
       `}
       onClick={() => onClick(value)}
       value={value}
@@ -41,7 +57,7 @@ export default function InformPage() {
           display: flex;
           justify-content: center;
           align-items: center;
-          margin: 59px 0;
+          margin: 40px 0;
         `}
       >
         <Menu 

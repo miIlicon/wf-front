@@ -6,15 +6,31 @@ import profile from "../../data/profile.json";
 
 const Icon = ({ src } : ImageProps) => {
   return (
-      <img
-        css={css`
+    <img
+      css={css`
+        background-color: #4E5968;
+        border-radius: 8px;
+
+        @media (max-width: 479px) {
+          height: 45px;
+          margin-right: 10px;
+        }
+        @media all and (min-width: 480px) and (max-width: 767px) {
+          height: 70px;
+          margin-right: 13px;
+        }
+        @media all and (min-width: 768px) and (max-width: 1099px) {
+          height: 75px;
+          margin-right: 16px;
+        }
+        @media all and (min-width: 1100px) {
           height: 90px;
-          background-color: #4E5968;
-          border-radius: 8px;
-        `}
-        src={src}
-        alt=""
-      />
+          margin-right: 19px;
+        }
+      `}
+      src={src}
+      alt=""
+    />
   );
 }
 
@@ -23,22 +39,57 @@ const Profile = ({ name, date } : ProfileProps) => {
     <div>
       <p
         css={css`
-          font-size: 24px;
           font-weight: 700;
           margin: 0;
+
+          @media (max-width: 479px) {
+            font-size: 14px;
+          }
+          @media all and (min-width: 480px) and (max-width: 767px) {
+            font-size: 20px;
+          }
+          @media all and (min-width: 768px) and (max-width: 1099px) {
+            font-size: 22px;
+          }
+          @media all and (min-width: 1100px) {
+            font-size: 24px;
+          }
         `}
       >
         {name}
       </p>
       <div
         css={css`
-        font-size: 16px;
-        opacity: 0.6;
+          opacity: 0.6;
+
+          @media (max-width: 479px) {
+            font-size: 9px;
+          }
+          @media all and (min-width: 480px) and (max-width: 767px) {
+            font-size: 12px;
+          }
+          @media all and (min-width: 768px) and (max-width: 1099px) {
+            font-size: 14px;
+          }
+          @media all and (min-width: 1100px) {
+            font-size: 16px;
+          }
       `}
       >
         <p
           css={css`
-            margin: 9px 0;
+            @media (max-width: 479px) {
+              margin: 4px 0;
+            }
+            @media all and (min-width: 480px) and (max-width: 767px) {
+              margin: 5px 0;
+            }
+            @media all and (min-width: 768px) and (max-width: 1099px) {
+              margin: 7px 0;
+            }
+            @media all and (min-width: 1100px) {
+              margin: 9px 0;
+            }
           `}
         >
           서비스 운영자
@@ -51,7 +102,6 @@ const Profile = ({ name, date } : ProfileProps) => {
           {date}
         </p>
       </div>
-    
     </div>
   );
 }
@@ -60,7 +110,20 @@ const Content = ({ text }: contentTextProps) => {
   return (
     <p
       css={css`
-        font-size: 21px;
+        word-break: keep-all;
+
+        @media (max-width: 479px) {
+          font-size: 13px;
+        }
+        @media all and (min-width: 480px) and (max-width: 767px) {
+          font-size: 17px;
+        }
+        @media all and (min-width: 768px) and (max-width: 1099px) {
+          font-size: 20px;
+        }
+        @media all and (min-width: 1100px) {
+          font-size: 21px;
+        }
       `}
     >
       {text}
@@ -79,11 +142,7 @@ const NoticeBox = ({ icon, name, date, content } : NoticeProps) => {
       `}
     >
       <Icon src={icon} />
-      <div
-        css={css`
-          margin-left: 19px;
-        `}
-      >
+      <div>
         <Profile name={name} date={date} />
         <Content text={content} />
       </div>
@@ -95,37 +154,88 @@ const InputBox = () => {
   return (
     <div
       css={css`
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        font-family: "Pretendard-Medium";
         margin-bottom: 50px;
+        
+        @media (max-width: 479px) {
+          font-size: 9px;
+        }
+        @media all and (min-width: 480px) and (max-width: 767px) {
+          font-size: 11px;
+        }
+        @media all and (min-width: 768px) and (max-width: 1099px) {
+          font-size: 13px;
+        }
+        @media all and (min-width: 1100px) {
+          font-size: 15px;
+        }
       `}
     >
       <input
         css={css`
-          width: 80%;
-          height: 40px;
-          font-size: 15px;
+          width: 70%;
           border: solid 2px #4E5968;
           border-radius: 8px;
           outline: none;
           padding: 5px 15px;
+
+          @media (max-width: 479px) {
+            font-size: 8px;
+            height: 25px;
+          }
+          @media all and (min-width: 480px) and (max-width: 767px) {
+            font-size: 11px;
+            height: 30px;
+          }
+          @media all and (min-width: 768px) and (max-width: 1099px) {
+            font-size: 13px;
+            height: 35px;
+          }
+          @media all and (min-width: 1100px) {
+            font-size: 15px;
+            height: 40px;
+          }
         `}
         placeholder="공지사항을 입력해주세요."
         type="text"
       />
       <button
         css={css`
-          width: 10%;
           height: 50px;
-          font-size: 15px;
           font-weight: 700;
           background-color: #3182F6;
           color: #FFFFFF;
           border: none;
           border-radius: 8px;
-          padding: 0 10px;
-          margin-left: 10px;
           cursor: pointer;
-          &:hover {
-            box-shadow: 2px 2px 1px #4E5968;
+
+          @media (max-width: 479px) {
+            height: 35px;
+            font-size: 8px;
+            padding: 0 8px;
+            margin-left: 5px;
+          }
+          @media all and (min-width: 480px) and (max-width: 767px) {
+            height: 40px;
+            font-size: 11px;
+            padding: 0 17px;
+            margin-left: 8px;
+          }
+          @media all and (min-width: 768px) and (max-width: 1099px) {
+            height: 45px;
+            font-size: 13px;
+            padding: 0 20px;
+            margin-left: 10px;
+          }
+          @media all and (min-width: 1100px) {
+            height: 50px;
+            font-size: 15px;
+            padding: 0 22px;
+            margin-left: 10px;
           }
         `}
       >
@@ -166,7 +276,7 @@ export default function Notice() {
     <div
       css={css`
         font-family: "Pretendard-Medium";
-        padding: 0 25%;
+        padding: 0 15%;
       `}
     >
       {isAdmin && <InputBox />}

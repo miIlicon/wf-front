@@ -10,7 +10,6 @@ const QuestionBox = ({ text, onClick } : TextProps) => {
       css={css`
         display: flex;
         align-items: center;
-        height: 103px;
         border-radius: 8px;
         background-color: #FFFFFF;
         font-family: "Pretendard-Regular";
@@ -18,23 +17,68 @@ const QuestionBox = ({ text, onClick } : TextProps) => {
         &:hover {
           background-color: #f1f1f6;
         }
+
+        @media (max-width: 479px) {
+          height: 73px;
+        }
+        @media all and (min-width: 480px) and (max-width: 767px) {
+          height: 83px;
+        }
+        @media all and (min-width: 768px) and (max-width: 1099px) {
+          height: 93px;
+        }
+        @media all and (min-width: 1100px) {
+          height: 103px;
+        }
       `}
       onClick={onClick}
     >
       <p
         css={css`
-          font-size: 25px;
           font-weight: 700;
           color: #4E5968;
           opacity: 0.6;
-          padding: 36px;
+
+          @media (max-width: 479px) {
+            font-size: 18px;
+            padding: 24px;
+          }
+          @media all and (min-width: 480px) and (max-width: 767px) {
+            font-size: 21px;
+            padding: 28px;
+          }
+          @media all and (min-width: 768px) and (max-width: 1099px) {
+            font-size: 23px;
+            padding: 32px;
+          }
+          @media all and (min-width: 1100px) {
+            font-size: 25px;
+            padding: 36px;
+          }
         `}
       >
       Q
       </p>
       <p
         css={css`
-          font-size: 20px;
+          word-break: keep-all;
+
+          @media (max-width: 479px) {
+            font-size: 14px;
+            padding-right: 24px;
+          }
+          @media all and (min-width: 480px) and (max-width: 767px) {
+            font-size: 16px;
+            padding-right: 28px;
+          }
+          @media all and (min-width: 768px) and (max-width: 1099px) {
+            font-size: 18px;
+            padding-right: 32px;
+          }
+          @media all and (min-width: 1100px) {
+            font-size: 20px;
+            padding-right: 36px;
+          }
         `}
       >
         {text}
@@ -49,25 +93,69 @@ const AnswerBox = ({ text } : TextProps) => {
       css={css`
         display: flex;
         align-items: center;
-        height: 103px;
         border-radius: 8px;
         background-color: #E8F3FF;
         font-family: "Pretendard-Regular";
+
+        @media (max-width: 479px) {
+          height: 73px;
+        }
+        @media all and (min-width: 480px) and (max-width: 767px) {
+          height: 83px;
+        }
+        @media all and (min-width: 768px) and (max-width: 1099px) {
+          height: 93px;
+        }
+        @media all and (min-width: 1100px) {
+          height: 103px;
+        }
       `}
     >
       <p
         css={css`
-          font-size: 25px;
           font-weight: 700;
           color: #1B64DA;
-          padding: 36px;
+
+          @media (max-width: 479px) {
+            font-size: 18px;
+            padding: 24px;
+          }
+          @media all and (min-width: 480px) and (max-width: 767px) {
+            font-size: 21px;
+            padding: 28px;
+          }
+          @media all and (min-width: 768px) and (max-width: 1099px) {
+            font-size: 23px;
+            padding: 32px;
+          }
+          @media all and (min-width: 1100px) {
+            font-size: 25px;
+            padding: 36px;
+          }
         `}
       >
         A
       </p>
       <p
         css={css`
-          font-size: 20px;
+          word-break: keep-all;
+
+          @media (max-width: 479px) {
+            font-size: 14px;
+            padding-right: 24px;
+          }
+          @media all and (min-width: 480px) and (max-width: 767px) {
+            font-size: 16px;
+            padding-right: 28px;
+          }
+          @media all and (min-width: 768px) and (max-width: 1099px) {
+            font-size: 18px;
+            padding-right: 32px;
+          }
+          @media all and (min-width: 1100px) {
+            font-size: 20px;
+            padding-right: 36px;
+          }
         `}
       >
         {text}
@@ -94,7 +182,7 @@ export default function QandA() {
   return (
     <div
       css={css`
-        padding: 35px 150px;
+        padding: 35px 10%;
       `}
     >
       {QandAData.map((item) =>
