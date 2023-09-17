@@ -23,7 +23,7 @@ export default function SlideCard({ eventName, eventType }: eventProps) {
       <span
         css={css`
           color: black;
-          font-family: "Pretendard-Bold";
+          font-family: "Pretendard-Medium";
           font-size: 20px;
           margin-right: auto;
         `}

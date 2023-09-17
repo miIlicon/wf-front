@@ -14,7 +14,8 @@ export default function Introduce() {
         flex-direction: column;
         align-items: center;
         animation: ${spaceEffect} 1.5s linear infinite;
-        margin-bottom: -3em;
+        margin-top: -7em;
+        margin-bottom: -5em;
       `}
     >
       <img

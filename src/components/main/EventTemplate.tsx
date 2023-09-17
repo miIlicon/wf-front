@@ -12,6 +12,7 @@ export default function EventTemplate({ text }: titleProps) {
     <div
       css={css`
         width: 100%;
+        margin-bottom: 3em;
       `}
     >
       <div

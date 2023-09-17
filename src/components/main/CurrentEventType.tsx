@@ -7,10 +7,10 @@ export default function CurrentEventType({ eventType }: eventProps) {
   return (
     <div
       css={css`
-        font-family: "Pretendard-Bold";
+        font-family: "Pretendard-Medium";
         border: none;
         min-width: 7em;
-        padding: 0.6em;
+        padding: 0.7em;
 
         display: flex;
         justify-content: center;
