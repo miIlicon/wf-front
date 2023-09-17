@@ -7,6 +7,10 @@ import { MainTitle } from "../../components/main/Main";
 import artistData from "../../data/artist.json";
 import { ReactComponent as Arrow } from "../../images/artistArrow.svg";
 import Introduce from "../../components/main/Introduce";
+import Search from "../../components/main/Search";
+import CurrentEvent from "../../components/main/CurrentEvent";
+import PopularEvent from "../../components/main/EventTemplate";
+import EventTemplate from "../../components/main/EventTemplate";
 
 export default function Index() {
   console.log(artistData);
@@ -37,7 +41,7 @@ export default function Index() {
           row-gap: 2em;
         `}
       >
-        <div
+        {/* <div
           css={css`
             display: flex;
             flex-direction: column;
@@ -191,8 +195,13 @@ export default function Index() {
             </span>
             분이 이용해주셨어요
           </div>
-        </div>
+        </div> */}
         <Introduce />
+        <Search />
+        <CurrentEvent />
+        <EventTemplate text="지금 현재 인기있는 축제 정보" />
+        <EventTemplate text="지금 현재 인기있는 플리 마켓" />
+        <EventTemplate text="지금 현재 인기있는 푸드 트럭" />
         {/* <img
           src={location}
           alt="축제 위치 한 눈에 보기"

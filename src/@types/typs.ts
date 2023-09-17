@@ -38,6 +38,16 @@ export interface EventStatusButtonProps {
   isRunning?: boolean;
 }
 
+export interface titleProps {
+  text: string;
+  used?: string;
+}
+
+export interface eventProps {
+  eventName?: string;
+  eventType?: string;
+}
+
 export interface contentTextProps {
   text: string;
 }

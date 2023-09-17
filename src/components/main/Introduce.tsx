@@ -14,6 +14,7 @@ export default function Introduce() {
         flex-direction: column;
         align-items: center;
         animation: ${spaceEffect} 1.5s linear infinite;
+        margin-bottom: -3em;
       `}
     >
       <img
@@ -22,6 +23,7 @@ export default function Introduce() {
         css={css`
           will-change: transform, opacity;
           width: 60%;
+          text-shadow: 0 8px 10px rgba(0, 0, 0, 0.2);
         `}
       />
       <div
