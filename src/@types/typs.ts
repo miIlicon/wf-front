@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent } from "react";
 
 export interface WrapperProps {
   children: React.ReactNode;
@@ -11,12 +11,14 @@ export interface CardProps {
   subTitle?: string;
   status?: boolean;
   thumb: string;
+  isRunning?: boolean;
 }
 
 export interface CardListProps {
   dataList: any[];
   category: string;
   status?: boolean;
+  isRunning?: boolean;
 }
 
 export interface VideoProps {
@@ -32,18 +34,19 @@ export interface VideoListProps {
 }
 
 export interface EventStatusButtonProps {
-	status: boolean;
+  status?: boolean;
+  isRunning?: boolean;
 }
 
 export interface contentTextProps {
-    text: string;
+  text: string;
 }
 
 export interface ButtonProps {
-	text: string;
-	isSelect: boolean;
-	value: string;
-  onClick: (value : string) => void;
+  text: string;
+  isSelect: boolean;
+  value: string;
+  onClick: (value: string) => void;
 }
 
 export interface TextProps {
