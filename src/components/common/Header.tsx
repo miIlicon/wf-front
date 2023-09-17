@@ -35,8 +35,8 @@ export default function Header() {
           display: flex;
           justify-content: center;
           align-items: center;
-          padding-top: 1.2em;
-          padding-bottom: 1.2em;
+          padding-top: 1em;
+          padding-bottom: 1em;
 
           margin-left: auto;
           margin-right: auto;
@@ -99,7 +99,7 @@ export default function Header() {
             src={logo}
             css={css`
               height: auto;
-              width: 8em;
+              width: 6em;
               cursor: pointer;
               transition: 0.4s all;
 

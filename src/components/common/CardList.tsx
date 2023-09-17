@@ -54,7 +54,7 @@ export default function CardList({ dataList, category }: CardListProps) {
       >
         {dataList.map(
           (data) =>
-            (data.state) && (
+            data.state && (
               <div css={css``}>
                 <Card
                   id={data.id}
