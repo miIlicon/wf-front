@@ -6,6 +6,7 @@ import location from "../../images/location.png";
 import { MainTitle } from "../../components/main/Main";
 import artistData from "../../data/artist.json";
 import { ReactComponent as Arrow } from "../../images/artistArrow.svg";
+import Introduce from "../../components/main/Introduce";
 
 export default function Index() {
   console.log(artistData);
@@ -191,7 +192,8 @@ export default function Index() {
             분이 이용해주셨어요
           </div>
         </div>
-        <img
+        <Introduce />
+        {/* <img
           src={location}
           alt="축제 위치 한 눈에 보기"
           css={css`
@@ -199,7 +201,7 @@ export default function Index() {
             height: auto;
             filter: drop-shadow(10px 10px 10px rgb(0, 0, 0, 0.16));
           `}
-        />
+        /> */}
       </article>
     </Section>
   );
