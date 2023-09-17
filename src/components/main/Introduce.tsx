@@ -13,7 +13,7 @@ export default function Introduce() {
         display: flex;
         flex-direction: column;
         align-items: center;
-        animation: ${spaceEffect} 1.5s linear infinite;
+        // animation: ${spaceEffect} 1.5s linear infinite;
         margin-top: -7em;
         margin-bottom: -5em;
       `}
