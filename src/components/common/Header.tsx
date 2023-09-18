@@ -142,7 +142,7 @@ export default function Header() {
             <Link to={"foodtruck"} tabIndex={-1}>
               안내사항
             </Link>
-            <Link to={"video"} tabIndex={-1}>
+            <Link to={"community"} tabIndex={-1}>
               대나무숲
             </Link>
           </nav>
