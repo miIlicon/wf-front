@@ -134,16 +134,16 @@ export default function Header() {
             `}
           >
             <Link to={"festivalInfo"} tabIndex={-1}>
-              축제정보
+              프로그램
             </Link>
             <Link to={"fleamarket"} tabIndex={-1}>
-              플리마켓
+              축제부스
             </Link>
             <Link to={"foodtruck"} tabIndex={-1}>
-              푸드트럭
+              안내사항
             </Link>
             <Link to={"video"} tabIndex={-1}>
-              축제영상
+              대나무숲
             </Link>
           </nav>
         </div>
