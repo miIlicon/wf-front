@@ -6,30 +6,35 @@ export default function ChatBox() {
   return (
     <div
       css={css`
-        width: 100%;
-        background-color: #ffffff;
-        border-radius: 18px;
-        height: 12em;
-        margin-top: 3em;
+        width: auto;
+        background-color: #f0f1f4;
+        border-radius: 0.5em;
 
         display: flex;
-        padding: 1.2em 1.8em 1.2em 1.8em;
+        flex-direction: column;
+        row-gap: 0.6em;
+        padding: 1.2em;
+        padding-top: 1.5em;
+        padding-bottom: 1.5em;
         box-sizing: border-box;
       `}
     >
-      <textarea
-        placeholder="메세지를 입력해주세요&#10;대나무 숲 취지에 맞지 않는 내용은 삭제 및 IP 제한이 있을 수 있습니다."
+      <span
         css={css`
-          border: none;
-          width: 100%;
-          font-family: "Pretendard-Regular";
-          line-height: 1.4em;
-
-          &:focus {
-            outline: none;
-          }
+          font-family: "Pretendard-Bold";
+          color: #4e5968;
         `}
-      />
+      >
+        #45618번째 외침
+      </span>
+      <span
+        css={css`
+          line-height: 1em;
+          color: #4e5968;
+        `}
+      >
+        이번 축제 서비스 폼 미쳤다. 이런 혁신적인 서비스 누가 만들었누..갓수호
+      </span>
     </div>
   );
 }

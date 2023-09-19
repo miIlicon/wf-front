@@ -16,6 +16,7 @@ export default function Introduce() {
         // animation: ${spaceEffect} 1.5s linear infinite;
         margin-top: -7em;
         margin-bottom: -5em;
+        z-index: -1;
       `}
     >
       <img
