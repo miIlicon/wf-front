@@ -20,7 +20,7 @@ export const spaceEffect = keyframes`
     transform: translateY(0%);
 }
 50% {
-    transform: translateY(1%);
+    transform: translateY(2%);
 }
 100% {
     transform: translateY(0%);

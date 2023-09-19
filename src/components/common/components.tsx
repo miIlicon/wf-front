@@ -1,8 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { WrapperProps } from "../../@types/typs";
+import { useLocation } from "react-router-dom";
 
 export const Section = ({ children }: WrapperProps) => {
+  const path = useLocation().pathname;
+
   return (
     <div
       css={css`
@@ -12,7 +15,9 @@ export const Section = ({ children }: WrapperProps) => {
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-top: 3em;
+        background-color: ${path === "/community" && "#E5EBFB"};
+        padding-top: 3em;
+        box-sizing: border-box;
       `}
     >
       <section

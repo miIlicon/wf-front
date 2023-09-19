@@ -1,4 +1,6 @@
+/** @jsxImportSource @emotion/react */
 import React from "react";
+import { css } from "@emotion/react";
 import logo from "./logo.svg";
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -15,6 +17,7 @@ import Editor from "./pages/Editor";
 import Login from "./pages/Login/Login";
 import ScrollToTop from "./hooks/ScrollToTop";
 import VideoPost from "./pages/Video/VideoPost";
+import Community from "./pages/Community/Community";
 
 function App() {
   return (
@@ -32,6 +35,7 @@ function App() {
             <Route path="/foodtruck" element={<FoodtruckPage />}></Route>
             <Route path="/video" element={<FestivalVideoPage />}></Route>
             <Route path="/edit" element={<Editor />}></Route>
+            <Route path="/community" element={<Community />}></Route>
             <Route path="/videoPost" element={<VideoPost />}></Route>
           </Route>
           <Route path="/admin" element={<Login />} />
