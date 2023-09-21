@@ -116,3 +116,25 @@ export interface NoticeProps {
 export interface ImageProps {
   src: string;
 }
+
+export interface MenuProps {
+  main: string;
+  sub: string[];
+  onClick: (main : string, sub : string) => void;
+}
+
+export interface SubCategoryProps {
+  text: string;
+  onClick: () => void;
+}
+
+export interface SearchResultProps {
+  title: string;
+  subTitle: string;
+  thumb: string;
+  state: boolean;
+}
+
+export interface ClickEventProps {
+  onClick: () => void;
+}

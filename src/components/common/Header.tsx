@@ -4,9 +4,25 @@ import React, { useEffect, useState } from "react";
 import logo from "../../images/logo.png";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import Banner from "./Banner";
+import menu from "../../images/menu.svg"
+import { ClickEventProps } from "../../@types/typs";
+
+const Menu = ({ onClick } : ClickEventProps) => {
+  return (
+    <img
+      css={css`
+        height: 15px;
+      `}
+      src={menu}
+      alt="카테고리"
+      onClick={onClick}
+    />
+  )
+}
 
 export default function Header() {
   const [scrollState, setScrollState] = useState<boolean>(false);
+  const isMobile = /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   const navigate = useNavigate();
 
   const handleScroll = () => {
@@ -16,6 +32,10 @@ export default function Header() {
       setScrollState(false);
     }
   };
+
+  const handleOpenCategory = () => {
+    navigate("/category");
+  }
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
@@ -89,7 +109,7 @@ export default function Header() {
         <div
           css={css`
             display: flex;
-            jusitify-content: center;
+            justify-content: center;
             align-items: center;
             width: 56.5em;
           `}
@@ -133,18 +153,23 @@ export default function Header() {
               }
             `}
           >
-            <Link to={"festivalInfo"} tabIndex={-1}>
-              프로그램
-            </Link>
-            <Link to={"fleamarket"} tabIndex={-1}>
-              축제부스
-            </Link>
-            <Link to={"foodtruck"} tabIndex={-1}>
-              안내사항
-            </Link>
-            <Link to={"community"} tabIndex={-1}>
-              대나무숲
-            </Link>
+            {isMobile 
+              ? <Menu onClick={handleOpenCategory} /> 
+              : <>
+                  <Link to={"program"} tabIndex={-1}>
+                    프로그램
+                  </Link>
+                  <Link to={"booth"} tabIndex={-1}>
+                    축제부스
+                  </Link>
+                  <Link to={"inform"} tabIndex={-1}>
+                    안내사항
+                  </Link>
+                  <Link to={"community"} tabIndex={-1}>
+                    대나무숲
+                  </Link>
+                </>
+            }
           </nav>
         </div>
       </header>

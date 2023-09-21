@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import React, { useEffect, useState } from "react";
 import { css } from "@emotion/react";
+import { useLocation } from "react-router-dom";
 import PageTitle from "../components/common/PageTitle";
 import PageSubTitle from "../components/common/PageSubTitle";
 import CardList from "../components/common/CardList";
@@ -9,23 +10,14 @@ import API from "../utils/api";
 import Notice from "../components/common/Notice";
 
 export default function BoothPage() {
+  const location = useLocation();
+  const state = location.state as { menu: string };
   const [BoothList, setFleamarketList] = useState<any>([]);
-  const [selectMenu, setSelectMenu] = useState<string>("PUB");
+  const [selectMenu, setSelectMenu] = useState<string>(state ? state.menu : "PUB");
   const [notice, setNotice] = useState<string>("진행 중인 축제 주점이 없어요");
 
   const onClickButton = (value: string) => {
     setSelectMenu(value);
-    switch (value) {
-      case "PUB" :
-        setNotice("진행 중인 축제 주점이 없어요");
-        break;
-      case "FLEAMARKET":
-        setNotice("진행 중인 플리마켓이 없어요");
-        break;
-      case "FOODTRUCK":
-        setNotice("진행 중인 푸드트럭이 없어요");
-        break;
-    }
   };
 
 	const getFleamarket= async () => {
@@ -40,7 +32,22 @@ export default function BoothPage() {
 
   useEffect(() => {
 		getFleamarket();
-	}, [selectMenu])
+    switch (selectMenu) {
+      case "PUB" :
+        setNotice("진행 중인 축제 주점이 없어요");
+        break;
+      case "FLEAMARKET":
+        setNotice("진행 중인 플리마켓이 없어요");
+        break;
+      case "FOODTRUCK":
+        setNotice("진행 중인 푸드트럭이 없어요");
+        break;
+    }
+	}, [selectMenu]);
+
+  useEffect(() => {
+    setSelectMenu(state ? state.menu : "PUB");
+  }, [state]);
 
   return (
     <div

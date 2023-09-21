@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import React, { useEffect, useState } from "react";
 import { css } from "@emotion/react";
+import { useLocation } from "react-router-dom";
 import PageTitle from "../components/common/PageTitle";
 import PageSubTitle from "../components/common/PageSubTitle";
 import CardList from "../components/common/CardList";
@@ -8,18 +9,15 @@ import DefaultButton from "../components/common/DefaultButton";
 import API from "../utils/api";
 import Notice from "../components/common/Notice";
 
-export default function FestivalPage() {
+export default function ProgramPage() {
+  const location = useLocation();
+  const state = location.state as { menu: string };
   const [programList, setProgramList] = useState<any>([]);
   const [notice, setNotice] = useState<string>("진행 중인 이벤트가 없어요");
-  const [selectMenu, setSelectMenu] = useState<string>("EVENT");
+  const [selectMenu, setSelectMenu] = useState<string>(state ? state.menu : "EVENT");
 
   const onClickButton = (value: string) => {
     setSelectMenu(value);
-    if (value === "EVENT") {
-      setNotice("진행 중인 이벤트가 없어요");
-    } else if (value === "GAME") {
-      setNotice("진행 중인 경기가 없어요");
-    }
   };
 
   const getProgramInfo = async () => {
@@ -34,7 +32,16 @@ export default function FestivalPage() {
 
 	useEffect(() => {
 		getProgramInfo();
-	}, [selectMenu])
+    if (selectMenu === "EVENT") {
+      setNotice("진행 중인 이벤트가 없어요");
+    } else if (selectMenu === "GAME") {
+      setNotice("진행 중인 경기가 없어요");
+    }
+	}, [selectMenu]);
+
+  useEffect(() => {
+    setSelectMenu(state ? state.menu : "EVENT");
+  }, [state]);
 
   return (
     <div
