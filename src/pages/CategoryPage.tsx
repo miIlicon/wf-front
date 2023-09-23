@@ -123,6 +123,7 @@ export default function CategoryPage() {
       css={css`
         position: absolute;
         width: 100vw;
+        min-height: 100vh;
         top: 1;
         font-family: "Pretendard-Medium";
         margin: 0;
