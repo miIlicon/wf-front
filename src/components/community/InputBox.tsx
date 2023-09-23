@@ -1,14 +1,34 @@
 /** @jsxImportSource @emotion/react */
 import React, { useState } from "react";
 import { css } from "@emotion/react";
+import API from "../../utils/api";
+import axios from "axios";
+import { chatBoxProps } from "../../@types/typs";
 
 export default function ChatBox() {
   const [currentLength, setCurrentLength] = useState(0);
+  const [value, setValue] = useState("");
+  const form = new FormData();
 
   function handleChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
     if (event.target && currentLength < 200) {
       setCurrentLength(event.target.value.length);
+      setValue(event.target.value);
     }
+  }
+
+  function handleClick() {
+    form.append("content", value);
+    form.append("contact", "gentlemonster77@likelion.org");
+    axios
+      .post("/api/v2/bambooforest", form, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+        },
+      })
+      .then(() => {
+        setValue("");
+      });
   }
 
   return (
@@ -72,6 +92,7 @@ export default function ChatBox() {
             background-color: #3182f6;
             cursor: pointer;
           `}
+          onClick={handleClick}
         >
           등록
         </button>

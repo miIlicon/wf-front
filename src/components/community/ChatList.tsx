@@ -1,10 +1,26 @@
 /** @jsxImportSource @emotion/react */
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { css } from "@emotion/react";
 import arrowBottom from "../../images/community/arrowBottom.png";
 import ChatBox from "./ChatBox";
+import axios from "axios";
 
 export default function ChatList() {
+  const [chatData, setChatData] = useState<any[]>([]);
+
+  useEffect(() => {
+    setInterval(function () {
+    axios
+      .get("/api/v2/bambooforest/list?page=0&size=10&sort=string")
+      .then((res: any) => {
+        setChatData(res.data.forestResList);
+      });
+    }, 4000);
+  }, []);
+
+  useEffect(() => {
+    console.log(chatData);
+  }, [chatData]);
   return (
     <div
       css={css`
@@ -28,16 +44,10 @@ export default function ChatList() {
           row-gap: 1.5em;
         `}
       >
-        <ChatBox />
-        <ChatBox />
-        <ChatBox />
-        <ChatBox />
-        <ChatBox />
-        <ChatBox />
-        <ChatBox />
-        <ChatBox />
-        <ChatBox />
-        <ChatBox />
+        {chatData.length > 1 &&
+          chatData.map((item) => {
+            return <ChatBox key={item.id} id={item.id} text={item.content} />;
+          })}
       </div>
 
       <div
