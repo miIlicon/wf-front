@@ -5,9 +5,9 @@ import { useNavigate } from "react-router-dom";
 import backButton from "../../src/images/prevButton.svg";
 import linkButton from "../../src/images/nextButton.svg";
 import { MenuProps, SubCategoryProps, contentTextProps } from "../@types/typs";
-import SearchBar from "../components/common/SearchBar";
 import { ReactComponent as Rocket } from "../images/rocket.svg";
 import category from "../data/category.json";
+import Search from "../components/main/Search";
 
 const MainCategory = ({ text } : contentTextProps) => {
   return (
@@ -63,7 +63,7 @@ const Menu = ({ main, sub, onClick } : MenuProps) => {
     <div
       css={css`
         display: flex;
-        margin: 30px 20px;
+        margin: 30px 0;
       `}
     >
       <MainCategory text={main} />
@@ -159,16 +159,22 @@ export default function CategoryPage() {
       <Banner />
       <div
         css={css`
-          margin: 35px 0;
+          padding: 0 20px;
         `}
       >
-        <SearchBar />
-      </div>
-      <div>
-        <Menu main="프로그램" sub={["학교주최 이벤트", "경기 일정/결과"]} onClick={handleClick} />
-        <Menu main="축제부스" sub={["축제주점", "플리마켓", "푸드트럭"]} onClick={handleClick} />
-        <Menu main="안내사항" sub={["Q&A", "공지사항", "달구지"]} onClick={handleClick} />
-        <Menu main="대나무숲" sub={["대나무숲"]} onClick={handleClick} />
+        <div
+          css={css`
+            margin: 35px 0;
+          `}
+        >
+          <Search />
+        </div>
+        <div>
+          <Menu main="프로그램" sub={["학교주최 이벤트", "경기 일정/결과"]} onClick={handleClick} />
+          <Menu main="축제부스" sub={["축제주점", "플리마켓", "푸드트럭"]} onClick={handleClick} />
+          <Menu main="안내사항" sub={["Q&A", "공지사항", "달구지"]} onClick={handleClick} />
+          <Menu main="대나무숲" sub={["대나무숲"]} onClick={handleClick} />
+        </div>
       </div>
     </div>
   )

@@ -131,8 +131,8 @@ export interface SubCategoryProps {
 export interface SearchResultProps {
   title: string;
   subTitle: string;
-  thumb: string;
-  state: boolean;
+  mainFilePath: string;
+  status: boolean;
 }
 
 export interface ClickEventProps {
