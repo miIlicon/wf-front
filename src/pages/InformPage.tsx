@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { css } from "@emotion/react";
+import { useLocation } from "react-router-dom";
 import { ButtonProps } from "../@types/typs";
 import PageTitle from "../components/common/PageTitle";
 import QandA from "./Inform/QandA";
@@ -44,11 +45,17 @@ const Menu = ({ text, isSelect, value, onClick }: ButtonProps) => {
 }
 
 export default function InformPage() {
-  const [selectMenu, setSelectMenu] = useState<string>("Q&A");
+  const location = useLocation();
+  const state = location.state as { menu: string };
+  const [selectMenu, setSelectMenu] = useState<string>(state ? state.menu : "Q&A");
 
   const onClickMenu = (value: string) => {
     setSelectMenu(value);
   };
+
+  useEffect(() => {
+    setSelectMenu(state ? state.menu : "Q&A");
+  }, [state]);
 
   return (
     <div>
