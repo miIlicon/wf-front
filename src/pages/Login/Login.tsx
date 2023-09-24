@@ -13,12 +13,19 @@ export default function Login() {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
 
+  const data = new FormData();
+  data.append("username", id);
+  data.append("password", password);
+
   const handleSubmit = () => {
     console.log(id, password);
-    API.post(`/admin`, {
-      username: id,
-      password: password,
-    })
+    axios
+      .post(`/api/v2/member/login`, data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          "Access-Control-Allow-Origin": "*",
+        },
+      })
       .then((res) => {
         alert("로그인을 성공적으로 했어요!");
         navigate("/");
