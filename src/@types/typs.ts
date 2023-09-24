@@ -34,6 +34,10 @@ export interface chatBoxProps {
   text: string;
 }
 
+export interface toogleProps {
+  checked: boolean;
+}
+
 export interface VideoListProps {
   dataList: VideoProps[];
 }

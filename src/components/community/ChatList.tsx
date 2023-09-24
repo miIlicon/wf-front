@@ -4,23 +4,26 @@ import { css } from "@emotion/react";
 import arrowBottom from "../../images/community/arrowBottom.png";
 import ChatBox from "./ChatBox";
 import axios from "axios";
+import thinking from "../../images/emoji/thinking.png";
 
 export default function ChatList() {
   const [chatData, setChatData] = useState<any[]>([]);
 
   useEffect(() => {
-    setInterval(function () {
+    // setInterval(function () {
     axios
       .get("/api/v2/bambooforest/list?page=0&size=10&sort=string")
       .then((res: any) => {
         setChatData(res.data.forestResList);
       });
-    }, 4000);
+    // }, 4000);
   }, []);
 
+  // 트리거를 통해 상태를 최신화 시켜줘야 함
   useEffect(() => {
     console.log(chatData);
   }, [chatData]);
+
   return (
     <div
       css={css`
@@ -44,10 +47,39 @@ export default function ChatList() {
           row-gap: 1.5em;
         `}
       >
-        {chatData.length > 1 &&
+        {chatData.length > 1 ? (
           chatData.map((item) => {
             return <ChatBox key={item.id} id={item.id} text={item.content} />;
-          })}
+          })
+        ) : (
+          <div
+            css={css`
+              margin-left: auto;
+              margin-right: auto;
+
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              column-gap: 0.5em;
+            `}
+          >
+            <img
+              src={thinking}
+              alt="생각하는 이모지"
+              css={css`
+                width: 1.4em;
+              `}
+            />
+            <span
+              css={css`
+                font-family: "Pretendard-Regular";
+                color: #404040;
+              `}
+            >
+              아쉽게도 아직 등록된 대나무숲 게시글이 없어요
+            </span>
+          </div>
+        )}
       </div>
 
       <div
