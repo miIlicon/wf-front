@@ -1,8 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import React from "react";
 import { css } from "@emotion/react";
+import { chatBoxProps } from "../../@types/typs";
 
-export default function ChatBox() {
+export default function ChatBox({ id, text }: chatBoxProps) {
   return (
     <div
       css={css`
@@ -25,7 +26,7 @@ export default function ChatBox() {
           color: #4e5968;
         `}
       >
-        #45618번째 외침
+        #{id}번째 외침
       </span>
       <span
         css={css`
@@ -33,7 +34,7 @@ export default function ChatBox() {
           color: #4e5968;
         `}
       >
-        이번 축제 서비스 폼 미쳤다. 이런 혁신적인 서비스 누가 만들었누..갓수호
+        {text}
       </span>
     </div>
   );
