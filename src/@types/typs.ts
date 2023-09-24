@@ -29,6 +29,15 @@ export interface VideoProps {
   videoUrl?: string;
 }
 
+export interface chatBoxProps {
+  id: number;
+  text: string;
+}
+
+export interface toogleProps {
+  checked: boolean;
+}
+
 export interface VideoListProps {
   dataList: VideoProps[];
 }
@@ -120,7 +129,7 @@ export interface ImageProps {
 export interface MenuProps {
   main: string;
   sub: string[];
-  onClick: (main : string, sub : string) => void;
+  onClick: (main: string, sub: string) => void;
 }
 
 export interface SubCategoryProps {
