@@ -138,12 +138,18 @@ export interface SubCategoryProps {
 }
 
 export interface SearchResultProps {
+  id: number;
   title: string;
   subTitle: string;
   mainFilePath: string;
-  status: boolean;
+  status: string;
 }
 
 export interface ClickEventProps {
   onClick: () => void;
+}
+
+export interface SearchModalProps {
+  path: string;
+  dataList: SearchResultProps[];
 }
