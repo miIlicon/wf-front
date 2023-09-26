@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, Dispatch, SetStateAction } from "react";
 
 export interface WrapperProps {
   children: React.ReactNode;
@@ -27,6 +27,13 @@ export interface VideoProps {
   artist: string;
   thumb: string;
   videoUrl?: string;
+}
+
+export interface communityStateProps {
+  trigger: boolean;
+  changeTrigger: Dispatch<SetStateAction<boolean>>;
+  autoUpdate: boolean;
+  setAutoUpdate: Dispatch<SetStateAction<boolean>>;
 }
 
 export interface chatBoxProps {

@@ -3,37 +3,53 @@ import React, { useState } from "react";
 import { css } from "@emotion/react";
 import API from "../../utils/api";
 import axios from "axios";
-import { chatBoxProps } from "../../@types/typs";
+import { chatBoxProps, communityStateProps } from "../../@types/typs";
 import Toggle from "./Toggle";
 import Required from "./Required";
 
-export default function ChatBox() {
+export default function ChatBox({
+  changeTrigger,
+  setAutoUpdate,
+  trigger,
+  autoUpdate,
+}: communityStateProps) {
   const [currentLength, setCurrentLength] = useState(0);
   const [value, setValue] = useState("");
+  const [email, setEmail] = useState("");
   const [checked, setChecked] = useState(false);
   const [validation, setValidation] = useState(false);
   const form = new FormData();
 
   function toggleChange() {
     setChecked(!checked);
+    setAutoUpdate(!autoUpdate);
   }
 
-  function handleChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
-    if (event.target && currentLength < 200) {
-      setCurrentLength(event.target.value.length);
-      setValue(event.target.value);
+  function handleChange(
+    event:
+      | React.ChangeEvent<HTMLTextAreaElement>
+      | React.ChangeEvent<HTMLInputElement>
+  ) {
+    if (event.target.name && event.target.name === "연락처") {
+      setEmail(event.target.value);
     }
+    if (event.target.name && event.target.name === "내용") {
+      if (event.target && currentLength < 200) {
+        setCurrentLength(event.target.value.length);
+        setValue(event.target.value);
+      }
 
-    if (event.target.value.length !== 0) {
-      setValidation(true);
-    } else {
-      setValidation(false);
+      if (event.target.value.length !== 0) {
+        setValidation(true);
+      } else {
+        setValidation(false);
+      }
     }
   }
 
   function handleClick() {
     form.append("content", value);
-    form.append("contact", "gentlemonster77@likelion.org");
+    form.append("contact", email);
     axios
       .post("/api/v2/bambooforest", form, {
         headers: {
@@ -42,7 +58,9 @@ export default function ChatBox() {
       })
       .then(() => {
         setValue("");
+        setEmail("");
         setCurrentLength(0);
+        changeTrigger(!trigger);
       });
   }
 
@@ -106,7 +124,10 @@ export default function ChatBox() {
               outline: none;
             }
           `}
+          value={email}
+          name="연락처"
           placeholder="이벤트를 참여하고 싶다면 이메일 또는 번호를 적어주세요, 정보는 우리만 알고 있을게요!"
+          onChange={handleChange}
         />
         <span
           css={css`
@@ -124,6 +145,7 @@ export default function ChatBox() {
           maxLength={200}
           onChange={handleChange}
           value={value}
+          name="내용"
           css={css`
             border: none;
             width: 100%;

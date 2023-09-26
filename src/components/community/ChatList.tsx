@@ -1,28 +1,51 @@
 /** @jsxImportSource @emotion/react */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { css } from "@emotion/react";
 import arrowBottom from "../../images/community/arrowBottom.png";
 import ChatBox from "./ChatBox";
 import axios from "axios";
 import thinking from "../../images/emoji/thinking.png";
+import { communityStateProps } from "../../@types/typs";
 
-export default function ChatList() {
+export default function ChatList({
+  changeTrigger,
+  setAutoUpdate,
+  trigger,
+  autoUpdate,
+}: communityStateProps) {
   const [chatData, setChatData] = useState<any[]>([]);
+  const autoTimerObj = useRef<NodeJS.Timeout | null>(null);
 
+  /** 트리거를 통해 대나무 숲을 업데이트를 해주는 렌더링 함수 */
   useEffect(() => {
-    // setInterval(function () {
     axios
       .get("/api/v2/bambooforest/list?page=0&size=10&sort=string")
       .then((res: any) => {
         setChatData(res.data.forestResList);
       });
-    // }, 4000);
-  }, []);
+  }, [trigger]);
 
-  // 트리거를 통해 상태를 최신화 시켜줘야 함
+  /** 대나무 숲 자동 업데이트를 위한 렌더링 함수 */
   useEffect(() => {
-    console.log(chatData);
-  }, [chatData]);
+    if (autoUpdate) {
+      autoTimerObj.current = setInterval(() => {
+        axios
+          .get("/api/v2/bambooforest/list?page=0&size=10&sort=string")
+          .then((res: any) => {
+            setChatData(res.data.forestResList);
+            console.log(res.data.forestResList);
+          });
+      }, 4000);
+    } else {
+      // 컴포넌트가 언마운트되거나, autoUpdate 값이 false로 변경될 때 인터벌을 정리해줘야해요
+      clearInterval(autoTimerObj.current as NodeJS.Timeout);
+    }
+
+    // 컴포넌트 언마운트시에 인터벌을 정리해줘야해요
+    return () => {
+      clearInterval(autoTimerObj.current as NodeJS.Timeout);
+    };
+  }, [autoUpdate]);
 
   return (
     <div
@@ -47,7 +70,7 @@ export default function ChatList() {
           row-gap: 1.5em;
         `}
       >
-        {chatData.length > 1 ? (
+        {chatData.length >= 1 ? (
           chatData.map((item) => {
             return <ChatBox key={item.id} id={item.id} text={item.content} />;
           })
