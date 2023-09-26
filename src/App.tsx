@@ -19,6 +19,7 @@ import BoothPage from "./pages/BoothPage";
 import ProgramPage from "./pages/ProgramPage";
 import InformPage from "./pages/InformPage";
 import CategoryPage from "./pages/CategoryPage";
+import Error from "./pages/404/Error";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <ScrollToTop />
         <GlobalStyles />
         <Routes>
+          <Route path="*" element={<Error />} />
           <Route element={<Header />}>
             <Route element={<Banner />}></Route>
             <Route path="/" element={<Index />}></Route>
