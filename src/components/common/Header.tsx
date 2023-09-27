@@ -4,10 +4,10 @@ import React, { useEffect, useState } from "react";
 import logo from "../../images/logo.png";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import Banner from "./Banner";
-import menu from "../../images/menu.svg"
+import menu from "../../images/menu.svg";
 import { ClickEventProps } from "../../@types/typs";
 
-const Menu = ({ onClick } : ClickEventProps) => {
+const Menu = ({ onClick }: ClickEventProps) => {
   return (
     <img
       css={css`
@@ -17,12 +17,15 @@ const Menu = ({ onClick } : ClickEventProps) => {
       alt="카테고리"
       onClick={onClick}
     />
-  )
-}
+  );
+};
 
 export default function Header() {
   const [scrollState, setScrollState] = useState<boolean>(false);
-  const isMobile = /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  const isMobile =
+    /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent
+    );
   const navigate = useNavigate();
 
   const handleScroll = () => {
@@ -35,7 +38,7 @@ export default function Header() {
 
   const handleOpenCategory = () => {
     navigate("/category");
-  }
+  };
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
@@ -48,7 +51,7 @@ export default function Header() {
     <>
       <header
         css={css`
-          position: sticky;
+          position: fixed;
           top: 0;
           z-index: 999;
           width: 100%;
@@ -79,7 +82,7 @@ export default function Header() {
           @media all and (min-width: 1100px) {
             font-size: 18px;
           }
-          background-color: white;
+          background-color: rgba(255, 255, 255, 0.88);
 
           ${scrollState &&
           css`
@@ -153,28 +156,40 @@ export default function Header() {
               }
             `}
           >
-            {isMobile 
-              ? <Menu onClick={handleOpenCategory} /> 
-              : <>
-                  <Link to={"program"} tabIndex={-1}>
-                    프로그램
-                  </Link>
-                  <Link to={"booth"} tabIndex={-1}>
-                    축제부스
-                  </Link>
-                  <Link to={"inform"} tabIndex={-1}>
-                    안내사항
-                  </Link>
-                  <Link to={"community"} tabIndex={-1}>
-                    대나무숲
-                  </Link>
-                </>
-            }
+            {isMobile ? (
+              <Menu onClick={handleOpenCategory} />
+            ) : (
+              <>
+                <Link to={"program"} tabIndex={-1}>
+                  프로그램
+                </Link>
+                <Link to={"booth"} tabIndex={-1}>
+                  축제부스
+                </Link>
+                <Link to={"inform"} tabIndex={-1}>
+                  안내사항
+                </Link>
+                <Link to={"community"} tabIndex={-1}>
+                  대나무숲
+                </Link>
+              </>
+            )}
           </nav>
         </div>
       </header>
+      <PaddingHeader />
       <Banner />
       <Outlet />
     </>
+  );
+}
+
+export function PaddingHeader() {
+  return (
+    <div
+      css={css`
+        height: 65px;
+      `}
+    ></div>
   );
 }
