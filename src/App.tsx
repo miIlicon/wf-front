@@ -5,7 +5,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Index from "./pages/Index/Index";
-import Header from "./components/common/Header";
+import Header, { PaddingHeader } from "./components/common/Header";
 import Banner from "./components/common/Banner";
 import GlobalStyles from "./styles/GlobalStyles";
 import Detail from "./pages/Detail/Detail";
@@ -30,7 +30,6 @@ function App() {
         <Routes>
           <Route path="*" element={<Error />} />
           <Route element={<Header />}>
-            <Route element={<Banner />}></Route>
             <Route path="/" element={<Index />}></Route>
             <Route path="/detail" element={<Detail />}></Route>
             <Route path="/program" element={<ProgramPage />}></Route>
