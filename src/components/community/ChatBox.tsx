@@ -15,8 +15,8 @@ export default function ChatBox({ id, text }: chatBoxProps) {
         flex-direction: column;
         row-gap: 0.6em;
         padding: 1.2em;
-        padding-top: 1.5em;
-        padding-bottom: 1.5em;
+        padding-top: 1.35em;
+        padding-bottom: 1.35em;
         box-sizing: border-box;
       `}
     >
@@ -30,8 +30,9 @@ export default function ChatBox({ id, text }: chatBoxProps) {
       </span>
       <span
         css={css`
-          line-height: 1em;
+          line-height: 1.5em;
           color: #4e5968;
+          white-space: pre;
         `}
       >
         {text}
