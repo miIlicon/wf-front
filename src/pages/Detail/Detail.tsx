@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Section } from "../../components/common/components";
 import EventStatusButton from "../../components/common/EventStatusButton";
 import ContentTitle from "../../components/common/ContentTitle";
@@ -21,11 +21,12 @@ export default function Detail() {
     subFilePaths: [],
     latitude: 0,
     longitude: 0,
-    status: ""
+    status: "",
   });
 
-  const state = location.state as { category: string, id: number} 
+  const state = location.state as { category: string; id: number };
   const category = state.category;
+  const commentRef = useRef<HTMLDivElement | null>(null);
   const id = state.id;
 
   useEffect(() => {
@@ -44,23 +45,45 @@ export default function Detail() {
 
       e.parentNode.insertBefore(j, e);
     })(document, "script");
+
+    // DOM 요소가 동적으로 추가되는 것을 감지하기 위해 MutationObserver을 사용합니다.
+    let observer = new MutationObserver(function (mutationsList, observer) {
+      for (var mutation of mutationsList) {
+        if (mutation.type === "childList") {
+          // DOM 요소가 추가되었을 때 실행할 코드를 여기에 작성합니다.
+          console.log(commentRef.current);
+          const AD = commentRef.current?.querySelector("#taboola-livere");
+          if (AD) {
+            commentRef.current?.removeChild(AD);
+          }
+        }
+      }
+    });
+
+    if (commentRef.current) {
+      let config = { childList: true }; // DOM의 자식 노드 변경 사항을 감지합니다.
+
+      window.onload = function () {
+        if (commentRef.current) {
+          observer.observe(commentRef?.current, config);
+        }
+      };
+    }
   }, []);
 
   const getDetailInfo = async () => {
-		await API.get(
-			`/api/v2/${category}/${id}`
-		)
-		.then((res) => {
-			setDetailData(res.data.content);
-		})
-    .catch((error) => {
-      alert(`알 수 없는 오류가 발생했어요!`);
-    });
-	};
+    await API.get(`/api/v2/${category}/${id}`)
+      .then((res) => {
+        setDetailData(res.data.content);
+      })
+      .catch((error) => {
+        alert(`알 수 없는 오류가 발생했어요!`);
+      });
+  };
 
-	useEffect(() => {
-		getDetailInfo();
-	}, [])
+  useEffect(() => {
+    getDetailInfo();
+  }, []);
 
   return (
     <Section>
@@ -135,7 +158,7 @@ export default function Detail() {
             <ContentTitle text={detailData.title} />
             <ContentSubTitle text={detailData.subTitle} />
             <EventStatusButton status={detailData.status === "OPERATE"} />
-            <Map lat={detailData.latitude} lon={detailData.longitude}/>
+            <Map lat={detailData.latitude} lon={detailData.longitude} />
           </div>
         </article>
         <div
@@ -184,9 +207,13 @@ export default function Detail() {
               }
             `}
           >
-            {detailData.subFilePaths.map(
-              (path : string, i : number) => <ContentCards thumb={path} idx={i} dataList={detailData.subFilePaths}/>
-            )}
+            {detailData.subFilePaths.map((path: string, i: number) => (
+              <ContentCards
+                thumb={path}
+                idx={i}
+                dataList={detailData.subFilePaths}
+              />
+            ))}
           </div>
         </div>
         <div
@@ -224,10 +251,7 @@ export default function Detail() {
               border-radius: 0.7em;
             `}
           >
-            <span>
-              {" "}
-              {detailData.content}
-            </span>
+            <span> {detailData.content}</span>
           </div>
         </div>
         <div
@@ -262,6 +286,7 @@ export default function Detail() {
               box-sizing: border-box;
               border-radius: 0.5em;
             `}
+            ref={commentRef}
           >
             <div
               id="lv-container"
