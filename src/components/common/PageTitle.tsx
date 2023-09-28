@@ -11,8 +11,9 @@ export default function PageTitle({ text }: contentTextProps) {
         font-style: normal;
         line-height: 1.2em;
         letter-spacing: -0.03em;
-        color: #333d4b;
         margin-bottom: 1em;
+        color: #3c4651;
+        transition: 0.4s all;
 
         @media (max-width: 479px) {
           font-size: 22px;

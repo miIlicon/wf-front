@@ -4,14 +4,14 @@ import { css } from "@emotion/react";
 import { TextProps, QandAProps } from "../../@types/typs";
 import QandAData from "../../data/QandA.json";
 
-const QuestionBox = ({ text, onClick } : TextProps) => {
+const QuestionBox = ({ text, onClick }: TextProps) => {
   return (
     <div
       css={css`
         display: flex;
         align-items: center;
         border-radius: 8px;
-        background-color: #FFFFFF;
+        background-color: #ffffff;
         font-family: "Pretendard-Regular";
         cursor: pointer;
         &:hover {
@@ -36,7 +36,7 @@ const QuestionBox = ({ text, onClick } : TextProps) => {
       <p
         css={css`
           font-weight: 700;
-          color: #4E5968;
+          color: #4e5968;
           opacity: 0.6;
 
           @media (max-width: 479px) {
@@ -57,7 +57,7 @@ const QuestionBox = ({ text, onClick } : TextProps) => {
           }
         `}
       >
-      Q
+        Q
       </p>
       <p
         css={css`
@@ -85,16 +85,16 @@ const QuestionBox = ({ text, onClick } : TextProps) => {
       </p>
     </div>
   );
-}
+};
 
-const AnswerBox = ({ text } : TextProps) => {
+const AnswerBox = ({ text }: TextProps) => {
   return (
     <div
       css={css`
         display: flex;
         align-items: center;
         border-radius: 8px;
-        background-color: #E8F3FF;
+        background-color: #e8f3ff;
         font-family: "Pretendard-Regular";
 
         @media (max-width: 479px) {
@@ -114,7 +114,7 @@ const AnswerBox = ({ text } : TextProps) => {
       <p
         css={css`
           font-weight: 700;
-          color: #1B64DA;
+          color: #1b64da;
 
           @media (max-width: 479px) {
             font-size: 18px;
@@ -162,13 +162,13 @@ const AnswerBox = ({ text } : TextProps) => {
       </p>
     </div>
   );
-}
+};
 
-const QandABox = ({ Q, A } : QandAProps ) => {
+const QandABox = ({ Q, A }: QandAProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const onClickBox = () => {
-    setIsOpen(!(isOpen));
-  }
+    setIsOpen(!isOpen);
+  };
 
   return (
     <div>
@@ -176,18 +176,14 @@ const QandABox = ({ Q, A } : QandAProps ) => {
       {isOpen && <AnswerBox text={A} />}
     </div>
   );
-}
+};
 
 export default function QandA() {
   return (
-    <div
-      css={css`
-        padding: 35px 10%;
-      `}
-    >
-      {QandAData.map((item) =>
+    <div>
+      {QandAData.map((item) => (
         <QandABox Q={item.Q} A={item.A} />
-      )}
+      ))}
     </div>
   );
 }
