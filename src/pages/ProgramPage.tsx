@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import React, { useEffect, useState } from "react";
 import { css } from "@emotion/react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import PageTitle from "../components/common/PageTitle";
 import PageSubTitle from "../components/common/PageSubTitle";
 import CardList from "../components/common/CardList";
@@ -70,7 +70,9 @@ export default function ProgramPage() {
           onClick={onClickButton}
         />
       </div>
-      <CreateSection />
+      <Link to={`/edit?${selectMenu}`}>
+        <CreateSection />
+      </Link>
       {programList.length ? (
         <CardList dataList={programList} category="program" />
       ) : (

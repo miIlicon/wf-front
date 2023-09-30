@@ -59,6 +59,11 @@ export interface titleProps {
   used?: string;
 }
 
+export interface DateProps {
+  endDate: string;
+  startDate: string;
+}
+
 export interface eventProps {
   eventName?: string;
   eventType?: string;

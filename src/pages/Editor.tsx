@@ -3,7 +3,10 @@ import React, { useRef, useState } from "react";
 import Map from "../components/common/Map";
 import { css } from "@emotion/react";
 import EventStatusButton from "../components/common/EventStatusButton";
+import "react-calendar/dist/Calendar.css"; // css import
+import { ReactComponent as CalendarIcon } from "../images/emoji/calendar.svg";
 import {
+  DateProps,
   FileProps,
   InputProps,
   TextProps,
@@ -15,6 +18,9 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { ReduxType } from "../app/store";
 import API from "../utils/api";
+import { Section } from "../components/common/components";
+import Calendar from "react-calendar";
+import moment from "moment";
 
 const TitleInput = ({ onChange }: InputProps) => {
   return (
@@ -23,23 +29,23 @@ const TitleInput = ({ onChange }: InputProps) => {
         width: 638px;
         height: 40px;
         border: none;
-        font-family: "Pretendard-Bold";
+        font-family: "Pretendard-Regular";
         letter-spacing: -0.03em;
         font-size: 25px;
-        color: #4e5968;
+        color: #404040;
         outline: none;
         ::placeholder,
         ::-webkit-input-placeholder {
           font-size: 25px;
           line-height: 30px;
-          font-family: "Pretendard-Medium";
+          font-family: "Pretendard-Regular";
           letter-spacing: -0.03em;
           color: #8b95a1;
         }
         :-ms-input-placeholder {
           font-size: 25px;
           line-height: 30px;
-          font-family: "Pretendard-Medium";
+          font-family: "Pretendard-Regular";
           letter-spacing: -0.03em;
           color: #8b95a1;
         }
@@ -51,6 +57,135 @@ const TitleInput = ({ onChange }: InputProps) => {
   );
 };
 
+const CalendarSection = ({ endDate, startDate }: DateProps) => {
+  const touchNode = useRef<HTMLDivElement | null>(null);
+  const calendarNode = useRef<HTMLDivElement | null>(null);
+  const [sDate, setSDate] = useState(new Date());
+  const [eDate, setEDate] = useState(new Date());
+  const [isOpen, setIsOpen] = useState(false);
+  const [isOpenStart, setIsOpenStart] = useState(false);
+  const [isOpenEnd, setIsOpenEnd] = useState(false);
+
+  return (
+    <div
+      css={css`
+        display: flex;
+        align-items: center;
+        column-gap: -1em;
+        font-size: 14px;
+        color: #404040;
+      `}
+    >
+      <div
+        css={css`
+          display: flex;
+          align-items: center;
+          color: #404040;
+          column-gap: 0.4em;
+          margin-right: 0.6em;
+        `}
+      >
+        <CalendarIcon
+          css={css`
+            width: 1.2em !important;
+          `}
+        />
+        <span>일정</span>
+      </div>
+      <div
+        css={css`
+          position: relative;
+          font-family: "Pretendard-Regular";
+          // box-shadow: inset 0 0 0 1px rgba(0, 27, 55, 0.1);
+          padding: 0.35em 0.7em 0.35em 0.7em;
+          border-radius: 0.3em;
+          color: #404040;
+          transition: 0.4s all;
+          cursor: pointer;
+
+          ${isOpenStart && `background-color: #ebecf0;`}
+
+          &:hover {
+            background-color: #ebecf0;
+          }
+        `}
+        ref={touchNode}
+        onClick={() => {
+          setIsOpenStart(!isOpenStart);
+          setIsOpenEnd(false);
+        }}
+      >
+        {moment(sDate).format("YYYY년 MM월 DD일")}
+      </div>
+      <span
+        css={css`
+          font-family: "Pretendard-Regular";
+          padding: 0em 0.3em 0em 0.3em;
+          color: #404040;
+        `}
+      >
+        ~
+      </span>
+      <div
+        css={css`
+          position: relative;
+          font-family: "Pretendard-Regular";
+          // box-shadow: inset 0 0 0 1px rgba(0, 27, 55, 0.1);
+          padding: 0.35em 0.7em 0.35em 0.7em;
+          border-radius: 0.3em;
+          color: #404040;
+          cursor: pointer;
+          transition: 0.4s all;
+
+          ${isOpenEnd && `background-color: #ebecf0;`}
+
+          &:hover {
+            background-color: #ebecf0;
+          }
+        `}
+        onClick={() => {
+          setIsOpenEnd(!isOpenEnd);
+          setIsOpenStart(false);
+        }}
+        ref={touchNode}
+      >
+        {moment(eDate).format("YYYY년 MM월 DD일")}
+      </div>
+      {isOpenStart && (
+        <Calendar
+          css={css`
+            position: absolute;
+            z-index: 999;
+            top: ${touchNode.current &&
+            touchNode.current?.offsetTop +
+              touchNode.current.offsetHeight +
+              10 +
+              "px"};
+          `}
+          onChange={(selectDate: any) => setSDate(selectDate)}
+          ref={calendarNode}
+        />
+      )}
+      {isOpenEnd && (
+        <Calendar
+          css={css`
+            position: absolute;
+            z-index: 999;
+            top: ${touchNode.current &&
+            touchNode.current?.offsetTop +
+              touchNode.current.offsetHeight +
+              10 +
+              "px"};
+          `}
+          onChange={(selectDate: any) => setEDate(selectDate)}
+          value={eDate}
+          ref={calendarNode}
+        />
+      )}
+    </div>
+  );
+};
+
 const SubTitleInput = ({ onChange }: InputProps) => {
   return (
     <input
@@ -58,21 +193,21 @@ const SubTitleInput = ({ onChange }: InputProps) => {
         width: 638px;
         height: 1em;
         border: none;
-        font-family: "Pretendard-Medium";
+        font-family: "Pretendard-Regular";
         letter-spacing: -0.03em;
         font-size: 16px;
-        color: #4e5968;
+        color: #404040;
         outline: none;
         ::placeholder,
         ::-webkit-input-placeholder {
-          font-family: "Pretendard-Medium";
+          font-family: "Pretendard-Regular";
           font-size: 16px;
           line-height: 20px;
           letter-spacing: -0.03em;
           color: #8b95a1;
         }
         :-ms-input-placeholder {
-          font-family: "Pretendard-Medium";
+          font-family: "Pretendard-Regular";
           font-size: 16px;
           line-height: 20px;
           letter-spacing: -0.03em;
@@ -90,16 +225,15 @@ const Label = ({ text }: contentTextProps) => {
   return (
     <p
       css={css`
-        font-family: "Pretendard-Medium";
+        font-family: "Pretendard-Bold";
         letter-spacing: -0.03em;
         font-style: normal;
-        font-weight: 800;
-        font-size: 25px;
+        font-size: 22px;
         line-height: 30px;
         letter-spacing: -0.03em;
-        color: #4e5968;
+        color: #404040;
 
-        margin-bottom: 40px;
+        margin-bottom: 20px;
       `}
     >
       {text}
@@ -111,8 +245,8 @@ const Detail = ({ onChange }: TextareaProps) => {
   return (
     <textarea
       css={css`
-        width: 1010px;
-        height: 327px;
+        width: 100%;
+        height: 400px;
         font-family: "Pretendard-Regular";
         font-size: 18px;
         background: #ebecf0;
@@ -121,6 +255,7 @@ const Detail = ({ onChange }: TextareaProps) => {
         outline: none;
         padding: 27px;
         resize: none;
+        box-sizing: border-box;
       `}
       name="content"
       placeholder="상세 설명을 입력해주세요"
@@ -142,7 +277,6 @@ const Button = ({ text, onClick }: TextProps) => {
         font-family: "Pretendard-Bold";
         letter-spacing: -0.03em;
         font-style: normal;
-        font-weight: 800;
         font-size: 18px;
         line-height: 30px;
         letter-spacing: -0.03em;
@@ -294,15 +428,7 @@ export default function Editor() {
   };
 
   return (
-    <div
-      css={css`
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-family: "Pretendard-Regular";
-        padding: 59px 455px;
-      `}
-    >
+    <Section>
       <form>
         <div
           css={css`
@@ -375,46 +501,47 @@ export default function Editor() {
               row-gap: 0.7em;
             `}
           >
-            <TitleInput
-              onChange={(event) => {
-                setTitle(event.target.value);
-              }}
-              value={title}
-            />
-            <SubTitleInput
-              onChange={(event) => {
-                setSubTitle(event.target.value);
-              }}
-              value={subTitle}
-            />
+            {/* 현재 이벤트 상태 제어 버튼 */}
             <div
               css={css`
                 width: 100%;
                 display: flex;
                 justify-content: left;
                 align-items: center;
-                column-gap: 1em;
+                column-gap: 0.5em;
               `}
             >
-              <label
-                css={css`
-                  border-radius: 0.2em;
-                  outline: ${state ? "0.07em solid #8b95a1" : "none"};
-                `}
-                onClick={() => setState(true)}
-              >
-                <EventStatusButton isRunning={true} />
+              <label onClick={() => setState(true)}>
+                <EventStatusButton
+                  status={true}
+                  isRunning={state ? true : false}
+                />
               </label>
-              <label
-                css={css`
-                  border-radius: 0.2em;
-                  outline: ${state ? "none" : "0.07em solid #8b95a1"};
-                `}
-                onClick={() => setState(false)}
-              >
-                <EventStatusButton isRunning={false} />
+              <label onClick={() => setState(false)}>
+                <EventStatusButton
+                  status={false}
+                  isRunning={!state ? true : false}
+                />
               </label>
             </div>
+            {/* 제목 */}
+            <TitleInput
+              onChange={(event) => {
+                setTitle(event.target.value);
+              }}
+              value={title}
+            />
+            {/* 소제목 */}
+            <SubTitleInput
+              onChange={(event) => {
+                setSubTitle(event.target.value);
+              }}
+              value={subTitle}
+            />
+            <CalendarSection
+              startDate={"2023년 10월 1일"}
+              endDate={"2023년 10월 1일"}
+            />
             <Map />
           </div>
         </div>
@@ -425,7 +552,7 @@ export default function Editor() {
             margin-bottom: 40px;
           `}
         >
-          <Label text="관련된 더 많은 사진을 보여드릴게요" />
+          <Label text="이벤트 사진" />
           {/* 첫번째 사진 */}
           <div
             css={css`
@@ -623,6 +750,6 @@ export default function Editor() {
           <Button text="이벤트 발행하기" onClick={handleSubmit} />
         </div>
       </form>
-    </div>
+    </Section>
   );
 }
