@@ -52,21 +52,20 @@ export default function CardList({ dataList, category }: CardListProps) {
           margin-bottom: 3em;
         `}
       >
-        {dataList.map(
-          (data) =>
-            data.state && (
-              <div css={css``}>
-                <Card
-                  id={data.id}
-                  category={category}
-                  title={data.title}
-                  subTitle={data.subTitle}
-                  status={data.status === "OPERATE"}
-                  thumb={data.mainFilePath}
-                />
-              </div>
-            )
-        )}
+        {dataList.map((data) => {
+          return (
+            <div css={css``}>
+              <Card
+                id={data.id}
+                category={category}
+                title={data.title}
+                subTitle={data.subTitle}
+                status={data.operateStatus === "OPERATE"}
+                thumb={data.mainFilePath}
+              />
+            </div>
+          );
+        })}
       </div>
     </div>
   );

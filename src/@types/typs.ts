@@ -61,8 +61,10 @@ export interface titleProps {
 }
 
 export interface DateProps {
-  endDate: string;
-  startDate: string;
+  sDate: Date;
+  eDate: Date;
+  setSDate: Dispatch<SetStateAction<Date>>;
+  setEDate: Dispatch<SetStateAction<Date>>;
 }
 
 export interface eventProps {

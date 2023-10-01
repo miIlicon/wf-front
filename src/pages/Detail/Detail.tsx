@@ -24,10 +24,13 @@ export default function Detail() {
     status: "",
   });
 
-  const state = location.state as { category: string; id: number };
-  const category = state.category;
+  // const state = location.state as { category: string; id: number };
+  // const category = state.category;
   const commentRef = useRef<HTMLDivElement | null>(null);
-  const id = state.id;
+  // const id = state.id;
+
+  const category = new URLSearchParams(location.search).get("category");
+  const id = new URLSearchParams(location.search).get("id");
 
   useEffect(() => {
     (function (d, s) {
@@ -74,7 +77,7 @@ export default function Detail() {
   const getDetailInfo = async () => {
     await API.get(`/api/v2/${category}/${id}`)
       .then((res) => {
-        setDetailData(res.data.content);
+        setDetailData(res.data);
       })
       .catch((error) => {
         alert(`알 수 없는 오류가 발생했어요!`);
@@ -209,6 +212,7 @@ export default function Detail() {
           >
             {detailData.subFilePaths.map((path: string, i: number) => (
               <ContentCards
+                key={i}
                 thumb={path}
                 idx={i}
                 dataList={detailData.subFilePaths}

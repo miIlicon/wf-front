@@ -45,9 +45,9 @@ export default function Map({ lat = 37.27574, lon = 127.13249 }: MapProps) {
       var message = "클릭한 위치의 위도는 " + latlng.getLat() + " 이고, ";
       message += "경도는 " + latlng.getLng() + " 입니다";
 
-      console.log(message);
+      // console.log(message);
     });
-  }, []);
+  }, [lat, lon]);
 
   return (
     <div
