@@ -52,6 +52,7 @@ export interface VideoListProps {
 export interface EventStatusButtonProps {
   status?: boolean;
   isRunning?: boolean;
+  used?: string;
 }
 
 export interface titleProps {

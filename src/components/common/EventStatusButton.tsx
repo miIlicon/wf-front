@@ -6,7 +6,9 @@ import { EventStatusButtonProps } from "../../@types/typs";
 export default function EventStatusButton({
   status,
   isRunning,
+  used,
 }: EventStatusButtonProps) {
+  console.log(used);
   const text = status ? "진행 중인 이벤트" : "종료된 이벤트";
   return (
     <label
@@ -35,6 +37,19 @@ export default function EventStatusButton({
         @media all and (min-width: 1100px) {
           font-size: 12.5px;
         }
+
+        ${used !== "edit" &&
+        `
+          color: #3182f6;
+          opacity: ${status ? "1" : "80%"};
+          background-color: ${
+            status ? "rgba(49, 130, 246, 0.16)" : "rgba(124, 124, 124, 0.4)"
+          };
+          border-radius: 0.3em;
+          height: 2.2em;
+          width: 8.5em;
+          box-shadow: none;
+        `}
 
         display: flex;
         justify-content: center;

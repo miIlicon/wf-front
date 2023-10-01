@@ -12,6 +12,7 @@ export default function Map({ lat = 37.27574, lon = 127.13249 }: MapProps) {
 
   useEffect(() => {
     let mapContainer = document.getElementById("map"); // 지도를 표시할 div
+
     let mapOption = {
       center: new kakao.maps.LatLng(lat, lon), // 지도의 중심좌표
       level: 3, // 지도의 확대 레벨

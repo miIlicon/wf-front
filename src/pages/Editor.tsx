@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Map from "../components/common/Map";
 import { css } from "@emotion/react";
 import EventStatusButton from "../components/common/EventStatusButton";
@@ -58,13 +58,84 @@ const TitleInput = ({ onChange }: InputProps) => {
 };
 
 const CalendarSection = ({ endDate, startDate }: DateProps) => {
-  const touchNode = useRef<HTMLDivElement | null>(null);
+  const sTouchNode = useRef<HTMLDivElement | null>(null);
+  const eTouchNode = useRef<HTMLDivElement | null>(null);
   const calendarNode = useRef<HTMLDivElement | null>(null);
   const [sDate, setSDate] = useState(new Date());
   const [eDate, setEDate] = useState(new Date());
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenStart, setIsOpenStart] = useState(false);
   const [isOpenEnd, setIsOpenEnd] = useState(false);
+  const CalendarOverrideCss = `
+  position: absolute;
+            z-index: 999;
+            top: ${
+              isOpenStart &&
+              sTouchNode.current &&
+              sTouchNode.current?.offsetTop +
+                sTouchNode.current.offsetHeight +
+                10 +
+                "px"
+            };
+            top: ${
+              isOpenEnd &&
+              eTouchNode.current &&
+              eTouchNode.current?.offsetTop +
+                eTouchNode.current.offsetHeight +
+                10 +
+                "px"
+            };
+
+            border-radius: 10px !important;
+            box-shadow: inset 0 0 0 1px rgba(0, 27, 55, 0.1) !important;
+            border: none !important;
+            .react-calendar__navigation {
+            }
+
+            .react-calendar__tile--now {
+              // border-radius: 8px;
+            }
+
+            .react-calendar__tile--active {
+              // border-radius: 8px;
+              background-color: #3182f6;
+            }
+
+            .react-calendar__month-view__weekdays {
+              font-size: 1em;
+            }
+
+            abbr[title] {
+              text-decoration: none !important;
+            }
+
+            .react-calendar__navigation__arrow {
+              font-size: 1.3em !important;
+            }
+
+            .react-calendar__navigation__label__labelText {
+              position: relative;
+              top: 2px !important;
+            }
+
+            .react-calendar__navigation button:enabled:hover,
+            .react-calendar__navigation button:enabled:focus {
+              background-color: transparent !important;
+            }`;
+
+  useEffect(() => {
+    document.addEventListener("click", function (event) {
+      if (sTouchNode.current && eTouchNode.current) {
+        if (sTouchNode.current.contains(event.target as HTMLElement)) {
+          setIsOpenStart(true);
+        }
+
+        if (eTouchNode.current.contains(event.target as HTMLElement)) {
+          setIsOpenEnd(true);
+        }
+      }
+    });
+  }, []);
 
   return (
     <div
@@ -109,11 +180,12 @@ const CalendarSection = ({ endDate, startDate }: DateProps) => {
             background-color: #ebecf0;
           }
         `}
-        ref={touchNode}
+        ref={sTouchNode}
         onClick={() => {
           setIsOpenStart(!isOpenStart);
           setIsOpenEnd(false);
         }}
+        className="calendar"
       >
         {moment(sDate).format("YYYY년 MM월 DD일")}
       </div>
@@ -147,39 +219,31 @@ const CalendarSection = ({ endDate, startDate }: DateProps) => {
           setIsOpenEnd(!isOpenEnd);
           setIsOpenStart(false);
         }}
-        ref={touchNode}
+        className="calendar"
+        ref={eTouchNode}
       >
         {moment(eDate).format("YYYY년 MM월 DD일")}
       </div>
       {isOpenStart && (
         <Calendar
           css={css`
-            position: absolute;
-            z-index: 999;
-            top: ${touchNode.current &&
-            touchNode.current?.offsetTop +
-              touchNode.current.offsetHeight +
-              10 +
-              "px"};
+            ${CalendarOverrideCss}
           `}
           onChange={(selectDate: any) => setSDate(selectDate)}
+          value={sDate}
           ref={calendarNode}
+          className="calendarDetail"
         />
       )}
       {isOpenEnd && (
         <Calendar
           css={css`
-            position: absolute;
-            z-index: 999;
-            top: ${touchNode.current &&
-            touchNode.current?.offsetTop +
-              touchNode.current.offsetHeight +
-              10 +
-              "px"};
+            ${CalendarOverrideCss}
           `}
           onChange={(selectDate: any) => setEDate(selectDate)}
           value={eDate}
           ref={calendarNode}
+          className="calendarDetail"
         />
       )}
     </div>
@@ -515,12 +579,14 @@ export default function Editor() {
                 <EventStatusButton
                   status={true}
                   isRunning={state ? true : false}
+                  used={`edit`}
                 />
               </label>
               <label onClick={() => setState(false)}>
                 <EventStatusButton
                   status={false}
                   isRunning={!state ? true : false}
+                  used={`edit`}
                 />
               </label>
             </div>
