@@ -9,8 +9,10 @@ export const Thumb = ({ thumb, status }: CardProps) => {
   return (
     <img
       css={css`
-        width: 100%;
-        height: auto;
+        // width: 100%;
+        // height: auto;
+        width: 18.8em;
+        height: 26.6em;
         border-radius: 11px;
         filter: ${status ? "grayscale(0)" : "grayscale(100%)"};
       `}

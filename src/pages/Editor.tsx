@@ -384,15 +384,28 @@ export default function Editor() {
   const location = useLocation();
   const navigate = useNavigate();
   const type = new URLSearchParams(location.search).get("type");
-  let requestURL = null;
+  let requestURL: string | null = null;
+  let category: string | null = null;
+  // 이미지 파일 크기 제한 (예: 5MB)
+  const maxSizeInBytes = 5 * 1024 * 1024; // 5MB
 
   // 파라미터로 넘어오는 타입 값을 통해 API 요청 값을 유동적으로 변동해줍니다.
-  if (type === "EVENT") {
+  if (type === "EVENT" || type === "GAME") {
     requestURL = `/api/v2/program`;
+    category = `program`;
+  }
+
+  if (type === "FOOD_TRUCK" || type === "PUB" || type === "FLEA_MARKET") {
+    requestURL = `/api/v2/booth`;
+    category = `booth`;
   }
 
   useEffect(() => {
     if (!type) {
+      navigate("/404");
+    }
+
+    if (!sessionStorage.getItem("accessToken")) {
       navigate("/404");
     }
   }, []);
@@ -423,21 +436,27 @@ export default function Editor() {
     data.append("startDate", moment(sDate).format("YYYY-MM-DD").toString());
     data.append("endDate", moment(eDate).format("YYYY-MM-DD").toString());
 
-    await axios
-      .post(`/api/v2/program`, data, {
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-          "Content-Type": "multipart/form-data",
-          "Access-Control-Allow-Origin": "*",
-        },
-      })
-      .then((res) => {
-        alert("게시물이 성공적으로 작성되었어요");
-        console.log(res);
-      })
-      .catch((error) => {
-        alert("에러 발생!");
-      });
+    if (requestURL) {
+      await axios
+        .post(requestURL, data, {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+            "Content-Type": "multipart/form-data",
+            "Access-Control-Allow-Origin": "*",
+          },
+        })
+        .then((res) => {
+          alert("게시물이 성공적으로 작성되었어요");
+          if (category) {
+            navigate(`/detail?category=${category}&id=${res.data}`);
+          }
+          // http://localhost:3000/detail?category=booth&id=2
+        })
+        .catch((error) => {
+          console.log(error);
+          alert("에러 발생!");
+        });
+    }
   };
 
   const tempImgFile = (e: React.FormEvent<HTMLInputElement>) => {
@@ -445,6 +464,7 @@ export default function Editor() {
     if (imgRef.current) {
       file = imgRef.current?.files[0];
     }
+
     setThumnail(file);
     const reader: any = new FileReader();
     reader.readAsDataURL(file);

@@ -10,6 +10,7 @@ export default function CreateSection() {
         display: flex;
         flex-direction: column;
         row-gap: 0.7em;
+        margin-bottom: 2em;
       `}
     >
       <div

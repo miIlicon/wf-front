@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import React, { useEffect, useState } from "react";
 import { css } from "@emotion/react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import PageTitle from "../components/common/PageTitle";
 import PageSubTitle from "../components/common/PageSubTitle";
 import CardList from "../components/common/CardList";
@@ -26,9 +26,9 @@ export default function BoothPage() {
 
   const getFleamarket = async () => {
     await API.get("/api/v2/booth/list", {
-      params: { page: 0, type: selectMenu },
+      params: { page: 0, type: selectMenu, size: 6 },
     }).then((res) => {
-      setFleamarketList(res.data.content);
+      setFleamarketList(res.data.boothResList);
     });
   };
 
@@ -38,10 +38,10 @@ export default function BoothPage() {
       case "PUB":
         setNotice("진행 중인 축제 주점이 없어요");
         break;
-      case "FLEAMARKET":
+      case "FLEA_MARKET":
         setNotice("진행 중인 플리마켓이 없어요");
         break;
-      case "FOODTRUCK":
+      case "FOOD_TRUCK":
         setNotice("진행 중인 푸드트럭이 없어요");
         break;
     }
@@ -71,22 +71,24 @@ export default function BoothPage() {
         />
         <DefaultButton
           text="플리마켓"
-          isSelect={"FLEAMARKET" === selectMenu}
-          value="FLEAMARKET"
+          isSelect={"FLEA_MARKET" === selectMenu}
+          value="FLEA_MARKET"
           onClick={onClickButton}
         />
         <DefaultButton
           text="푸드트럭"
-          isSelect={"FOODTRUCK" === selectMenu}
-          value="FOODTRUCK"
+          isSelect={"FOOD_TRUCK" === selectMenu}
+          value="FOOD_TRUCK"
           onClick={onClickButton}
         />
       </div>
-      <CreateSection />
-      {BoothList.length < 1 ? (
-        <Notice text={notice} />
-      ) : (
+      <Link to={`/edit?type=${selectMenu}`}>
+        <CreateSection />
+      </Link>
+      {BoothList.length ? (
         <CardList dataList={BoothList} category="booth" />
+      ) : (
+        <Notice text={notice} />
       )}
     </Section>
   );

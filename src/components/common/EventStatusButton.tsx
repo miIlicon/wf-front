@@ -8,7 +8,6 @@ export default function EventStatusButton({
   isRunning,
   used,
 }: EventStatusButtonProps) {
-  console.log(used);
   const text = status ? "진행 중인 이벤트" : "종료된 이벤트";
   return (
     <label

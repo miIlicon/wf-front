@@ -6,33 +6,35 @@ import nextButton from "../../images/nextButton.png";
 import prevButton from "../../images/prevButton.png";
 import ModalPortal from "./ModalPortal";
 
-export default function ContentCards({ thumb, idx, dataList }: ContentCardsProps) {
+export default function ContentCards({
+  thumb,
+  idx,
+  dataList,
+}: ContentCardsProps) {
   const [modalOpened, setModalOpened] = useState(false);
   const [currentIdx, setCurrentIdx] = useState(idx);
 
-  const modalOpen = (idx : number) : void => {
+  const modalOpen = (idx: number): void => {
     setCurrentIdx(idx);
     setModalOpened(true);
-  }
+  };
 
-  const modalClose = () : void => {
+  const modalClose = (): void => {
     setModalOpened(false);
-  }
+  };
 
-  const next = () : void => {
-    setCurrentIdx((currentIdx+1)%dataList.length);
-  }
+  const next = (): void => {
+    setCurrentIdx((currentIdx + 1) % dataList.length);
+  };
 
-  const prev = () : void => {
+  const prev = (): void => {
     if (currentIdx === 0) {
-      setCurrentIdx(dataList.length-1);
+      setCurrentIdx(dataList.length - 1);
+    } else {
+      setCurrentIdx(currentIdx - 1);
     }
-    else {
-      setCurrentIdx(currentIdx-1);
-    }
-    
-  }
-  
+  };
+
   return (
     <div>
       {modalOpened && (
@@ -50,7 +52,7 @@ export default function ContentCards({ thumb, idx, dataList }: ContentCardsProps
                   height: 20px;
                   margin: 0 10px;
                   cursor: pointer;
-              `}
+                `}
                 src={prevButton}
                 alt=""
                 onClick={prev}
@@ -82,12 +84,12 @@ export default function ContentCards({ thumb, idx, dataList }: ContentCardsProps
                 font-family: "Pretendard-Medium";
               `}
             >
-              {currentIdx+1} / {dataList.length}
+              {currentIdx + 1} / {dataList.length}
             </p>
           </div>
         </ModalPortal>
       )}
-      <div id="root-modal"/>
+      <div id="root-modal" />
       <img
         src={thumb}
         alt="콘텐츠 부가 이미지"
@@ -95,6 +97,12 @@ export default function ContentCards({ thumb, idx, dataList }: ContentCardsProps
           width: 10em;
           height: 10em;
           border-radius: 0.5em;
+          transition: 0.4s all;
+          cursor: pointer;
+
+          &:hover {
+            opacity: 0.8;
+          }
 
           @media (max-width: 479px) {
             font-size: 10px;

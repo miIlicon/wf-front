@@ -9,7 +9,8 @@ export default function CardList({ dataList, category }: CardListProps) {
     <div
       css={css`
         font-size: 16px;
-        width: 65.8em;
+        // width: 65.8em;
+        width: 100%;
 
         @media all and (max-width: 1100px) {
           width: 100%;
