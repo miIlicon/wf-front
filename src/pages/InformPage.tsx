@@ -7,34 +7,43 @@ import PageTitle from "../components/common/PageTitle";
 import QandA from "./Inform/QandA";
 import Notice from "./Inform/Notice";
 import Bus from "./Inform/Bus";
+import { Section } from "../components/common/components";
 
 const Menu = ({ text, isSelect, value, onClick }: ButtonProps) => {
   return (
     <button
+      type="button"
+      title={value}
       css={css`
-        opacity: ${isSelect ? "1" : "0.3"};
+        opacity: ${isSelect ? "1" : "0.2"};
         background-color: transparent;
         border: none;
         outline: none;
         padding: 0;
-        cursor: pointer;
-        
+
         @media (max-width: 479px) {
           font-size: 28px;
           margin: 0 25px;
         }
         @media all and (min-width: 480px) and (max-width: 767px) {
           font-size: 30px;
-          margin: 0 40px
+          margin: 0 40px;
         }
         @media all and (min-width: 768px) and (max-width: 1099px) {
           font-size: 32px;
-          margin: 0 85px
+          margin: 0 85px;
         }
         @media all and (min-width: 1100px) {
           font-size: 34px;
           margin: 0 110px;
         }
+
+        ${!isSelect &&
+        `&:hover {
+          opacity: 0.4;
+          transition: .4s all;
+          cursor: pointer;
+        }`}
       `}
       onClick={() => onClick(value)}
       value={value}
@@ -42,12 +51,14 @@ const Menu = ({ text, isSelect, value, onClick }: ButtonProps) => {
       <PageTitle text={text} />
     </button>
   );
-}
+};
 
 export default function InformPage() {
   const location = useLocation();
   const state = location.state as { menu: string };
-  const [selectMenu, setSelectMenu] = useState<string>(state ? state.menu : "Q&A");
+  const [selectMenu, setSelectMenu] = useState<string>(
+    state ? state.menu : "Q&A"
+  );
 
   const onClickMenu = (value: string) => {
     setSelectMenu(value);
@@ -58,7 +69,7 @@ export default function InformPage() {
   }, [state]);
 
   return (
-    <div>
+    <Section>
       <div
         css={css`
           display: flex;
@@ -67,19 +78,19 @@ export default function InformPage() {
           margin: 40px 0;
         `}
       >
-        <Menu 
+        <Menu
           text="Q&A"
           isSelect={selectMenu === "Q&A"}
           value="Q&A"
           onClick={onClickMenu}
         />
-        <Menu 
+        <Menu
           text="공지사항"
           isSelect={selectMenu === "notice"}
           value="notice"
           onClick={onClickMenu}
         />
-        <Menu 
+        <Menu
           text="달구지"
           isSelect={selectMenu === "bus"}
           value="bus"
@@ -87,12 +98,10 @@ export default function InformPage() {
         />
       </div>
       <div>
-        {
-          (selectMenu === "Q&A" && <QandA />) ||
+        {(selectMenu === "Q&A" && <QandA />) ||
           (selectMenu === "notice" && <Notice />) ||
-          (selectMenu === "bus" && <Bus />)
-        }
+          (selectMenu === "bus" && <Bus />)}
       </div>
-    </div>
+    </Section>
   );
 }

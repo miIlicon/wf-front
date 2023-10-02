@@ -8,32 +8,34 @@ import CardList from "../components/common/CardList";
 import DefaultButton from "../components/common/DefaultButton";
 import API from "../utils/api";
 import Notice from "../components/common/Notice";
+import { Section } from "../components/common/components";
+import CreateSection from "../components/common/CreateSection";
 
 export default function BoothPage() {
   const location = useLocation();
   const state = location.state as { menu: string };
   const [BoothList, setFleamarketList] = useState<any>([]);
-  const [selectMenu, setSelectMenu] = useState<string>(state ? state.menu : "PUB");
+  const [selectMenu, setSelectMenu] = useState<string>(
+    state ? state.menu : "PUB"
+  );
   const [notice, setNotice] = useState<string>("진행 중인 축제 주점이 없어요");
 
   const onClickButton = (value: string) => {
     setSelectMenu(value);
   };
 
-	const getFleamarket= async () => {
-		await API.get(
-			"/api/v2/booth/list",
-			{params: { "page": 0, "type": selectMenu}}
-		)
-		.then((res) => {
-			setFleamarketList(res.data.content);
-		})
-	};
+  const getFleamarket = async () => {
+    await API.get("/api/v2/booth/list", {
+      params: { page: 0, type: selectMenu },
+    }).then((res) => {
+      setFleamarketList(res.data.content);
+    });
+  };
 
   useEffect(() => {
-		getFleamarket();
+    getFleamarket();
     switch (selectMenu) {
-      case "PUB" :
+      case "PUB":
         setNotice("진행 중인 축제 주점이 없어요");
         break;
       case "FLEAMARKET":
@@ -43,22 +45,14 @@ export default function BoothPage() {
         setNotice("진행 중인 푸드트럭이 없어요");
         break;
     }
-	}, [selectMenu]);
+  }, [selectMenu]);
 
   useEffect(() => {
     setSelectMenu(state ? state.menu : "PUB");
   }, [state]);
 
   return (
-    <div
-      css={css`
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        margin-top: 2em;
-      `}
-    >
+    <Section>
       <PageTitle text="축제 부스" />
       <PageSubTitle text="축제 부스에서 현재 진행되고 있는 축제에 대한 다양한 정보를 얻을 수 있어요" />
       <div
@@ -88,14 +82,12 @@ export default function BoothPage() {
           onClick={onClickButton}
         />
       </div>
-      {
-        (BoothList.length < 1)
-          ? <Notice text= {notice} />
-          : <CardList
-              dataList={BoothList}
-              category="booth"
-            />
-      }
-    </div>
+      <CreateSection />
+      {BoothList.length < 1 ? (
+        <Notice text={notice} />
+      ) : (
+        <CardList dataList={BoothList} category="booth" />
+      )}
+    </Section>
   );
 }

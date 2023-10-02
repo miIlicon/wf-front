@@ -25,6 +25,8 @@ export const Section = ({ children }: WrapperProps) => {
           width: 63.5em;
           padding-left: 1em;
           padding-right: 1em;
+          ${(path === "/inform" || path === "/booth" || path === "/program") &&
+          "text-align:center;"}
         `}
       >
         {children}

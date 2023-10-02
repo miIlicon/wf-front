@@ -47,8 +47,8 @@ export default function Detail() {
     })(document, "script");
 
     // DOM 요소가 동적으로 추가되는 것을 감지하기 위해 MutationObserver을 사용합니다.
-    let observer = new MutationObserver(function (mutationsList, observer) {
-      for (var mutation of mutationsList) {
+    const observer = new MutationObserver(function (mutationsList, observer) {
+      for (let mutation of mutationsList) {
         if (mutation.type === "childList") {
           // DOM 요소가 추가되었을 때 실행할 코드를 여기에 작성합니다.
           console.log(commentRef.current);
@@ -61,7 +61,7 @@ export default function Detail() {
     });
 
     if (commentRef.current) {
-      let config = { childList: true }; // DOM의 자식 노드 변경 사항을 감지합니다.
+      const config = { childList: true }; // DOM의 자식 노드 변경 사항을 감지합니다.
 
       window.onload = function () {
         if (commentRef.current) {
@@ -285,6 +285,10 @@ export default function Detail() {
               column-gap: 2em;
               box-sizing: border-box;
               border-radius: 0.5em;
+
+              #taboola-livere {
+                display: none;
+              }
             `}
             ref={commentRef}
           >
