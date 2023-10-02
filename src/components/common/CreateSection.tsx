@@ -27,6 +27,19 @@ export default function CreateSection() {
           padding: 0.8em;
           transition: 0.4s all;
 
+          @media (max-width: 479px) {
+            font-size: 10px;
+          }
+          @media all and (min-width: 480px) and (max-width: 767px) {
+            font-size: 12px;
+          }
+          @media all and (min-width: 768px) and (max-width: 1099px) {
+            font-size: 14px;
+          }
+          @media all and (min-width: 1100px) {
+            font-size: 16px;
+          }
+
           &:hover {
             background: rgb(242, 244, 246);
           }
@@ -34,7 +47,7 @@ export default function CreateSection() {
       >
         <Plane
           css={css`
-            width: 1.2em;
+            width: 1.15em;
           `}
         />
         <span> 글 작성하기</span>

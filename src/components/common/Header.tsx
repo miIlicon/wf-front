@@ -188,7 +188,21 @@ export function PaddingHeader() {
   return (
     <div
       css={css`
-        height: 65px;
+        height: 3.75em;
+
+        @media (max-width: 479px) {
+          font-size: 10px;
+          column-gap: 1em;
+        }
+        @media all and (min-width: 480px) and (max-width: 767px) {
+          font-size: 12px;
+        }
+        @media all and (min-width: 768px) and (max-width: 1099px) {
+          font-size: 14px;
+        }
+        @media all and (min-width: 1100px) {
+          font-size: 16px;
+        }
       `}
     ></div>
   );

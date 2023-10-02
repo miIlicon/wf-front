@@ -59,6 +59,7 @@ export default function ChatBox({
       .then(() => {
         setValue("");
         setEmail("");
+        setValidation(false);
         setCurrentLength(0);
         changeTrigger(!trigger);
       });

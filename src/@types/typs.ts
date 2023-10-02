@@ -52,11 +52,17 @@ export interface VideoListProps {
 export interface EventStatusButtonProps {
   status?: boolean;
   isRunning?: boolean;
+  used?: string;
 }
 
 export interface titleProps {
   text: string;
   used?: string;
+}
+
+export interface DateProps {
+  endDate: string;
+  startDate: string;
 }
 
 export interface eventProps {
