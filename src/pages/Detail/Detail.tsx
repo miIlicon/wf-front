@@ -33,6 +33,10 @@ export default function Detail() {
   const id = new URLSearchParams(location.search).get("id");
 
   useEffect(() => {
+    window.livereOptions = {
+      refer: window.location.href,
+    };
+
     (function (d, s) {
       let j: any,
         e: any = d.getElementsByTagName(s)[0];
@@ -170,7 +174,7 @@ export default function Detail() {
             flex-direction: column;
             align-items: left;
             text-align: left;
-            row-gap: 2.68em;
+            row-gap: 2.2em;
             width: 85vw;
             overflow: auto;
             white-space: nowrap;
@@ -189,7 +193,7 @@ export default function Detail() {
             }
           `}
         >
-          <ContentTitle text="관련된 더 많은 사진을 보여드릴게요" />
+          <ContentTitle text="이벤트 사진" />
           <div
             css={css`
               display: flex;
@@ -242,7 +246,7 @@ export default function Detail() {
             }
           `}
         >
-          <ContentTitle text="상세 설명" />
+          <ContentTitle text="이벤트 상세 설명" />
           <div
             css={css`
               display: flex;
@@ -280,7 +284,7 @@ export default function Detail() {
             }
           `}
         >
-          <ContentTitle text="해당 이벤트에 대해 같이 이야기를 나눠봐요" />
+          <ContentTitle text="이벤트 댓글" />
           <div
             css={css`
               display: flex;
