@@ -74,9 +74,12 @@ export default function ProgramPage() {
           onClick={onClickButton}
         />
       </div>
-      <Link to={`/edit?type=${selectMenu}`}>
-        <CreateSection />
-      </Link>
+
+      {sessionStorage.getItem("accessToken") && (
+        <Link to={`/edit?type=${selectMenu}`}>
+          <CreateSection />
+        </Link>
+      )}
       {programList.length ? (
         <CardList dataList={programList} category="program" />
       ) : (

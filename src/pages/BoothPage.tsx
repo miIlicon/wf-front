@@ -82,9 +82,11 @@ export default function BoothPage() {
           onClick={onClickButton}
         />
       </div>
-      <Link to={`/edit?type=${selectMenu}`}>
-        <CreateSection />
-      </Link>
+      {sessionStorage.getItem("accessToken") && (
+        <Link to={`/edit?type=${selectMenu}`}>
+          <CreateSection />
+        </Link>
+      )}
       {BoothList.length ? (
         <CardList dataList={BoothList} category="booth" />
       ) : (

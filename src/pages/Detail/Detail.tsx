@@ -164,7 +164,7 @@ export default function Detail() {
           >
             <ContentTitle text={detailData.title} />
             <ContentSubTitle text={detailData.subTitle} />
-            <EventStatusButton status={detailData.status === "OPERATE"} />
+            <EventStatusButton status={detailData.status} />
             <Map lat={detailData.latitude} lon={detailData.longitude} />
           </div>
         </article>

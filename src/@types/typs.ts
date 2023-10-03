@@ -9,7 +9,7 @@ export interface CardProps {
   category?: string;
   title?: string;
   subTitle?: string;
-  status?: boolean;
+  status?: string | boolean;
   thumb: string;
   isRunning?: boolean;
 }
@@ -17,7 +17,7 @@ export interface CardProps {
 export interface CardListProps {
   dataList: any[];
   category: string;
-  status?: boolean;
+  status?: string | boolean;
   isRunning?: boolean;
 }
 
@@ -50,7 +50,7 @@ export interface VideoListProps {
 }
 
 export interface EventStatusButtonProps {
-  status?: boolean;
+  status?: string | boolean;
   isRunning?: boolean;
   used?: string;
 }

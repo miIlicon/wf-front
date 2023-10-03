@@ -8,7 +8,15 @@ export default function EventStatusButton({
   isRunning,
   used,
 }: EventStatusButtonProps) {
-  const text = status ? "진행 중인 이벤트" : "종료된 이벤트";
+  let text = null;
+  if (status === "OPERATE") {
+    status = true;
+    text = "진행 중인 이벤트";
+  } else {
+    text = status === "TERMINATE" ? "종료된 이벤트" : "예정 중인 이벤트";
+    status = false;
+  }
+
   return (
     <label
       css={css`
@@ -19,7 +27,6 @@ export default function EventStatusButton({
         transition: 0.4s all;
 
         border: none;
-        cursor: pointer;
         border-radius: 30em;
         box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 0.12);
         font-size: 12px;
@@ -60,7 +67,7 @@ export default function EventStatusButton({
         font-family: "Pretendard-Medium";
       `}
     >
-      {text}
+      {text && text}
     </label>
   );
 }
