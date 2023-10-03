@@ -8,7 +8,6 @@ export default function EventStatusButton({
   isRunning,
   used,
 }: EventStatusButtonProps) {
-  console.log(used);
   const text = status ? "진행 중인 이벤트" : "종료된 이벤트";
   return (
     <label
@@ -40,14 +39,18 @@ export default function EventStatusButton({
 
         ${used !== "edit" &&
         `
-          color: #3182f6;
+          color: ${status ? "#3182f6" : "#404040"};
           opacity: ${status ? "1" : "80%"};
           background-color: ${
             status ? "rgba(49, 130, 246, 0.16)" : "rgba(124, 124, 124, 0.4)"
           };
           border-radius: 0.3em;
-          height: 2.2em;
-          width: 8.5em;
+          height: 1.7em;
+          padding-top: .3em;
+          padding-bottom: .3em;
+          padding-left: .2em;
+          padding-right: .2em;
+          width: 7.9em;
           box-shadow: none;
         `}
 

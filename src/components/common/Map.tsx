@@ -5,10 +5,12 @@ import { MapProps } from "../../@types/typs";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../app/store";
 import { saveLocation } from "../../features/fetcherSlice";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function Map({ lat = 37.27574, lon = 127.13249 }: MapProps) {
   const { kakao }: any = window;
   const dispatch = useDispatch<AppDispatch>();
+  const location = useLocation();
 
   useEffect(() => {
     let mapContainer = document.getElementById("map"); // 지도를 표시할 div
@@ -32,6 +34,10 @@ export default function Map({ lat = 37.27574, lon = 127.13249 }: MapProps) {
     marker.setMap(map);
 
     kakao.maps.event.addListener(map, "click", function (mouseEvent: any) {
+      if (location.pathname === "/detail") {
+        return;
+      }
+
       // 클릭한 위도, 경도 정보를 가져옵니다
       var latlng = mouseEvent.latLng;
 
@@ -45,9 +51,9 @@ export default function Map({ lat = 37.27574, lon = 127.13249 }: MapProps) {
       var message = "클릭한 위치의 위도는 " + latlng.getLat() + " 이고, ";
       message += "경도는 " + latlng.getLng() + " 입니다";
 
-      console.log(message);
+      // console.log(message);
     });
-  }, []);
+  }, [lat, lon]);
 
   return (
     <div

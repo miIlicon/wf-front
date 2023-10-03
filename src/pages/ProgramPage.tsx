@@ -10,6 +10,7 @@ import API from "../utils/api";
 import Notice from "../components/common/Notice";
 import { Section } from "../components/common/components";
 import CreateSection from "../components/common/CreateSection";
+import axios from "axios";
 
 export default function ProgramPage() {
   const location = useLocation();
@@ -25,11 +26,14 @@ export default function ProgramPage() {
   };
 
   const getProgramInfo = async () => {
-    await API.get(`/api/v2/program/list`, {
-      params: { page: 0, type: selectMenu },
-    }).then((res) => {
-      setProgramList(res.data.content);
-    });
+    await axios
+      .get(`/api/v2/program/list`, {
+        params: { page: 0, type: selectMenu, size: 6 },
+      })
+      .then((res) => {
+        console.log(res);
+        setProgramList(res.data.programList);
+      });
   };
 
   useEffect(() => {
@@ -70,7 +74,7 @@ export default function ProgramPage() {
           onClick={onClickButton}
         />
       </div>
-      <Link to={`/edit?${selectMenu}`}>
+      <Link to={`/edit?type=${selectMenu}`}>
         <CreateSection />
       </Link>
       {programList.length ? (

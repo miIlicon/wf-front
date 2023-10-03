@@ -21,6 +21,7 @@ import API from "../utils/api";
 import { Section } from "../components/common/components";
 import Calendar from "react-calendar";
 import moment from "moment";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const TitleInput = ({ onChange }: InputProps) => {
   return (
@@ -57,13 +58,10 @@ const TitleInput = ({ onChange }: InputProps) => {
   );
 };
 
-const CalendarSection = ({ endDate, startDate }: DateProps) => {
+const CalendarSection = ({ sDate, setSDate, eDate, setEDate }: DateProps) => {
   const sTouchNode = useRef<HTMLDivElement | null>(null);
   const eTouchNode = useRef<HTMLDivElement | null>(null);
   const calendarNode = useRef<HTMLDivElement | null>(null);
-  const [sDate, setSDate] = useState(new Date());
-  const [eDate, setEDate] = useState(new Date());
-  const [isOpen, setIsOpen] = useState(false);
   const [isOpenStart, setIsOpenStart] = useState(false);
   const [isOpenEnd, setIsOpenEnd] = useState(false);
   const CalendarOverrideCss = `
@@ -128,10 +126,14 @@ const CalendarSection = ({ endDate, startDate }: DateProps) => {
       if (sTouchNode.current && eTouchNode.current) {
         if (sTouchNode.current.contains(event.target as HTMLElement)) {
           setIsOpenStart(true);
+        } else {
+          setIsOpenStart(false);
         }
 
         if (eTouchNode.current.contains(event.target as HTMLElement)) {
           setIsOpenEnd(true);
+        } else {
+          setIsOpenEnd(false);
         }
       }
     });
@@ -363,6 +365,8 @@ export default function Editor() {
   const [test1, setTest1] = useState("");
   const [test2, setTest2] = useState("");
   const [test3, setTest3] = useState("");
+  const [sDate, setSDate] = useState(new Date());
+  const [eDate, setEDate] = useState(new Date());
 
   const [imgFile, setImgFile] = useState("");
   const [subfirstFile, setsubfirstFile] = useState("");
@@ -377,66 +381,82 @@ export default function Editor() {
   const imgthirdRef = useRef<any>(null);
 
   const data = new FormData();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const type = new URLSearchParams(location.search).get("type");
+  let requestURL: string | null = null;
+  let category: string | null = null;
+  // 이미지 파일 크기 제한 (예: 5MB)
+  const maxSizeInBytes = 5 * 1024 * 1024; // 5MB
+
+  // 파라미터로 넘어오는 타입 값을 통해 API 요청 값을 유동적으로 변동해줍니다.
+  if (type === "EVENT" || type === "GAME") {
+    requestURL = `/api/v2/program`;
+    category = `program`;
+  }
+
+  if (type === "FOOD_TRUCK" || type === "PUB" || type === "FLEA_MARKET") {
+    requestURL = `/api/v2/booth`;
+    category = `booth`;
+  }
+
+  useEffect(() => {
+    if (!type) {
+      navigate("/404");
+    }
+
+    if (!sessionStorage.getItem("accessToken")) {
+      navigate("/404");
+    }
+  }, []);
 
   const handleSubmit = async (event: Event) => {
     event.preventDefault();
-    const dataSet: any = {
-      title: title,
-      subTitle: subTitle,
-      content: content,
-      latitude: latitude,
-      longtitude: longtitude,
-      state: state,
-    };
 
     const subFile: any = [test1, test2, test3];
 
-    // data.append("dto", JSON.stringify(dataSet));
     data.append("title", title);
     data.append("subTitle", subTitle);
     data.append("content", content);
     data.append("latitude", latitude);
     data.append("longitude", longtitude);
-    data.append("state", state.toString());
+    if (type) {
+      data.append("type", type);
+    }
+    if (state) {
+      data.append("operateStatus", "OPERATE");
+    } else {
+      data.append("operateStatus", "TERMINATE");
+    }
     data.append("mainFile", thumnail);
-
-    // for (let i = 0; i < subFile.length; i++) {
-    //   data.append("sub-file", subFile[i]);
-    // }
 
     Array.from(subFile).forEach((img: any) => {
       data.append("subFiles", img);
-      // console.log(img);
     });
+    data.append("startDate", moment(sDate).format("YYYY-MM-DD").toString());
+    data.append("endDate", moment(eDate).format("YYYY-MM-DD").toString());
 
-    // data.append("sub-file", subFile);
-    // data.append("sub-file", subtwiceFile);
-    // data.append("sub-file", subthirdFile);
-    // console.log("formdata", data);
-
-    for (let key of data.entries()) {
-      console.log(key);
+    if (requestURL) {
+      await axios
+        .post(requestURL, data, {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+            "Content-Type": "multipart/form-data",
+            "Access-Control-Allow-Origin": "*",
+          },
+        })
+        .then((res) => {
+          alert("게시물이 성공적으로 작성되었어요");
+          if (category) {
+            navigate(`/detail?category=${category}&id=${res.data}`);
+          }
+          // http://localhost:3000/detail?category=booth&id=2
+        })
+        .catch((error) => {
+          console.log(error);
+          alert("에러 발생!");
+        });
     }
-
-    console.log(data);
-
-    await API.post(`/api/v1/festivalEvent/integrated`, data, {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-        "Content-Type": "multipart/form-data",
-        "Access-Control-Allow-Origin": "*",
-      },
-    })
-      .then((res) => {
-        alert(res);
-      })
-      .catch((error) => {
-        alert("에러 발생!");
-
-        // for (let i of data) {
-        //   console.log("!!", i);
-        // }
-      });
   };
 
   const tempImgFile = (e: React.FormEvent<HTMLInputElement>) => {
@@ -444,6 +464,7 @@ export default function Editor() {
     if (imgRef.current) {
       file = imgRef.current?.files[0];
     }
+
     setThumnail(file);
     const reader: any = new FileReader();
     reader.readAsDataURL(file);
@@ -605,8 +626,10 @@ export default function Editor() {
               value={subTitle}
             />
             <CalendarSection
-              startDate={"2023년 10월 1일"}
-              endDate={"2023년 10월 1일"}
+              sDate={sDate}
+              eDate={eDate}
+              setSDate={setSDate}
+              setEDate={setEDate}
             />
             <Map />
           </div>

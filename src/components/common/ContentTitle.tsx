@@ -8,7 +8,7 @@ export default function ContentTitle({ text }: contentTextProps) {
     <span
       css={css`
         display: block;
-        color: #4e5968;
+        color: #404040;
         font-family: "Pretendard-Bold";
         letter-spacing: -0.03em;
 

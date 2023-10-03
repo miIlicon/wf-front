@@ -9,8 +9,10 @@ export const Thumb = ({ thumb, status }: CardProps) => {
   return (
     <img
       css={css`
-        width: 100%;
-        height: auto;
+        // width: 100%;
+        // height: auto;
+        width: 18.8em;
+        height: 26.6em;
         border-radius: 11px;
         filter: ${status ? "grayscale(0)" : "grayscale(100%)"};
       `}
@@ -20,7 +22,14 @@ export const Thumb = ({ thumb, status }: CardProps) => {
   );
 };
 
-export default function Card({ id, category, title, subTitle, thumb, status }: CardProps) {
+export default function Card({
+  id,
+  category,
+  title,
+  subTitle,
+  thumb,
+  status,
+}: CardProps) {
   const navigate = useNavigate();
 
   return (
@@ -35,7 +44,7 @@ export default function Card({ id, category, title, subTitle, thumb, status }: C
           transform: translateY(-2%);
         }
       `}
-      onClick={() => navigate("/detail", {state: { category: category, id: id }})}
+      onClick={() => navigate(`/detail?category=${category}&id=${id}`)}
     >
       <Thumb thumb={thumb} status={status} />
       <div
@@ -43,7 +52,7 @@ export default function Card({ id, category, title, subTitle, thumb, status }: C
           margin-top: 17px;
         `}
       >
-        <EventStatusButton status={status? true : false} />
+        <EventStatusButton status={status ? true : false} />
         <p
           css={css`
             font-weight: 700;

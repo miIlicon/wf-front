@@ -9,7 +9,8 @@ export default function CardList({ dataList, category }: CardListProps) {
     <div
       css={css`
         font-size: 16px;
-        width: 65.8em;
+        // width: 65.8em;
+        width: 100%;
 
         @media all and (max-width: 1100px) {
           width: 100%;
@@ -52,21 +53,20 @@ export default function CardList({ dataList, category }: CardListProps) {
           margin-bottom: 3em;
         `}
       >
-        {dataList.map(
-          (data) =>
-            data.state && (
-              <div css={css``}>
-                <Card
-                  id={data.id}
-                  category={category}
-                  title={data.title}
-                  subTitle={data.subTitle}
-                  status={data.status === "OPERATE"}
-                  thumb={data.mainFilePath}
-                />
-              </div>
-            )
-        )}
+        {dataList.map((data) => {
+          return (
+            <div css={css``}>
+              <Card
+                id={data.id}
+                category={category}
+                title={data.title}
+                subTitle={data.subTitle}
+                status={data.operateStatus === "OPERATE"}
+                thumb={data.mainFilePath}
+              />
+            </div>
+          );
+        })}
       </div>
     </div>
   );
