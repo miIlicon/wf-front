@@ -6,6 +6,11 @@ import { CardProps } from "../../@types/typs";
 import { useNavigate } from "react-router-dom";
 
 export const Thumb = ({ thumb, status }: CardProps) => {
+  if (status === "OPERATE") {
+    status = true;
+  } else {
+    status = false;
+  }
   return (
     <img
       css={css`
@@ -52,7 +57,7 @@ export default function Card({
           margin-top: 17px;
         `}
       >
-        <EventStatusButton status={status ? true : false} />
+        <EventStatusButton status={status} />
         <p
           css={css`
             font-weight: 700;

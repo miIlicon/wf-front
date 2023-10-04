@@ -235,6 +235,7 @@ const CalendarSection = ({ sDate, setSDate, eDate, setEDate }: DateProps) => {
           value={sDate}
           ref={calendarNode}
           className="calendarDetail"
+          maxDate={eDate}
         />
       )}
       {isOpenEnd && (
@@ -246,6 +247,7 @@ const CalendarSection = ({ sDate, setSDate, eDate, setEDate }: DateProps) => {
           value={eDate}
           ref={calendarNode}
           className="calendarDetail"
+          minDate={sDate}
         />
       )}
     </div>
@@ -359,7 +361,7 @@ export default function Editor() {
   const [title, setTitle] = useState("");
   const [subTitle, setSubTitle] = useState("");
   const [content, setContent] = useState("");
-  const [state, setState] = useState(false);
+  const [state, setState] = useState("");
 
   const [thumnail, setThumnail] = useState("");
   const [test1, setTest1] = useState("");
@@ -384,10 +386,9 @@ export default function Editor() {
   const location = useLocation();
   const navigate = useNavigate();
   const type = new URLSearchParams(location.search).get("type");
+  const currentTime = moment();
   let requestURL: string | null = null;
   let category: string | null = null;
-  // 이미지 파일 크기 제한 (예: 5MB)
-  const maxSizeInBytes = 5 * 1024 * 1024; // 5MB
 
   // 파라미터로 넘어오는 타입 값을 통해 API 요청 값을 유동적으로 변동해줍니다.
   if (type === "EVENT" || type === "GAME") {
@@ -406,9 +407,22 @@ export default function Editor() {
     }
 
     if (!sessionStorage.getItem("accessToken")) {
-      navigate("/404");
+      navigate("/admin");
     }
   }, []);
+
+  useEffect(() => {
+    if (currentTime.isBefore(moment(sDate).format("YYYY-MM-DD 00:00"))) {
+      // alert("시작 날짜가 현재 날짜보다 큽니다.");
+      setState("UPCOMING");
+    } else if (currentTime.isAfter(moment(eDate).format("YYYY-MM-DD 24:00"))) {
+      // alert("만료 날짜가 현재 날짜보다 작습니다.");
+      setState("TERMINATE");
+    } else {
+      // alert("현재 날짜가 시작 날짜와 만료 날짜 사이에 있습니다.");
+      setState("OPERATE");
+    }
+  }, [sDate, eDate]);
 
   const handleSubmit = async (event: Event) => {
     event.preventDefault();
@@ -596,17 +610,24 @@ export default function Editor() {
                 column-gap: 0.5em;
               `}
             >
-              <label onClick={() => setState(true)}>
+              <label>
                 <EventStatusButton
-                  status={true}
-                  isRunning={state ? true : false}
+                  status={"UPCOMING"}
+                  isRunning={state === "UPCOMING" ? true : false}
                   used={`edit`}
                 />
               </label>
-              <label onClick={() => setState(false)}>
+              <label>
                 <EventStatusButton
-                  status={false}
-                  isRunning={!state ? true : false}
+                  status={"OPERATE"}
+                  isRunning={state === "OPERATE" ? true : false}
+                  used={`edit`}
+                />
+              </label>
+              <label>
+                <EventStatusButton
+                  status={"TERMINATE"}
+                  isRunning={state === "TERMINATE" ? true : false}
                   used={`edit`}
                 />
               </label>

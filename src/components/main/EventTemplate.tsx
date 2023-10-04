@@ -72,7 +72,7 @@ export default function EventTemplate({ text }: titleProps) {
           category={"food-truck"}
           title={"축제 임시데이터"}
           subTitle={"축제 임시데이터"}
-          status={true}
+          status={"OPERATE"}
           thumb={dummy}
         />
         <Card
@@ -80,7 +80,7 @@ export default function EventTemplate({ text }: titleProps) {
           category={"food-truck"}
           title={"축제 임시데이터"}
           subTitle={"축제 임시데이터"}
-          status={true}
+          status={"OPERATE"}
           thumb={dummy}
         />
         <Card
@@ -88,7 +88,7 @@ export default function EventTemplate({ text }: titleProps) {
           category={"food-truck"}
           title={"축제 임시데이터"}
           subTitle={"축제 임시데이터"}
-          status={true}
+          status={"OPERATE"}
           thumb={dummy}
         />
       </div>

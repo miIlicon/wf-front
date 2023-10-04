@@ -61,7 +61,7 @@ export default function CardList({ dataList, category }: CardListProps) {
                 category={category}
                 title={data.title}
                 subTitle={data.subTitle}
-                status={data.operateStatus === "OPERATE"}
+                status={data.operateStatus}
                 thumb={data.mainFilePath}
               />
             </div>
