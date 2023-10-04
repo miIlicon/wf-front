@@ -6,8 +6,8 @@
     "학교주최 이벤트": "EVENT",
     "경기 일정/결과": "GAME",
     "축제주점": "PUB",
-    "플리마켓": "FLEAMARKET",
-    "푸드트럭": "FOODTRUCK",
+    "플리마켓": "FLEA_MARKET",
+    "푸드트럭": "FOOD_TRUCK",
     "Q&A": "Q&A",
     "공지사항": "notice",
     "달구지": "bus"
