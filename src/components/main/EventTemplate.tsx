@@ -7,11 +7,12 @@ import rightArrow from "../../images/main/rightArrow.png";
 import { EventTemplateProps } from "../../@types/typs";
 import Card from "../common/Card";
 import { useNavigate } from "react-router-dom";
+import NotData from "../common/NotData";
 
 export default function EventTemplate({ text, type }: EventTemplateProps) {
   const navigate = useNavigate();
   const [dataList, setDataList] = useState<any>([]);
-  const category = (type === "EVENT" ? "program" : "booth");
+  const category = type === "EVENT" ? "program" : "booth";
 
   const getInfo = async () => {
     await axios
@@ -29,7 +30,7 @@ export default function EventTemplate({ text, type }: EventTemplateProps) {
 
   useEffect(() => {
     getInfo();
-  }, [])
+  }, []);
 
   return (
     <div
@@ -65,7 +66,9 @@ export default function EventTemplate({ text, type }: EventTemplateProps) {
               background-color: #f8f8f8;
             }
           `}
-          onClick={() => {navigate(`/${category}`, {state: { menu: type }})}}
+          onClick={() => {
+            navigate(`/${category}`, { state: { menu: type } });
+          }}
         >
           <span
             css={css`
@@ -91,15 +94,20 @@ export default function EventTemplate({ text, type }: EventTemplateProps) {
           column-gap: 1.8em;
         `}
       >
-        {dataList.map((data : any) =>
-          <Card
-            id={data.id}
-            category={category}
-            title={data.title}
-            subTitle={data.subTitle}
-            status={data.operateStatus}
-            thumb={data.mainFilePath}
-          />
+        {dataList.length ? (
+          dataList.map((data: any) => (
+            <Card
+              id={data.id}
+              key={data.id}
+              category={category}
+              title={data.title}
+              subTitle={data.subTitle}
+              status={data.operateStatus}
+              thumb={data.mainFilePath}
+            />
+          ))
+        ) : (
+          <NotData />
         )}
       </div>
     </div>

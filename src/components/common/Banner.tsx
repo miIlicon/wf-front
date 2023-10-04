@@ -118,7 +118,7 @@ export default function Banner() {
         </div>
         <Rocket
           css={css`
-            width: 3.3em;
+            width: 5em;
             height: auto;
 
             @media (max-width: 479px) {

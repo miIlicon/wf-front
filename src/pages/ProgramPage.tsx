@@ -39,9 +39,9 @@ export default function ProgramPage() {
   useEffect(() => {
     getProgramInfo();
     if (selectMenu === "EVENT") {
-      setNotice("진행 중인 이벤트가 없어요");
+      setNotice("아직 등록된 이벤트가 없어요");
     } else if (selectMenu === "GAME") {
-      setNotice("진행 중인 경기가 없어요");
+      setNotice("아직 등록된 경기 일정이 없어요");
     }
   }, [selectMenu]);
 
@@ -75,7 +75,7 @@ export default function ProgramPage() {
         />
       </div>
 
-      {sessionStorage.getItem("accessToken") && (
+      {localStorage.getItem("accessToken") && (
         <Link to={`/edit?type=${selectMenu}`}>
           <CreateSection />
         </Link>
