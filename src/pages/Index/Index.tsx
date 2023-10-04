@@ -199,9 +199,9 @@ export default function Index() {
         <Introduce />
         <Search />
         <CurrentEvent />
-        <EventTemplate text="지금 현재 인기있는 축제 정보" />
-        <EventTemplate text="지금 현재 인기있는 플리 마켓" />
-        <EventTemplate text="지금 현재 인기있는 푸드 트럭" />
+        <EventTemplate text="지금 현재 인기있는 축제 정보" type="EVENT" />
+        <EventTemplate text="지금 현재 인기있는 플리 마켓" type="FLEA_MARKET" />
+        <EventTemplate text="지금 현재 인기있는 푸드 트럭" type="FOOD_TRUCK" />
         {/* <img
           src={location}
           alt="축제 위치 한 눈에 보기"

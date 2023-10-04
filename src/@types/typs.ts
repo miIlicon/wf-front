@@ -168,3 +168,8 @@ export interface SearchModalProps {
   path: string;
   dataList: SearchResultProps[];
 }
+
+export interface EventTemplateProps {
+  text: string;
+  type: string;
+}
