@@ -1,13 +1,36 @@
 /** @jsxImportSource @emotion/react */
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { css } from "@emotion/react";
+import axios from "axios";
 import Title from "./Title";
 import rightArrow from "../../images/main/rightArrow.png";
-import { eventProps, titleProps } from "../../@types/typs";
+import { EventTemplateProps } from "../../@types/typs";
 import Card from "../common/Card";
-import dummy from "../../images/detail/dummy.png";
+import { useNavigate } from "react-router-dom";
 
-export default function EventTemplate({ text }: titleProps) {
+export default function EventTemplate({ text, type }: EventTemplateProps) {
+  const navigate = useNavigate();
+  const [dataList, setDataList] = useState<any>([]);
+  const category = (type === "EVENT" ? "program" : "booth");
+
+  const getInfo = async () => {
+    await axios
+      .get(`/api/v2/${category}/list`, {
+        params: { page: 0, type: type, size: 3 },
+      })
+      .then((res) => {
+        if (type === "EVENT") {
+          setDataList(res.data.programList);
+        } else {
+          setDataList(res.data.boothResList);
+        }
+      });
+  };
+
+  useEffect(() => {
+    getInfo();
+  }, [])
+
   return (
     <div
       css={css`
@@ -42,6 +65,7 @@ export default function EventTemplate({ text }: titleProps) {
               background-color: #f8f8f8;
             }
           `}
+          onClick={() => {navigate(`/${category}`, {state: { menu: type }})}}
         >
           <span
             css={css`
@@ -67,30 +91,16 @@ export default function EventTemplate({ text }: titleProps) {
           column-gap: 1.8em;
         `}
       >
-        <Card
-          id={1}
-          category={"food-truck"}
-          title={"축제 임시데이터"}
-          subTitle={"축제 임시데이터"}
-          status={"OPERATE"}
-          thumb={dummy}
-        />
-        <Card
-          id={1}
-          category={"food-truck"}
-          title={"축제 임시데이터"}
-          subTitle={"축제 임시데이터"}
-          status={"OPERATE"}
-          thumb={dummy}
-        />
-        <Card
-          id={1}
-          category={"food-truck"}
-          title={"축제 임시데이터"}
-          subTitle={"축제 임시데이터"}
-          status={"OPERATE"}
-          thumb={dummy}
-        />
+        {dataList.map((data : any) =>
+          <Card
+            id={data.id}
+            category={category}
+            title={data.title}
+            subTitle={data.subTitle}
+            status={data.operateStatus}
+            thumb={data.mainFilePath}
+          />
+        )}
       </div>
     </div>
   );
