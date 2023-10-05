@@ -178,7 +178,7 @@ export default function Banner() {
         spaceBetween={30}
         centeredSlides={true}
         autoplay={{
-          delay: 2000,
+          delay: 5000,
           disableOnInteraction: false,
         }}
         navigation={true}
@@ -191,7 +191,7 @@ export default function Banner() {
             // backgroundColor={`#004F3C`}
             content={`다시 돌아온 대나무 숲을 이용해보세요`}
             router={`/detail`}
-            imgSrc={lamb}
+            // imgSrc={lamb}
             defaultImgSize={"7"}
           />
         </SwiperSlide>

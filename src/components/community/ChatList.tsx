@@ -15,13 +15,29 @@ export default function ChatList({
 }: communityStateProps) {
   const [chatData, setChatData] = useState<any[]>([]);
   const autoTimerObj = useRef<NodeJS.Timeout | null>(null);
+  const [pageSize, setPageSize] = useState<number>(10);
+  const [dataSize, setDataSize] = useState<number>(0);
+  const [keepUpdateTrigger, setKeepUpdateTrigger] = useState<boolean>(false);
+
+  function moreChat() {
+    if (dataSize > pageSize) {
+      setPageSize(pageSize + 10);
+      changeTrigger(!trigger);
+      clearInterval(autoTimerObj.current as NodeJS.Timeout);
+      setKeepUpdateTrigger(!keepUpdateTrigger);
+    }
+  }
 
   /** 트리거를 통해 대나무 숲을 업데이트를 해주는 렌더링 함수 */
   useEffect(() => {
     axios
-      .get("/api/v2/bambooforest/list?page=0&size=10&sort=string")
+      .get(`/api/v2/bambooforest/list?page=0&size=${pageSize}&sort=string`)
       .then((res: any) => {
         setChatData(res.data.forestResList);
+        if (res.data.forestResList && res.data.forestResList.length) {
+          // 대나무 숲 데이터의 마지막 번호가 몇 번인지 가져옵니다.
+          setDataSize(res.data.forestResList[0].id);
+        }
       });
   }, [trigger]);
 
@@ -30,10 +46,13 @@ export default function ChatList({
     if (autoUpdate) {
       autoTimerObj.current = setInterval(() => {
         axios
-          .get("/api/v2/bambooforest/list?page=0&size=10&sort=string")
+          .get(`/api/v2/bambooforest/list?page=0&size=${pageSize}&sort=string`)
           .then((res: any) => {
             setChatData(res.data.forestResList);
-            console.log(res.data.forestResList);
+            if (res.data.forestResList && res.data.forestResList.length) {
+              // 대나무 숲 데이터의 마지막 번호가 몇 번인지 가져옵니다.
+              setDataSize(res.data.forestResList[0].id);
+            }
           });
       }, 4000);
     } else {
@@ -45,7 +64,7 @@ export default function ChatList({
     return () => {
       clearInterval(autoTimerObj.current as NodeJS.Timeout);
     };
-  }, [autoUpdate]);
+  }, [autoUpdate, keepUpdateTrigger]);
 
   return (
     <div
@@ -60,6 +79,19 @@ export default function ChatList({
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
+
+        @media (max-width: 479px) {
+          font-size: 13px;
+        }
+        @media all and (min-width: 480px) and (max-width: 767px) {
+          font-size: 14px;
+        }
+        @media all and (min-width: 768px) and (max-width: 1099px) {
+          font-size: 15px;
+        }
+        @media all and (min-width: 1100px) {
+          font-size: 16px;
+        }
       `}
     >
       <div
@@ -109,7 +141,7 @@ export default function ChatList({
         css={css`
           width: 100%;
           padding: 0;
-          border: solid;
+          border: 0.11em solid;
           border-bottom: 0;
           border-left: 0;
           border-right: 0;
@@ -123,25 +155,28 @@ export default function ChatList({
           border-color: rgba(192, 192, 192, 0.5);
         `}
       >
-        <div
-          css={css`
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            column-gap: 0.5em;
-            padding-top: 1em;
-            cursor: pointer;
-          `}
-        >
-          <img
-            src={arrowBottom}
-            alt="대화 더보기"
+        {dataSize > 10 && (
+          <div
             css={css`
-              width: 0.9em;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              column-gap: 0.5em;
+              padding-top: 1em;
+              cursor: pointer;
             `}
-          />
-          <span> 대화 더보기</span>
-        </div>
+            onClick={moreChat}
+          >
+            <img
+              src={arrowBottom}
+              alt="대화 더보기"
+              css={css`
+                width: 0.9em;
+              `}
+            />
+            <span> 대화 더보기</span>
+          </div>
+        )}
       </div>
     </div>
   );

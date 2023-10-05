@@ -18,6 +18,7 @@ export default function ChatBox({
   const [email, setEmail] = useState("");
   const [checked, setChecked] = useState(false);
   const [validation, setValidation] = useState(false);
+  const [completeLoad, setCompleteLoad] = useState<boolean>(false);
   const form = new FormData();
 
   function toggleChange() {
@@ -50,6 +51,7 @@ export default function ChatBox({
   function handleClick() {
     form.append("content", value);
     form.append("contact", email);
+    setCompleteLoad(true);
     axios
       .post("/api/v2/bambooforest", form, {
         headers: {
@@ -62,6 +64,7 @@ export default function ChatBox({
         setValidation(false);
         setCurrentLength(0);
         changeTrigger(!trigger);
+        setCompleteLoad(false);
       });
   }
 
@@ -75,6 +78,19 @@ export default function ChatBox({
           margin-top: 3em;
           margin-bottom: 1.1em;
           cursor: pointer;
+
+          @media (max-width: 479px) {
+            font-size: 13px;
+          }
+          @media all and (min-width: 480px) and (max-width: 767px) {
+            font-size: 14px;
+          }
+          @media all and (min-width: 768px) and (max-width: 1099px) {
+            font-size: 15px;
+          }
+          @media all and (min-width: 1100px) {
+            font-size: 16px;
+          }
         `}
         onClick={toggleChange}
       >
@@ -84,6 +100,19 @@ export default function ChatBox({
             font-family: "Pretendard-Regular";
             font-size: 16px;
             color: #404040;
+
+            @media (max-width: 479px) {
+              font-size: 13px;
+            }
+            @media all and (min-width: 480px) and (max-width: 767px) {
+              font-size: 14px;
+            }
+            @media all and (min-width: 768px) and (max-width: 1099px) {
+              font-size: 15px;
+            }
+            @media all and (min-width: 1100px) {
+              font-size: 16px;
+            }
           `}
         >
           대나무 숲 자동 업데이트
@@ -95,7 +124,7 @@ export default function ChatBox({
           width: 100%;
           background-color: #ffffff;
           border-radius: 1em;
-          height: 18.5em;
+          height: 19.5em;
 
           display: flex;
           flex-direction: column;
@@ -103,6 +132,19 @@ export default function ChatBox({
           row-gap: 1.1em;
           padding: 1.5em 2em 1.5em 2em;
           box-sizing: border-box;
+
+          @media (max-width: 479px) {
+            font-size: 13px;
+          }
+          @media all and (min-width: 480px) and (max-width: 767px) {
+            font-size: 14px;
+          }
+          @media all and (min-width: 768px) and (max-width: 1099px) {
+            font-size: 15px;
+          }
+          @media all and (min-width: 1100px) {
+            font-size: 16px;
+          }
         `}
       >
         <span
@@ -110,6 +152,19 @@ export default function ChatBox({
             display: block;
             font-family: "Pretendard-Bold";
             font-size: 16px;
+
+            @media (max-width: 479px) {
+              font-size: 13px;
+            }
+            @media all and (min-width: 480px) and (max-width: 767px) {
+              font-size: 14px;
+            }
+            @media all and (min-width: 768px) and (max-width: 1099px) {
+              font-size: 15px;
+            }
+            @media all and (min-width: 1100px) {
+              font-size: 16px;
+            }
           `}
         >
           이벤트 참여 정보
@@ -120,6 +175,19 @@ export default function ChatBox({
             font-size: 16px;
             font-family: "Pretendard-Regular";
             padding: 0;
+
+            @media (max-width: 479px) {
+              font-size: 13px;
+            }
+            @media all and (min-width: 480px) and (max-width: 767px) {
+              font-size: 14px;
+            }
+            @media all and (min-width: 768px) and (max-width: 1099px) {
+              font-size: 15px;
+            }
+            @media all and (min-width: 1100px) {
+              font-size: 16px;
+            }
 
             &:focus {
               outline: none;
@@ -136,13 +204,26 @@ export default function ChatBox({
             font-family: "Pretendard-Bold";
             font-size: 16px;
             margin-top: 0.5em;
+
+            @media (max-width: 479px) {
+              font-size: 13px;
+            }
+            @media all and (min-width: 480px) and (max-width: 767px) {
+              font-size: 14px;
+            }
+            @media all and (min-width: 768px) and (max-width: 1099px) {
+              font-size: 15px;
+            }
+            @media all and (min-width: 1100px) {
+              font-size: 16px;
+            }
           `}
         >
           내용
           <Required />
         </span>
         <textarea
-          placeholder="메세지를 입력해주세요&#10;대나무 숲 취지에 맞지 않는 내용은 삭제 및 IP 제한이 있을 수 있습니다."
+          placeholder="우리 학교 대나무 숲에 남길 메세지를 입력해주세요&#10;대나무 숲 취지에 맞지 않는 내용은 삭제 및 IP 제한이 있을 수 있습니다."
           maxLength={200}
           onChange={handleChange}
           value={value}
@@ -151,17 +232,32 @@ export default function ChatBox({
             border: none;
             width: 100%;
             height: 3.5em;
-            border: solid;
+            border: 0.11em solid;
             border-left: 0;
             border-right: 0;
             border-top: 0;
             resize: none;
             border-color: rgba(192, 192, 192, 0.5);
             font-family: "Pretendard-Regular";
-            line-height: 1.41em;
+            line-height: 1.5em;
             font-size: 16px;
             padding: 0;
-            padding-bottom: 1em;
+            padding-bottom: 5em;
+            box-sizing: border-box;
+            border-radius: 0px;
+
+            @media (max-width: 479px) {
+              font-size: 13px;
+            }
+            @media all and (min-width: 480px) and (max-width: 767px) {
+              font-size: 14px;
+            }
+            @media all and (min-width: 768px) and (max-width: 1099px) {
+              font-size: 15px;
+            }
+            @media all and (min-width: 1100px) {
+              font-size: 16px;
+            }
 
             &:focus {
               outline: none;
@@ -190,16 +286,29 @@ export default function ChatBox({
               transition: 0.4s all;
               cursor: pointer;
 
-              ${!validation &&
+              @media (max-width: 479px) {
+                font-size: 13px;
+              }
+              @media all and (min-width: 480px) and (max-width: 767px) {
+                font-size: 14px;
+              }
+              @media all and (min-width: 768px) and (max-width: 1099px) {
+                font-size: 15px;
+              }
+              @media all and (min-width: 1100px) {
+                font-size: 16px;
+              }
+
+              ${(completeLoad || !validation) &&
               `
               filter: grayscale(100%);
               cursor: default;
               `}
             `}
             onClick={handleClick}
-            disabled={!validation}
+            disabled={completeLoad || !validation}
           >
-            등록
+            {completeLoad ? "작성 중.." : "등록"}
           </button>
           <div
             css={css`
@@ -210,6 +319,19 @@ export default function ChatBox({
               column-gap: 0.3em;
               span {
                 font-family: "Pretendard-Regular";
+              }
+
+              @media (max-width: 479px) {
+                font-size: 13px;
+              }
+              @media all and (min-width: 480px) and (max-width: 767px) {
+                font-size: 14px;
+              }
+              @media all and (min-width: 768px) and (max-width: 1099px) {
+                font-size: 15px;
+              }
+              @media all and (min-width: 1100px) {
+                font-size: 16px;
               }
             `}
           >
