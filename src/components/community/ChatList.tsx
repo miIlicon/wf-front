@@ -96,7 +96,7 @@ export default function ChatList({
             <span
               css={css`
                 font-family: "Pretendard-Regular";
-                color: #404040;
+                color: #8d96a1;
               `}
             >
               아쉽게도 아직 등록된 대나무숲 게시글이 없어요

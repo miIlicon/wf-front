@@ -4,17 +4,27 @@ import { css } from "@emotion/react";
 import { useLocation } from "react-router-dom";
 import search from "../../images/main/search.png";
 import EventStatusButton from "../common/EventStatusButton";
-import { SearchResultProps, contentTextProps, SearchModalProps } from "../../@types/typs";
+import {
+  SearchResultProps,
+  contentTextProps,
+  SearchModalProps,
+} from "../../@types/typs";
 import axios from "axios";
 import API from "../../utils/api";
 
-const Result = ({ id, title, subTitle, mainFilePath, status } : SearchResultProps) => {
+const Result = ({
+  id,
+  title,
+  subTitle,
+  mainFilePath,
+  status,
+}: SearchResultProps) => {
   return (
     <div
       css={css`
         font-family: "Pretendard-Medium";
         display: flex;
-        color: #4E5968;
+        color: #4e5968;
         border-radius: 13px;
         padding: 13px 0;
         cursor: pointer;
@@ -77,7 +87,7 @@ const Result = ({ id, title, subTitle, mainFilePath, status } : SearchResultProp
             }
           `}
         >
-          {title}     
+          {title}
         </p>
         <p
           css={css`
@@ -97,17 +107,17 @@ const Result = ({ id, title, subTitle, mainFilePath, status } : SearchResultProp
             @media all and (min-width: 1100px) {
               font-size: 16px;
             }
-        `}
+          `}
         >
           {subTitle}
         </p>
         <EventStatusButton status={status === "OPERATE"} />
       </div>
-    </div> 
+    </div>
   );
-}
+};
 
-const ResultModal = ({ dataList, path } : SearchModalProps) => {
+const ResultModal = ({ dataList, path }: SearchModalProps) => {
   return (
     <div
       css={css`
@@ -122,23 +132,32 @@ const ResultModal = ({ dataList, path } : SearchModalProps) => {
         padding: 4px 30px;
       `}
     >
-      { dataList.length > 0
-        ? dataList.map((data) => <Result id={data.id} title={data.title} subTitle={data.subTitle} status={data.status} mainFilePath={data.mainFilePath} />)
-        : <p
-            css={css`
-              font-family: "Pretendard-Medium";
-              text-align: center;
-              color: #4E5968;
-            `}
-          >
-            일치하는 검색 결과가 없어요
-          </p>
-      }
+      {dataList.length > 0 ? (
+        dataList.map((data) => (
+          <Result
+            id={data.id}
+            title={data.title}
+            subTitle={data.subTitle}
+            status={data.status}
+            mainFilePath={data.mainFilePath}
+          />
+        ))
+      ) : (
+        <p
+          css={css`
+            font-family: "Pretendard-Medium";
+            text-align: center;
+            color: #4e5968;
+          `}
+        >
+          일치하는 검색 결과가 없어요
+        </p>
+      )}
     </div>
   );
-}
+};
 
-const RecentNotice = ({ text } : contentTextProps) => {
+const RecentNotice = ({ text }: contentTextProps) => {
   return (
     <div
       css={css`
@@ -174,33 +193,31 @@ const RecentNotice = ({ text } : contentTextProps) => {
       <span>{text}</span>
     </div>
   );
-}
+};
 
 export default function Search() {
   const path = useLocation().pathname;
-  const [notice, setNotice] = useState<string>("금일 우천으로 인해 가수 초청 공연은 진행되지 않습니다.");
+  const [notice, setNotice] = useState<string>(
+    "금일 우천으로 인해 가수 초청 공연은 진행되지 않습니다."
+  );
   const [keyword, setKeyword] = useState<string>("");
   const [result, setResult] = useState<SearchResultProps[]>([]);
 
   const getResult = async () => {
-    const data : SearchResultProps[] = [];
-		await axios.get(
-			`/api/v2/program/search`,
-			{params: { "keyword": keyword }}
-		)
-		.then((res) => {
-      data.push(...res.data);
-		})
+    const data: SearchResultProps[] = [];
+    await axios
+      .get(`/api/v2/program/search`, { params: { keyword: keyword } })
+      .then((res) => {
+        data.push(...res.data);
+      });
 
-    await axios.get(
-			`/api/v2/booth/search`,
-			{params: { "keyword": keyword }}
-		)
-		.then((res) => {
-      data.push(...res.data);
-		})
+    await axios
+      .get(`/api/v2/booth/search`, { params: { keyword: keyword } })
+      .then((res) => {
+        data.push(...res.data);
+      });
     setResult(data);
-	};
+  };
 
   useEffect(() => {
     if (keyword.length > 0) {
@@ -271,9 +288,9 @@ export default function Search() {
             setKeyword(event.target.value);
           }}
         />
-        { keyword.length > 0 && <ResultModal dataList={result} path={path} /> }
+        {keyword.length > 0 && <ResultModal dataList={result} path={path} />}
       </div>
-      { path === "/" && <RecentNotice text={notice} /> }
+      {path === "/" && <RecentNotice text={notice} />}
     </div>
   );
 }

@@ -36,13 +36,13 @@ export default function BoothPage() {
     getFleamarket();
     switch (selectMenu) {
       case "PUB":
-        setNotice("진행 중인 축제 주점이 없어요");
+        setNotice("아직 등록된 축제 주점이 없어요");
         break;
       case "FLEA_MARKET":
-        setNotice("진행 중인 플리마켓이 없어요");
+        setNotice("아직 등록된 플리마켓이 없어요");
         break;
       case "FOOD_TRUCK":
-        setNotice("진행 중인 푸드트럭이 없어요");
+        setNotice("아직 등록된 푸드트럭이 없어요");
         break;
     }
   }, [selectMenu]);

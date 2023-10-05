@@ -21,7 +21,7 @@ export default function Detail() {
     subFilePaths: [],
     latitude: 0,
     longitude: 0,
-    status: "",
+    operateStatus: "",
   });
 
   // const state = location.state as { category: string; id: number };
@@ -164,7 +164,7 @@ export default function Detail() {
           >
             <ContentTitle text={detailData.title} />
             <ContentSubTitle text={detailData.subTitle} />
-            <EventStatusButton status={detailData.status} />
+            <EventStatusButton status={detailData.operateStatus} />
             <Map lat={detailData.latitude} lon={detailData.longitude} />
           </div>
         </article>
