@@ -32,7 +32,7 @@ export default function ChatBox({ id, text }: chatBoxProps) {
         css={css`
           line-height: 1.5em;
           color: #4e5968;
-          white-space: pre;
+          white-space: pre-wrap;
         `}
       >
         {text}
