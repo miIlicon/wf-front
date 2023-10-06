@@ -12,9 +12,19 @@ export default function Title({ text, used }: titleProps) {
         font-family: "Pretendard-Bold";
         letter-spacing: -0.03em;
         margin-bottom: ${used === "main" && "0.5em"};
+
+        display: flex;
+        align-items: center;
+        column-gap: 0.3em;
       `}
     >
-      {text}
+      <img
+        src="https://www.kakaocorp.com/page/ico_tit_news.gif"
+        css={css`
+          width: 1.5em;
+        `}
+      />
+      <span>{text}</span>
     </div>
   );
 }

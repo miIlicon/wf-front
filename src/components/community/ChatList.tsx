@@ -137,25 +137,25 @@ export default function ChatList({
         )}
       </div>
 
-      <div
-        css={css`
-          width: 100%;
-          padding: 0;
-          border: 0.11em solid;
-          border-bottom: 0;
-          border-left: 0;
-          border-right: 0;
+      {dataSize > 10 && (
+        <div
+          css={css`
+            width: 100%;
+            padding: 0;
+            border: 0.11em solid;
+            border-bottom: 0;
+            border-left: 0;
+            border-right: 0;
 
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          margin-top: auto;
-          margin-bottom: 1em;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: auto;
+            margin-bottom: 1em;
 
-          border-color: rgba(192, 192, 192, 0.5);
-        `}
-      >
-        {dataSize > 10 && (
+            border-color: rgba(192, 192, 192, 0.5);
+          `}
+        >
           <div
             css={css`
               display: flex;
@@ -176,8 +176,8 @@ export default function ChatList({
             />
             <span> 대화 더보기</span>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }

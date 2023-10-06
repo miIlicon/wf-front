@@ -11,6 +11,7 @@ import Search from "../../components/main/Search";
 import CurrentEvent from "../../components/main/CurrentEvent";
 import PopularEvent from "../../components/main/EventTemplate";
 import EventTemplate from "../../components/main/EventTemplate";
+import CalendarNotice from "../../components/common/CalendarNotice";
 
 export default function Index() {
   console.log(artistData);
@@ -198,6 +199,7 @@ export default function Index() {
         </div> */}
         <Introduce />
         <Search />
+        <CalendarNotice />
         <CurrentEvent />
         <EventTemplate text="지금 현재 인기있는 축제 정보" type="EVENT" />
         <EventTemplate text="지금 현재 인기있는 플리 마켓" type="FLEA_MARKET" />
