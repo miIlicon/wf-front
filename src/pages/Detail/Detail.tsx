@@ -10,6 +10,7 @@ import ContentCards from "../../components/common/ContentCards";
 import { DetailThumb } from "../../components/common/DetailCard";
 import { useLocation } from "react-router-dom";
 import API from "../../utils/api";
+import axios from "axios";
 
 export default function Detail() {
   const location = useLocation();
@@ -79,7 +80,8 @@ export default function Detail() {
   }, []);
 
   const getDetailInfo = async () => {
-    await API.get(`/api/v2/${category}/${id}`)
+    await axios
+      .get(`/api/v2/${category}/${id}`)
       .then((res) => {
         setDetailData(res.data);
       })

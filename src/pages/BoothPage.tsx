@@ -10,6 +10,7 @@ import API from "../utils/api";
 import Notice from "../components/common/Notice";
 import { Section } from "../components/common/components";
 import CreateSection from "../components/common/CreateSection";
+import axios from "axios";
 
 export default function BoothPage() {
   const location = useLocation();
@@ -25,11 +26,13 @@ export default function BoothPage() {
   };
 
   const getFleamarket = async () => {
-    await API.get("/api/v2/booth/list", {
-      params: { page: 0, type: selectMenu, size: 6 },
-    }).then((res) => {
-      setFleamarketList(res.data.boothResList);
-    });
+    await axios
+      .get("/api/v2/booth/list", {
+        params: { page: 0, type: selectMenu, size: 6 },
+      })
+      .then((res) => {
+        setFleamarketList(res.data.boothResList);
+      });
   };
 
   useEffect(() => {
