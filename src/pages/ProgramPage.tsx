@@ -77,7 +77,7 @@ export default function ProgramPage() {
         />
       </div>
 
-      {cookies.WF_ID.AT && cookies.WF_ID.RT && (
+      {cookies.WF_ID && cookies.WF_ID.AT && cookies.WF_ID.RT && (
         <Link to={`/edit?type=${selectMenu}`}>
           <CreateSection />
         </Link>
