@@ -11,11 +11,13 @@ import Notice from "../components/common/Notice";
 import { Section } from "../components/common/components";
 import CreateSection from "../components/common/CreateSection";
 import axios from "axios";
+import { useCookies } from "react-cookie";
 
 export default function BoothPage() {
   const location = useLocation();
   const state = location.state as { menu: string };
   const [BoothList, setFleamarketList] = useState<any>([]);
+  const [cookies, setCookie] = useCookies(["WF_ID"]);
   const [selectMenu, setSelectMenu] = useState<string>(
     state ? state.menu : "PUB"
   );
@@ -85,7 +87,7 @@ export default function BoothPage() {
           onClick={onClickButton}
         />
       </div>
-      {localStorage.getItem("accessToken") && (
+      {cookies.WF_ID.AT && cookies.WF_ID.RT && (
         <Link to={`/edit?type=${selectMenu}`}>
           <CreateSection />
         </Link>

@@ -5,6 +5,7 @@ import { chatBoxProps } from "../../@types/typs";
 import { ReactComponent as Close } from "../../images/community/close.svg";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 export default function ChatBox({
   id,
@@ -13,13 +14,14 @@ export default function ChatBox({
   trigger,
 }: chatBoxProps) {
   const navigate = useNavigate();
+  const [cookies, setCookie] = useCookies(["WF_ID"]);
 
   function deleteChat() {
     if (window.confirm(`${id}번째 외침을 정말 삭제하시겠어요?`)) {
       axios
         .delete(`/api/v2/bambooforest/${id}`, {
           headers: {
-            Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+            accessToken: `Bearer ${cookies.WF_ID.AT}`,
           },
         })
         .then(() => {
@@ -51,7 +53,7 @@ export default function ChatBox({
         box-sizing: border-box;
       `}
     >
-      {sessionStorage.getItem("accessToken") && (
+      {cookies.WF_ID.AT && cookies.WF_ID.RT && (
         <Close
           css={css`
             position: absolute;

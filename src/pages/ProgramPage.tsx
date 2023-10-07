@@ -11,10 +11,12 @@ import Notice from "../components/common/Notice";
 import { Section } from "../components/common/components";
 import CreateSection from "../components/common/CreateSection";
 import axios from "axios";
+import { useCookies } from "react-cookie";
 
 export default function ProgramPage() {
   const location = useLocation();
   const state = location.state as { menu: string };
+  const [cookies, setCookie] = useCookies(["WF_ID"]);
   const [programList, setProgramList] = useState<any>([]);
   const [notice, setNotice] = useState<string>("진행 중인 이벤트가 없어요");
   const [selectMenu, setSelectMenu] = useState<string>(
@@ -75,7 +77,7 @@ export default function ProgramPage() {
         />
       </div>
 
-      {localStorage.getItem("accessToken") && (
+      {cookies.WF_ID.AT && cookies.WF_ID.RT && (
         <Link to={`/edit?type=${selectMenu}`}>
           <CreateSection />
         </Link>

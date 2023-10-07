@@ -6,6 +6,8 @@ import axios from "axios";
 import { chatBoxProps, communityStateProps } from "../../@types/typs";
 import Toggle from "./Toggle";
 import Required from "./Required";
+import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 
 export default function ChatBox({
   changeTrigger,
@@ -19,6 +21,8 @@ export default function ChatBox({
   const [checked, setChecked] = useState(false);
   const [validation, setValidation] = useState(false);
   const [completeLoad, setCompleteLoad] = useState<boolean>(false);
+  const [cookies, setCookie] = useCookies(["WF_ID"]);
+  const navigate = useNavigate();
   const form = new FormData();
 
   function toggleChange() {
@@ -48,10 +52,7 @@ export default function ChatBox({
     }
   }
 
-  function handleClick() {
-    form.append("content", value);
-    form.append("contact", email);
-    setCompleteLoad(true);
+  function requestData() {
     axios
       .post("/api/v2/bambooforest", form, {
         headers: {
@@ -65,7 +66,44 @@ export default function ChatBox({
         setCurrentLength(0);
         changeTrigger(!trigger);
         setCompleteLoad(false);
+      })
+      .catch((error) => {
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.errorMessage
+        ) {
+          console.log(error.response.data.errorMessage);
+          if (
+            error.response.data.errorMessage ===
+            "기한이 만료된 AccessToken입니다."
+          ) {
+            axios
+              .get(`/api/v2/member/rotate`, {
+                headers: {
+                  refreshToken: `Bearer ${cookies.WF_ID.RT}`,
+                },
+              })
+              .then((res) => {
+                setCookie("WF_ID", {
+                  AT: res.data.accessToken,
+                  RT: res.data.refreshToken,
+                });
+                return requestData();
+              })
+              .catch(() => {
+                navigate("/error");
+              });
+          }
+        }
       });
+  }
+
+  function handleClick() {
+    form.append("content", value);
+    form.append("contact", email);
+    setCompleteLoad(true);
+    requestData();
   }
 
   return (
