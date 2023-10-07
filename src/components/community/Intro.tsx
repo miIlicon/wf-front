@@ -1,10 +1,15 @@
 /** @jsxImportSource @emotion/react */
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import { css } from "@emotion/react";
 import community from "../../images/community/community.png";
 import { spaceEffect } from "../../styles/effects";
+import { ImagePreload } from "../../hooks/ImagePreload";
 
 export default function Intro() {
+  useLayoutEffect(() => {
+    ImagePreload(community);
+  }, []);
+
   return (
     <div
       css={css`

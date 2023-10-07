@@ -141,6 +141,10 @@ export interface ImageProps {
   src: string;
 }
 
+export interface PreloadImageProps {
+  src: string;
+}
+
 export interface MenuProps {
   main: string;
   sub: string[];

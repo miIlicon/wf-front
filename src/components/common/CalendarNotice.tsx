@@ -5,8 +5,8 @@ import React from "react";
 
 export default function CalendarNotice() {
   const currentTime = moment();
-  const month = currentTime.month();
-  const day = currentTime.day();
+  const month = currentTime.month() + 1;
+  const day = currentTime.day() + 1;
 
   return (
     <div

@@ -85,7 +85,7 @@ export default function BoothPage() {
           onClick={onClickButton}
         />
       </div>
-      {sessionStorage.getItem("accessToken") && (
+      {localStorage.getItem("accessToken") && (
         <Link to={`/edit?type=${selectMenu}`}>
           <CreateSection />
         </Link>

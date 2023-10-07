@@ -1,10 +1,15 @@
 /** @jsxImportSource @emotion/react */
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import { css } from "@emotion/react";
 import introduceImg from "../../images/main/people.png";
 import { cloneflow, spaceEffect } from "../../styles/effects";
+import { ImagePreload } from "../../hooks/ImagePreload";
 
 export default function Introduce() {
+  useLayoutEffect(() => {
+    ImagePreload(introduceImg);
+  }, []);
+
   return (
     <div
       css={css`
