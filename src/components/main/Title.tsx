@@ -16,6 +16,19 @@ export default function Title({ text, used }: titleProps) {
         display: flex;
         align-items: center;
         column-gap: 0.3em;
+
+        @media (max-width: 479px) {
+          font-size: 19px;
+        }
+        @media all and (min-width: 480px) and (max-width: 767px) {
+          font-size: 21px;
+        }
+        @media all and (min-width: 768px) and (max-width: 1099px) {
+          font-size: 23px;
+        }
+        @media all and (min-width: 1100px) {
+          font-size: 25px;
+        }
       `}
     >
       <img

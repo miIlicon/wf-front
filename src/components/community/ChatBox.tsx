@@ -2,11 +2,42 @@
 import React from "react";
 import { css } from "@emotion/react";
 import { chatBoxProps } from "../../@types/typs";
+import { ReactComponent as Close } from "../../images/community/close.svg";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-export default function ChatBox({ id, text }: chatBoxProps) {
+export default function ChatBox({
+  id,
+  text,
+  changeTrigger,
+  trigger,
+}: chatBoxProps) {
+  const navigate = useNavigate();
+
+  function deleteChat() {
+    if (window.confirm(`${id}번째 외침을 정말 삭제하시겠어요?`)) {
+      axios
+        .delete(`/api/v2/bambooforest/${id}`, {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+          },
+        })
+        .then(() => {
+          if (changeTrigger) {
+            changeTrigger(!trigger);
+          }
+          alert("성공적으로 삭제되었어요");
+        })
+        .catch(() => {
+          navigate("/error");
+        });
+    }
+  }
+
   return (
     <div
       css={css`
+        position: relative;
         width: auto;
         background-color: #f0f1f4;
         border-radius: 0.5em;
@@ -20,6 +51,24 @@ export default function ChatBox({ id, text }: chatBoxProps) {
         box-sizing: border-box;
       `}
     >
+      {sessionStorage.getItem("accessToken") && (
+        <Close
+          css={css`
+            position: absolute;
+            display: block;
+            width: 1.2em;
+            height: 1.2em;
+            right: 1.2em;
+            cursor: pointer;
+            margin-top: -0.1em;
+
+            path {
+              fill: #404040;
+            }
+          `}
+          onClick={deleteChat}
+        />
+      )}
       <span
         css={css`
           font-family: "Pretendard-Bold";

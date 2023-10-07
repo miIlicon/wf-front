@@ -27,6 +27,19 @@ export default function ViewTimeTable() {
           font-family: "Pretendard-Bold";
           font-size: 20px;
           margin-right: auto;
+
+          @media (max-width: 479px) {
+            font-size: 14px;
+          }
+          @media all and (min-width: 480px) and (max-width: 767px) {
+            font-size: 16px;
+          }
+          @media all and (min-width: 768px) and (max-width: 1099px) {
+            font-size: 18px;
+          }
+          @media all and (min-width: 1100px) {
+            font-size: 20px;
+          }
         `}
       >
         전체 타임 테이블 자세히 보러가기
