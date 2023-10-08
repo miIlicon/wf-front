@@ -170,6 +170,12 @@ export interface ClickEventProps {
   onClick: () => void;
 }
 
+export interface NoticeSubmitProps {
+  value: string;
+	onClick: () => void;
+	onChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+}
+
 export interface SearchModalProps {
   path: string;
   dataList: SearchResultProps[];
