@@ -106,7 +106,11 @@ export default function Banner() {
                   opacity: 80%;
                 }
               `}
-              onClick={() => navigate(`${router}`)}
+              onClick={() =>
+                router.indexOf("https" || "http") !== -1
+                  ? window.open(router)
+                  : navigate(`${router}`)
+              }
             >
               <span
                 css={css`
@@ -198,7 +202,7 @@ export default function Banner() {
             backgroundImg={banner2}
             // backgroundColor={`#004F3C`}
             content={`다시 돌아온 대나무 숲을 이용해보세요`}
-            router={`/detail`}
+            router={`/community`}
             // imgSrc={lamb}
             defaultImgSize={"7"}
           />
@@ -208,7 +212,7 @@ export default function Banner() {
             backgroundImg={banner1}
             // backgroundColor={`#404040`}
             content={`지금 인기 있는 축제를 만나보세요`}
-            router={`/detail`}
+            router={`/program`}
             // imgSrc={rocket}
             defaultImgSize={"5"}
           />
@@ -217,7 +221,7 @@ export default function Banner() {
           <Container
             backgroundImg={banner3}
             content={`밀리콘 팀에 합류하고 싶으신가요?`}
-            router={`/detail`}
+            router={`https://ripe-launch-04b.notion.site/9c3a2f916f9e40878a4dd676b58606a6?pvs=4`}
             // imgSrc={lamb}
             defaultImgSize={"7"}
           />
