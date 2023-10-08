@@ -1,12 +1,14 @@
 /** @jsxImportSource @emotion/react */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { css } from "@emotion/react";
 import {
   NoticeProps,
   ProfileProps,
   contentTextProps,
+	NoticeSubmitProps,
   ImageProps,
 } from "../../@types/typs";
+import axios from "axios";
 import profile from "../../data/profile.json";
 import { ReactComponent as Plane } from "../../images/emoji/plane.svg";
 
@@ -158,7 +160,7 @@ const NoticeBox = ({ icon, name, date, content }: NoticeProps) => {
   );
 };
 
-const InputBox = () => {
+const InputBox = ({ value, onChange, onClick } : NoticeSubmitProps) => {
   return (
     <div
       css={css`
@@ -213,6 +215,8 @@ const InputBox = () => {
             font-size: 16px;
           }
         `}
+				value={value}
+				onChange={onChange}
         placeholder="금일 공지할 공지사항을 입력해주세요"
       />
       <button
@@ -245,6 +249,7 @@ const InputBox = () => {
             font-size: 16px;
           }
         `}
+				onClick={onClick}
       >
         <Plane
           css={css`
@@ -261,29 +266,37 @@ const InputBox = () => {
 
 export default function Notice() {
   const icons = JSON.parse(JSON.stringify(profile));
-  const isAdmin = true;
-  const [noticeData, setNoticeData] = useState([
-    {
-      name: "Horang",
-      date: "2023.09.08 17:30",
-      content: "금일 타코야끼 푸드트럭은 재고소진으로 인해 일찍 마감을 합니다!",
-    },
-    {
-      name: "Judy",
-      date: "2023.09.08 17:30",
-      content: "금일 우천으로 인해 가수 초청 공연은 취소되었습니다.",
-    },
-    {
-      name: "Horang",
-      date: "2023.09.08 17:30",
-      content: "금일 우천으로 인해 가수 초청 공연은 취소되었습니다.",
-    },
-    {
-      name: "Judy",
-      date: "2023.09.08 17:30",
-      content: "금일 우천으로 인해 가수 초청 공연은 취소되었습니다.",
-    },
-  ]);
+	const [content, setContent] = useState<string>("");
+  const [noticeData, setNoticeData] = useState<any>([]);
+
+	const getNotice = async () => {
+    await axios
+      .get(`/api/v2/guide/list`, {
+        params: { page: 0, size: 20 },
+      })
+      .then((res) => {
+        setNoticeData(res.data.guideResList);
+      });
+  };
+
+	const data = new FormData();
+  data.append("content", content);
+
+  const handleClick = () => {
+    axios
+      .post(`/api/v2/guide`, data, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+        },
+      })
+      .then((res) => {
+				setContent("");
+      })
+  };
+
+	useEffect(() => {
+		getNotice();
+	}, [])
 
   return (
     <div
@@ -293,11 +306,19 @@ export default function Notice() {
         flex-direction: column;
       `}
     >
-      {isAdmin && <InputBox />}
-      {noticeData.map((data) => (
+      {sessionStorage.getItem("accessToken") && (
+				<InputBox 
+					value={content}
+					onClick={handleClick}
+					onChange={(event) => {
+						setContent(event.target.value);
+					}}
+				/>
+			)}
+      {noticeData.map((data : any) => (
         <NoticeBox
-          icon={icons[data.name]}
-          name={data.name}
+          icon={icons[data.username]}
+          name={data.username}
           date={data.date}
           content={data.content}
         />
