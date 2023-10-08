@@ -8,4 +8,7 @@ const API = axios.create({
   // baseURL: "https://server.withfestival.site/",
 });
 
+API.defaults.xsrfCookieName = "csrftoken";
+API.defaults.xsrfHeaderName = "X-CSRFTOKEN";
+
 export default API;
