@@ -28,13 +28,11 @@ export default function BoothPage() {
   };
 
   const getFleamarket = async () => {
-    await axios
-      .get("/api/v2/booth/list", {
-        params: { page: 0, type: selectMenu, size: 6 },
-      })
-      .then((res) => {
-        setFleamarketList(res.data.boothResList);
-      });
+    await API.get("/api/v2/booth/list", {
+      params: { page: 0, type: selectMenu, size: 6 },
+    }).then((res) => {
+      setFleamarketList(res.data.boothResList);
+    });
   };
 
   useEffect(() => {

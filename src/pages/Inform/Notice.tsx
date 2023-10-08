@@ -5,12 +5,13 @@ import {
   NoticeProps,
   ProfileProps,
   contentTextProps,
-	NoticeSubmitProps,
+  NoticeSubmitProps,
   ImageProps,
 } from "../../@types/typs";
 import axios from "axios";
 import profile from "../../data/profile.json";
 import { ReactComponent as Plane } from "../../images/emoji/plane.svg";
+import API from "../../utils/api";
 
 const Icon = ({ src }: ImageProps) => {
   return (
@@ -160,7 +161,7 @@ const NoticeBox = ({ icon, name, date, content }: NoticeProps) => {
   );
 };
 
-const InputBox = ({ value, onChange, onClick } : NoticeSubmitProps) => {
+const InputBox = ({ value, onChange, onClick }: NoticeSubmitProps) => {
   return (
     <div
       css={css`
@@ -215,8 +216,8 @@ const InputBox = ({ value, onChange, onClick } : NoticeSubmitProps) => {
             font-size: 16px;
           }
         `}
-				value={value}
-				onChange={onChange}
+        value={value}
+        onChange={onChange}
         placeholder="금일 공지할 공지사항을 입력해주세요"
       />
       <button
@@ -249,7 +250,7 @@ const InputBox = ({ value, onChange, onClick } : NoticeSubmitProps) => {
             font-size: 16px;
           }
         `}
-				onClick={onClick}
+        onClick={onClick}
       >
         <Plane
           css={css`
@@ -266,37 +267,33 @@ const InputBox = ({ value, onChange, onClick } : NoticeSubmitProps) => {
 
 export default function Notice() {
   const icons = JSON.parse(JSON.stringify(profile));
-	const [content, setContent] = useState<string>("");
+  const [content, setContent] = useState<string>("");
   const [noticeData, setNoticeData] = useState<any>([]);
 
-	const getNotice = async () => {
-    await axios
-      .get(`/api/v2/guide/list`, {
-        params: { page: 0, size: 20 },
-      })
-      .then((res) => {
-        setNoticeData(res.data.guideResList);
-      });
+  const getNotice = async () => {
+    await API.get(`/api/v2/guide/list`, {
+      params: { page: 0, size: 20 },
+    }).then((res) => {
+      setNoticeData(res.data.guideResList);
+    });
   };
 
-	const data = new FormData();
+  const data = new FormData();
   data.append("content", content);
 
   const handleClick = () => {
-    axios
-      .post(`/api/v2/guide`, data, {
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-        },
-      })
-      .then((res) => {
-				setContent("");
-      })
+    API.post(`/api/v2/guide`, data, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+      },
+    }).then((res) => {
+      setContent("");
+    });
   };
 
-	useEffect(() => {
-		getNotice();
-	}, [])
+  useEffect(() => {
+    getNotice();
+  }, []);
 
   return (
     <div
@@ -307,15 +304,15 @@ export default function Notice() {
       `}
     >
       {sessionStorage.getItem("accessToken") && (
-				<InputBox 
-					value={content}
-					onClick={handleClick}
-					onChange={(event) => {
-						setContent(event.target.value);
-					}}
-				/>
-			)}
-      {noticeData.map((data : any) => (
+        <InputBox
+          value={content}
+          onClick={handleClick}
+          onChange={(event) => {
+            setContent(event.target.value);
+          }}
+        />
+      )}
+      {noticeData.map((data: any) => (
         <NoticeBox
           icon={icons[data.username]}
           name={data.username}

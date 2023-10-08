@@ -8,6 +8,7 @@ import { EventTemplateProps } from "../../@types/typs";
 import Card from "../common/Card";
 import { useNavigate } from "react-router-dom";
 import NotData from "../common/NotData";
+import API from "../../utils/api";
 
 export default function EventTemplate({ text, type }: EventTemplateProps) {
   const navigate = useNavigate();
@@ -15,17 +16,15 @@ export default function EventTemplate({ text, type }: EventTemplateProps) {
   const category = type === "EVENT" ? "program" : "booth";
 
   const getInfo = async () => {
-    await axios
-      .get(`/api/v2/${category}/list`, {
-        params: { page: 0, type: type, size: 3 },
-      })
-      .then((res) => {
-        if (type === "EVENT") {
-          setDataList(res.data.programList);
-        } else {
-          setDataList(res.data.boothResList);
-        }
-      });
+    await API.get(`/api/v2/${category}/list`, {
+      params: { page: 0, type: type, size: 3 },
+    }).then((res) => {
+      if (type === "EVENT") {
+        setDataList(res.data.programList);
+      } else {
+        setDataList(res.data.boothResList);
+      }
+    });
   };
 
   useEffect(() => {

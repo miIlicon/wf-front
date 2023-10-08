@@ -205,17 +205,17 @@ export default function Search() {
 
   const getResult = async () => {
     const data: SearchResultProps[] = [];
-    await axios
-      .get(`/api/v2/program/search`, { params: { keyword: keyword } })
-      .then((res) => {
-        data.push(...res.data);
-      });
+    await API.get(`/api/v2/program/search`, {
+      params: { keyword: keyword },
+    }).then((res) => {
+      data.push(...res.data);
+    });
 
-    await axios
-      .get(`/api/v2/booth/search`, { params: { keyword: keyword } })
-      .then((res) => {
-        data.push(...res.data);
-      });
+    await API.get(`/api/v2/booth/search`, {
+      params: { keyword: keyword },
+    }).then((res) => {
+      data.push(...res.data);
+    });
     setResult(data);
   };
 

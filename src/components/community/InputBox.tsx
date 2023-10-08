@@ -53,12 +53,11 @@ export default function ChatBox({
   }
 
   function requestData() {
-    axios
-      .post("/api/v2/bambooforest", form, {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-        },
-      })
+    API.post("/api/v2/bambooforest", form, {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+      },
+    })
       .then(() => {
         setValue("");
         setEmail("");
@@ -78,12 +77,11 @@ export default function ChatBox({
             error.response.data.errorMessage ===
             "기한이 만료된 AccessToken입니다."
           ) {
-            axios
-              .get(`/api/v2/member/rotate`, {
-                headers: {
-                  refreshToken: `Bearer ${cookies.WF_ID.RT}`,
-                },
-              })
+            API.get(`/api/v2/member/rotate`, {
+              headers: {
+                refreshToken: `Bearer ${cookies.WF_ID.RT}`,
+              },
+            })
               .then((res) => {
                 setCookie("WF_ID", {
                   AT: res.data.accessToken,

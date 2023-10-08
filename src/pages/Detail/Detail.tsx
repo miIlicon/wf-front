@@ -80,8 +80,7 @@ export default function Detail() {
   }, []);
 
   const getDetailInfo = async () => {
-    await axios
-      .get(`/api/v2/${category}/${id}`)
+    await API.get(`/api/v2/${category}/${id}`)
       .then((res) => {
         setDetailData(res.data);
       })

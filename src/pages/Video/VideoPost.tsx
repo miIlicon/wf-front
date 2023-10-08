@@ -4,6 +4,7 @@ import { css } from "@emotion/react";
 import React, { ChangeEventHandler, useEffect, useState } from "react";
 import { Section } from "../../components/common/components";
 import axios from "axios";
+import API from "../../utils/api";
 
 export default function VideoPost() {
   const [url, setUrl] = useState<string>("");
@@ -14,8 +15,7 @@ export default function VideoPost() {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUrl(event.target.value);
 
-    axios
-      .get(`https://www.youtube.com/oembed?url=${event.target.value}`)
+    API.get(`https://www.youtube.com/oembed?url=${event.target.value}`)
       .then((res) => {
         console.log(res);
         setTitle(res.data.title);

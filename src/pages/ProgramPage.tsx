@@ -28,14 +28,12 @@ export default function ProgramPage() {
   };
 
   const getProgramInfo = async () => {
-    await axios
-      .get(`/api/v2/program/list`, {
-        params: { page: 0, type: selectMenu, size: 6 },
-      })
-      .then((res) => {
-        console.log(res);
-        setProgramList(res.data.programList);
-      });
+    await API.get(`/api/v2/program/list`, {
+      params: { page: 0, type: selectMenu, size: 6 },
+    }).then((res) => {
+      console.log(res);
+      setProgramList(res.data.programList);
+    });
   };
 
   useEffect(() => {

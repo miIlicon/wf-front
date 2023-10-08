@@ -6,6 +6,7 @@ import ChatBox from "./ChatBox";
 import axios from "axios";
 import thinking from "../../images/emoji/thinking.png";
 import { communityStateProps } from "../../@types/typs";
+import API from "../../utils/api";
 
 export default function ChatList({
   changeTrigger,
@@ -30,30 +31,30 @@ export default function ChatList({
 
   /** 트리거를 통해 대나무 숲을 업데이트를 해주는 렌더링 함수 */
   useEffect(() => {
-    axios
-      .get(`/api/v2/bambooforest/list?page=0&size=${pageSize}&sort=string`)
-      .then((res: any) => {
-        setChatData(res.data.forestResList);
-        if (res.data.forestResList && res.data.forestResList.length) {
-          // 대나무 숲 데이터의 마지막 번호가 몇 번인지 가져옵니다.
-          setDataSize(res.data.forestResList[0].id);
-        }
-      });
+    API.get(
+      `/api/v2/bambooforest/list?page=0&size=${pageSize}&sort=string`
+    ).then((res: any) => {
+      setChatData(res.data.forestResList);
+      if (res.data.forestResList && res.data.forestResList.length) {
+        // 대나무 숲 데이터의 마지막 번호가 몇 번인지 가져옵니다.
+        setDataSize(res.data.forestResList[0].id);
+      }
+    });
   }, [trigger]);
 
   /** 대나무 숲 자동 업데이트를 위한 렌더링 함수 */
   useEffect(() => {
     if (autoUpdate) {
       autoTimerObj.current = setInterval(() => {
-        axios
-          .get(`/api/v2/bambooforest/list?page=0&size=${pageSize}&sort=string`)
-          .then((res: any) => {
-            setChatData(res.data.forestResList);
-            if (res.data.forestResList && res.data.forestResList.length) {
-              // 대나무 숲 데이터의 마지막 번호가 몇 번인지 가져옵니다.
-              setDataSize(res.data.forestResList[0].id);
-            }
-          });
+        API.get(
+          `/api/v2/bambooforest/list?page=0&size=${pageSize}&sort=string`
+        ).then((res: any) => {
+          setChatData(res.data.forestResList);
+          if (res.data.forestResList && res.data.forestResList.length) {
+            // 대나무 숲 데이터의 마지막 번호가 몇 번인지 가져옵니다.
+            setDataSize(res.data.forestResList[0].id);
+          }
+        });
       }, 4000);
     } else {
       // 컴포넌트가 언마운트되거나, autoUpdate 값이 false로 변경될 때 인터벌을 정리해줘야해요

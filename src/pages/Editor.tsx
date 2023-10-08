@@ -431,14 +431,13 @@ export default function Editor() {
 
   function requestData() {
     if (requestURL) {
-      axios
-        .post(requestURL, data, {
-          headers: {
-            accessToken: `Bearer ${cookies.WF_ID.AT}`,
-            "Content-Type": "multipart/form-data",
-            "Access-Control-Allow-Origin": "*",
-          },
-        })
+      API.post(requestURL, data, {
+        headers: {
+          accessToken: `Bearer ${cookies.WF_ID.AT}`,
+          "Content-Type": "multipart/form-data",
+          "Access-Control-Allow-Origin": "*",
+        },
+      })
         .then((res) => {
           alert("게시물이 성공적으로 작성되었어요");
           if (category) {
@@ -456,12 +455,11 @@ export default function Editor() {
               error.response.data.errorMessage ===
               "기한이 만료된 AccessToken입니다."
             ) {
-              axios
-                .get(`/api/v2/member/rotate`, {
-                  headers: {
-                    refreshToken: `Bearer ${cookies.WF_ID.RT}`,
-                  },
-                })
+              API.get(`/api/v2/member/rotate`, {
+                headers: {
+                  refreshToken: `Bearer ${cookies.WF_ID.RT}`,
+                },
+              })
                 .then((res) => {
                   setCookie("WF_ID", {
                     AT: res.data.accessToken,

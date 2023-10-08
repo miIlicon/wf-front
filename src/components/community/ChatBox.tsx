@@ -6,6 +6,7 @@ import { ReactComponent as Close } from "../../images/community/close.svg";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import API from "../../utils/api";
 
 export default function ChatBox({
   id,
@@ -18,12 +19,11 @@ export default function ChatBox({
 
   function deleteChat() {
     if (window.confirm(`${id}번째 외침을 정말 삭제하시겠어요?`)) {
-      axios
-        .delete(`/api/v2/bambooforest/${id}`, {
-          headers: {
-            accessToken: `Bearer ${cookies.WF_ID.AT}`,
-          },
-        })
+      API.delete(`/api/v2/bambooforest/${id}`, {
+        headers: {
+          accessToken: `Bearer ${cookies.WF_ID.AT}`,
+        },
+      })
         .then(() => {
           if (changeTrigger) {
             changeTrigger(!trigger);
