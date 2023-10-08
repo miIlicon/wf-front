@@ -2,11 +2,7 @@
 import { css } from "@emotion/react";
 import React, { useEffect, useRef, useState } from 'react'
 import { createPortal } from "react-dom";
-
-interface ModalPortalProps {
-  children: JSX.Element;
-  closePortal: () => void;
-}
+import { ModalPortalProps } from "../../@types/typs";
 
 export default function ModalPortal({children, closePortal} : ModalPortalProps) {
   const ref = useRef<Element | null>();
