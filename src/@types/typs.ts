@@ -37,8 +37,10 @@ export interface communityStateProps {
 }
 
 export interface chatBoxProps {
-  id: number;
-  text: string;
+  id?: number;
+  text?: string;
+  changeTrigger?: Dispatch<SetStateAction<boolean>>;
+  trigger?: boolean;
 }
 
 export interface toogleProps {
@@ -138,6 +140,10 @@ export interface NoticeProps {
 }
 
 export interface ImageProps {
+  src: string;
+}
+
+export interface PreloadImageProps {
   src: string;
 }
 

@@ -7,13 +7,13 @@ import ModalPortal from "./ModalPortal";
 export const DetailThumb = ({ thumb }: CardProps) => {
   const [modalOpened, setModalOpened] = useState(false);
 
-  const modalOpen = () : void => {
+  const modalOpen = (): void => {
     setModalOpened(true);
-  }
+  };
 
-  const modalClose = () : void => {
+  const modalClose = (): void => {
     setModalOpened(false);
-  }
+  };
 
   return (
     <div>
@@ -22,18 +22,18 @@ export const DetailThumb = ({ thumb }: CardProps) => {
           <img
             css={css`
               width: 30em;
-              height: 100%;
+              height: 30em;
             `}
             src={thumb}
             alt=""
           />
         </ModalPortal>
       )}
-      <div id="root-modal"/>
+      <div id="root-modal" />
       <img
         css={css`
           width: 17.93em;
-          height: 100%;
+          height: auto;
           border-radius: 0.5em;
 
           @media (max-width: 479px) {

@@ -15,9 +15,9 @@ export const Thumb = ({ thumb, status }: CardProps) => {
     <img
       css={css`
         // width: 100%;
-        // height: auto;
+        height: auto;
         width: 18.8em;
-        height: 26.6em;
+        // height: 26.6em;
         border-radius: 11px;
         filter: ${status ? "grayscale(0)" : "grayscale(100%)"};
       `}
@@ -60,7 +60,7 @@ export default function Card({
         <EventStatusButton status={status} />
         <p
           css={css`
-            font-weight: 700;
+            font-family: "Pretendard-Bold";
             font-style: normal;
             line-height: 1.2em;
             letter-spacing: -0.03em;
@@ -89,8 +89,7 @@ export default function Card({
         </p>
         <p
           css={css`
-            font-weight: 500;
-            font-style: normal;
+            font-family: "Pretendard-Medium";
             line-height: 1.2em;
             letter-spacing: -0.03em;
             color: #4e5968;

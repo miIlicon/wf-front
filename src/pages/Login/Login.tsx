@@ -7,11 +7,13 @@ import logo from "../../images/logo.png";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import axios from "axios";
 import API from "../../utils/api";
+import { useCookies } from "react-cookie";
 
 export default function Login() {
   const navigate = useNavigate();
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
+  const [cookies, setCookie] = useCookies(["WF_ID"]);
 
   const data = new FormData();
   data.append("username", id);
@@ -29,9 +31,12 @@ export default function Login() {
       .then((res) => {
         alert("로그인을 성공적으로 했어요!");
         navigate("/");
-        console.log(res);
-        sessionStorage.setItem("accessToken", res.data.accessToken);
-        sessionStorage.setItem("refreshToken", res.data.accessToken);
+        setCookie("WF_ID", {
+          AT: res.data.accessToken,
+          RT: res.data.refreshToken,
+        });
+        // sessionStorage.setItem("accessToken", res.data.accessToken);
+        // sessionStorage.setItem("refreshToken", res.data.accessToken);
       })
       .catch((error) => {
         alert(`알 수 없는 오류가 발생했어요!`);

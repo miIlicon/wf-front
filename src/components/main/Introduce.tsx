@@ -1,10 +1,15 @@
 /** @jsxImportSource @emotion/react */
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import { css } from "@emotion/react";
 import introduceImg from "../../images/main/people.png";
 import { cloneflow, spaceEffect } from "../../styles/effects";
+import { ImagePreload } from "../../hooks/ImagePreload";
 
 export default function Introduce() {
+  useLayoutEffect(() => {
+    ImagePreload(introduceImg);
+  }, []);
+
   return (
     <div
       css={css`
@@ -14,9 +19,22 @@ export default function Introduce() {
         flex-direction: column;
         align-items: center;
         // animation: ${spaceEffect} 1.5s linear infinite;
-        margin-top: -7em;
-        margin-bottom: -5em;
+        margin-top: -5em;
+        margin-bottom: -3em;
         z-index: -1;
+
+        @media (max-width: 479px) {
+          font-size: 13px;
+        }
+        @media all and (min-width: 480px) and (max-width: 767px) {
+          font-size: 14px;
+        }
+        @media all and (min-width: 768px) and (max-width: 1099px) {
+          font-size: 15px;
+        }
+        @media all and (min-width: 1100px) {
+          font-size: 16px;
+        }
       `}
     >
       <img
@@ -47,6 +65,20 @@ export default function Introduce() {
             color: white;
             font-size: 30px;
             text-shadow: 0 8px 10px rgba(0, 0, 0, 0.2);
+            white-space: pre;
+
+            @media (max-width: 479px) {
+              font-size: 18px;
+            }
+            @media all and (min-width: 480px) and (max-width: 767px) {
+              font-size: 22px;
+            }
+            @media all and (min-width: 768px) and (max-width: 1099px) {
+              font-size: 26px;
+            }
+            @media all and (min-width: 1100px) {
+              font-size: 30px;
+            }
           }
         `}
       >

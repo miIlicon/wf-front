@@ -104,7 +104,15 @@ export default function ChatList({
       >
         {chatData.length >= 1 ? (
           chatData.map((item) => {
-            return <ChatBox key={item.id} id={item.id} text={item.content} />;
+            return (
+              <ChatBox
+                key={item.id}
+                id={item.id}
+                text={item.content}
+                changeTrigger={changeTrigger}
+                trigger={trigger}
+              />
+            );
           })
         ) : (
           <div

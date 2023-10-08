@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import { ReactComponent as BannerArrow } from "../../images/bannerArrow.svg";
 import rocket from "../../images/rocket.svg";
 import lamb from "../../images/banner/lamb.svg";
@@ -19,9 +19,17 @@ import {
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
+import { ImagePreload } from "../../hooks/ImagePreload";
 
 export default function Banner() {
   const navigate = useNavigate();
+  const bannerArray = [banner1, banner2, banner3];
+
+  useLayoutEffect(() => {
+    for (let i = 0; i < bannerArray.length; i++) {
+      ImagePreload(bannerArray[i]);
+    }
+  }, []);
 
   function Container({
     backgroundColor,

@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Map from "../components/common/Map";
 import { css } from "@emotion/react";
 import EventStatusButton from "../components/common/EventStatusButton";
@@ -22,6 +22,7 @@ import { Section } from "../components/common/components";
 import Calendar from "react-calendar";
 import moment from "moment";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 const TitleInput = ({ onChange }: InputProps) => {
   return (
@@ -374,6 +375,8 @@ export default function Editor() {
   const [subfirstFile, setsubfirstFile] = useState("");
   const [subtwiceFile, setsubtwiceFile] = useState("");
   const [subthirdFile, setsubthirdFile] = useState("");
+  const [queryCheck, setQueryCheck] = useState(false);
+  const [cookies, setCookie] = useCookies(["WF_ID"]);
   const latitude = useSelector((state: ReduxType) => state.fetcher.latitude);
   const longtitude = useSelector((state: ReduxType) => state.fetcher.longitude);
 
@@ -406,9 +409,11 @@ export default function Editor() {
       navigate("/404");
     }
 
-    if (!sessionStorage.getItem("accessToken")) {
+    if (!(cookies.WF_ID.AT && cookies.WF_ID.RT)) {
       navigate("/admin");
     }
+
+    setQueryCheck(true);
   }, []);
 
   useEffect(() => {
@@ -423,6 +428,55 @@ export default function Editor() {
       setState("OPERATE");
     }
   }, [sDate, eDate]);
+
+  function requestData() {
+    if (requestURL) {
+      axios
+        .post(requestURL, data, {
+          headers: {
+            accessToken: `Bearer ${cookies.WF_ID.AT}`,
+            "Content-Type": "multipart/form-data",
+            "Access-Control-Allow-Origin": "*",
+          },
+        })
+        .then((res) => {
+          alert("게시물이 성공적으로 작성되었어요");
+          if (category) {
+            navigate(`/detail?category=${category}&id=${res.data}`);
+          }
+        })
+        .catch((error) => {
+          if (
+            error.response &&
+            error.response.data &&
+            error.response.data.errorMessage
+          ) {
+            console.log(error.response.data.errorMessage);
+            if (
+              error.response.data.errorMessage ===
+              "기한이 만료된 AccessToken입니다."
+            ) {
+              axios
+                .get(`/api/v2/member/rotate`, {
+                  headers: {
+                    refreshToken: `Bearer ${cookies.WF_ID.RT}`,
+                  },
+                })
+                .then((res) => {
+                  setCookie("WF_ID", {
+                    AT: res.data.accessToken,
+                    RT: res.data.refreshToken,
+                  });
+                  return requestData();
+                })
+                .catch(() => {
+                  navigate("/error");
+                });
+            }
+          }
+        });
+    }
+  }
 
   const handleSubmit = async (event: Event) => {
     event.preventDefault();
@@ -449,28 +503,7 @@ export default function Editor() {
     });
     data.append("startDate", moment(sDate).format("YYYY-MM-DD").toString());
     data.append("endDate", moment(eDate).format("YYYY-MM-DD").toString());
-
-    if (requestURL) {
-      await axios
-        .post(requestURL, data, {
-          headers: {
-            Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-            "Content-Type": "multipart/form-data",
-            "Access-Control-Allow-Origin": "*",
-          },
-        })
-        .then((res) => {
-          alert("게시물이 성공적으로 작성되었어요");
-          if (category) {
-            navigate(`/detail?category=${category}&id=${res.data}`);
-          }
-          // http://localhost:3000/detail?category=booth&id=2
-        })
-        .catch((error) => {
-          console.log(error);
-          alert("에러 발생!");
-        });
-    }
+    requestData();
   };
 
   const tempImgFile = (e: React.FormEvent<HTMLInputElement>) => {
@@ -526,7 +559,7 @@ export default function Editor() {
     };
   };
 
-  return (
+  return queryCheck ? (
     <Section>
       <form>
         <div
@@ -538,7 +571,7 @@ export default function Editor() {
           <label
             css={css`
               width: 301px;
-              height: 426px;
+              height: 301px;
               display: flex;
               justify-content: center;
               align-items: center;
@@ -861,5 +894,7 @@ export default function Editor() {
         </div>
       </form>
     </Section>
+  ) : (
+    <></>
   );
 }

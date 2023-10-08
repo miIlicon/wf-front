@@ -4,6 +4,8 @@ const GlobalStyles = () => {
   return (
     <Global
       styles={css`
+        @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.5/dist/web/static/pretendard-dynamic-subset.css");
+
         @font-face {
           font-family: "Pretendard-Regular";
           src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
@@ -45,6 +47,7 @@ const GlobalStyles = () => {
           font-weight: 900;
           font-style: normal;
         }
+         }
       `}
     />
   );

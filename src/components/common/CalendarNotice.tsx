@@ -5,8 +5,8 @@ import React from "react";
 
 export default function CalendarNotice() {
   const currentTime = moment();
-  const month = currentTime.month();
-  const day = currentTime.day();
+  const month = currentTime.month() + 1;
+  const day = currentTime.day() + 1;
 
   return (
     <div
@@ -29,6 +29,19 @@ export default function CalendarNotice() {
         alt="현재 캘린더 이미지"
         css={css`
           width: 6em;
+
+          @media (max-width: 479px) {
+            font-size: 13px;
+          }
+          @media all and (min-width: 480px) and (max-width: 767px) {
+            font-size: 14px;
+          }
+          @media all and (min-width: 768px) and (max-width: 1099px) {
+            font-size: 15px;
+          }
+          @media all and (min-width: 1100px) {
+            font-size: 16px;
+          }
         `}
       />
       <div
@@ -39,12 +52,30 @@ export default function CalendarNotice() {
           color: #404040;
           font-size: 31px;
           line-height: 1.4em;
+          text-align: left;
+
+          @media (max-width: 479px) {
+            font-size: 22px;
+          }
+          @media all and (min-width: 480px) and (max-width: 767px) {
+            font-size: 25px;
+          }
+          @media all and (min-width: 768px) and (max-width: 1099px) {
+            font-size: 28px;
+          }
+          @media all and (min-width: 1100px) {
+            font-size: 31px;
+          }
+
+          span {
+            white-space: pre;
+          }
         `}
       >
         <span>
           {month}월 {day}일 위드 페스티벌에서
         </span>
-        <span> 전해드리는 축제 소식입니다</span>
+        <span>전해드리는 축제 소식입니다</span>
       </div>
     </div>
   );
