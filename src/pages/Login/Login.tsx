@@ -21,13 +21,12 @@ export default function Login() {
 
   const handleSubmit = () => {
     console.log(id, password);
-    axios
-      .post(`/api/v2/member/login`, data, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          "Access-Control-Allow-Origin": "*",
-        },
-      })
+    API.post(`/api/v2/member/login`, data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        "Access-Control-Allow-Origin": "*",
+      },
+    })
       .then((res) => {
         alert("로그인을 성공적으로 했어요!");
         navigate("/");
