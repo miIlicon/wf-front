@@ -6,11 +6,7 @@
     },
     {
       "source": "/api/:path*/",
-      "destination": "https://www.withfestival.site/:path*/"
-    },
-    {
-      "source": "/api/:path*/",
-      "destination": "https://withfestival.site/:path*/"
+      "destination": "https://server.withfestival.site/:path*/"
     }
   ]
 }
