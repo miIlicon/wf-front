@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://server.withfestival.site/:path*"
+    },
+    {
+      "source": "/api/:path*/",
+      "destination": "https://server.withfestival.site/:path*/"
+    }
+  ]
+}
