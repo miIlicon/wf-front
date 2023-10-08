@@ -1,8 +1,16 @@
 {
-  "routes": [
+  "rewrites": [
     {
-      "src": "/api/(.*)",
-      "dest": "https://server.withfestival.site/api/$1"
+      "source": "/api/:path*",
+      "destination": "https://server.withfestival.site/:path*"
+    },
+    {
+      "source": "/api/:path*/",
+      "destination": "https://www.withfestival.site/:path*/"
+    },
+    {
+      "source": "/api/:path*/",
+      "destination": "https://withfestival.site/:path*/"
     }
   ]
 }
