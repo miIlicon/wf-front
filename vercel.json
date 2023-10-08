@@ -8,5 +8,11 @@
       "source": "/api/:path*/",
       "destination": "https://server.withfestival.site/:path*/"
     }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "https://server.withfestival.site/api/$1"
+    }
   ]
 }
