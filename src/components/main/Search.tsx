@@ -197,9 +197,7 @@ const RecentNotice = ({ text }: contentTextProps) => {
 
 export default function Search() {
   const path = useLocation().pathname;
-  const [notice, setNotice] = useState<string>(
-    "금일 우천으로 인해 가수 초청 공연은 진행되지 않습니다."
-  );
+  const [notice, setNotice] = useState<string[]>([]);
   const [keyword, setKeyword] = useState<string>("");
   const [result, setResult] = useState<SearchResultProps[]>([]);
 
@@ -219,11 +217,25 @@ export default function Search() {
     setResult(data);
   };
 
+  const getNotice = async () => {
+    await API.get(`/api/v2/guide/list`, {
+      params: { page: 0, size: 1 },
+    }).then((res) => {
+      setNotice(res.data.guideResList);
+    });
+  }
+
   useEffect(() => {
     if (keyword.length > 0) {
       getResult();
     }
   }, [keyword]);
+
+  useEffect(() => {
+    if (path === "/") {
+      getNotice();
+    }
+  }, []);
 
   return (
     <div
@@ -290,7 +302,7 @@ export default function Search() {
         />
         {keyword.length > 0 && <ResultModal dataList={result} path={path} />}
       </div>
-      {path === "/" && <RecentNotice text={notice} />}
+      {path === "/" && <RecentNotice text={notice.length > 0 ? notice[0] : "아직 등록된 공지사항이 없어요"} />}
     </div>
   );
 }
