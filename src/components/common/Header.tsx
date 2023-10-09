@@ -11,7 +11,7 @@ const Menu = ({ onClick }: ClickEventProps) => {
   return (
     <img
       css={css`
-        height: 15px;
+        height: 1.7em;
       `}
       src={menu}
       alt="카테고리"
