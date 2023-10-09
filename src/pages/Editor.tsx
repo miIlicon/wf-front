@@ -28,29 +28,36 @@ const TitleInput = ({ onChange }: InputProps) => {
   return (
     <input
       css={css`
-        width: 638px;
+        width: 100%;
         height: 40px;
+
+        @media (max-width: 479px) {
+          font-size: 19px;
+        }
+        @media all and (min-width: 480px) and (max-width: 767px) {
+          font-size: 21px;
+        }
+        @media all and (min-width: 768px) and (max-width: 1099px) {
+          font-size: 23px;
+        }
+        @media all and (min-width: 1100px) {
+          font-size: 25px;
+        }
+
         border: none;
         font-family: "Pretendard-Regular";
         letter-spacing: -0.03em;
         font-size: 25px;
         color: #404040;
         outline: none;
-        ::placeholder,
-        ::-webkit-input-placeholder {
-          font-size: 25px;
-          line-height: 30px;
-          font-family: "Pretendard-Regular";
-          letter-spacing: -0.03em;
-          color: #8b95a1;
-        }
-        :-ms-input-placeholder {
-          font-size: 25px;
-          line-height: 30px;
-          font-family: "Pretendard-Regular";
-          letter-spacing: -0.03em;
-          color: #8b95a1;
-        }
+        // ::placeholder,
+        // ::-webkit-input-placeholder {
+        //   font-size: 25px;
+        //   line-height: 30px;
+        //   font-family: "Pretendard-Regular";
+        //   letter-spacing: -0.03em;
+        //   color: #8b95a1;
+        // }
       `}
       type="text"
       placeholder="제목을 입력해주세요"
@@ -157,6 +164,23 @@ const CalendarSection = ({ sDate, setSDate, eDate, setEDate }: DateProps) => {
           color: #404040;
           column-gap: 0.4em;
           margin-right: 0.6em;
+
+          @media (max-width: 479px) {
+            font-size: 10px;
+          }
+          @media all and (min-width: 480px) and (max-width: 767px) {
+            font-size: 12px;
+          }
+          @media all and (min-width: 768px) and (max-width: 1099px) {
+            font-size: 14px;
+          }
+          @media all and (min-width: 1100px) {
+            font-size: 16px;
+          }
+
+          span {
+            white-space: pre;
+          }
         `}
       >
         <CalendarIcon
@@ -182,6 +206,23 @@ const CalendarSection = ({ sDate, setSDate, eDate, setEDate }: DateProps) => {
           &:hover {
             background-color: #ebecf0;
           }
+
+          @media (max-width: 479px) {
+            font-size: 10px;
+          }
+          @media all and (min-width: 480px) and (max-width: 767px) {
+            font-size: 12px;
+          }
+          @media all and (min-width: 768px) and (max-width: 1099px) {
+            font-size: 14px;
+          }
+          @media all and (min-width: 1100px) {
+            font-size: 16px;
+          }
+
+          span {
+            white-space: pre;
+          }
         `}
         ref={sTouchNode}
         onClick={() => {
@@ -190,7 +231,7 @@ const CalendarSection = ({ sDate, setSDate, eDate, setEDate }: DateProps) => {
         }}
         className="calendar"
       >
-        {moment(sDate).format("YYYY년 MM월 DD일")}
+        <span>{moment(sDate).format("YYYY년 MM월 DD일")}</span>
       </div>
       <span
         css={css`
@@ -217,6 +258,23 @@ const CalendarSection = ({ sDate, setSDate, eDate, setEDate }: DateProps) => {
           &:hover {
             background-color: #ebecf0;
           }
+
+          @media (max-width: 479px) {
+            font-size: 10px;
+          }
+          @media all and (min-width: 480px) and (max-width: 767px) {
+            font-size: 12px;
+          }
+          @media all and (min-width: 768px) and (max-width: 1099px) {
+            font-size: 14px;
+          }
+          @media all and (min-width: 1100px) {
+            font-size: 16px;
+          }
+
+          span {
+            white-space: pre;
+          }
         `}
         onClick={() => {
           setIsOpenEnd(!isOpenEnd);
@@ -225,7 +283,7 @@ const CalendarSection = ({ sDate, setSDate, eDate, setEDate }: DateProps) => {
         className="calendar"
         ref={eTouchNode}
       >
-        {moment(eDate).format("YYYY년 MM월 DD일")}
+        <span>{moment(eDate).format("YYYY년 MM월 DD일")}</span>
       </div>
       {isOpenStart && (
         <Calendar
@@ -259,29 +317,43 @@ const SubTitleInput = ({ onChange }: InputProps) => {
   return (
     <input
       css={css`
-        width: 638px;
+        width: 100%;
         height: 1em;
+        font-size: 16px;
+
+        @media (max-width: 479px) {
+          font-size: 13px;
+        }
+        @media all and (min-width: 480px) and (max-width: 767px) {
+          font-size: 14px;
+        }
+        @media all and (min-width: 768px) and (max-width: 1099px) {
+          font-size: 15px;
+        }
+        @media all and (min-width: 1100px) {
+          font-size: 16px;
+        }
+
         border: none;
         font-family: "Pretendard-Regular";
         letter-spacing: -0.03em;
-        font-size: 16px;
         color: #404040;
         outline: none;
-        ::placeholder,
-        ::-webkit-input-placeholder {
-          font-family: "Pretendard-Regular";
-          font-size: 16px;
-          line-height: 20px;
-          letter-spacing: -0.03em;
-          color: #8b95a1;
-        }
-        :-ms-input-placeholder {
-          font-family: "Pretendard-Regular";
-          font-size: 16px;
-          line-height: 20px;
-          letter-spacing: -0.03em;
-          color: #8b95a1;
-        }
+        // ::placeholder,
+        // ::-webkit-input-placeholder {
+        //   font-family: "Pretendard-Regular";
+        //   font-size: 16px;
+        //   line-height: 20px;
+        //   letter-spacing: -0.03em;
+        //   color: #8b95a1;
+        // }
+        // :-ms-input-placeholder {
+        //   font-family: "Pretendard-Regular";
+        //   font-size: 16px;
+        //   line-height: 20px;
+        //   letter-spacing: -0.03em;
+        //   color: #8b95a1;
+        // }
       `}
       name="subTItle"
       placeholder="소제목을 입력해주세요"
@@ -563,13 +635,26 @@ export default function Editor() {
         <div
           css={css`
             display: flex;
-            margin-bottom: 2em;
           `}
         >
           <label
             css={css`
-              width: 301px;
-              height: 301px;
+              width: 20em;
+              height: 20em;
+
+              @media (max-width: 479px) {
+                font-size: 8px;
+              }
+              @media all and (min-width: 480px) and (max-width: 767px) {
+                font-size: 10px;
+              }
+              @media all and (min-width: 768px) and (max-width: 1099px) {
+                font-size: 12px;
+              }
+              @media all and (min-width: 1100px) {
+                font-size: 16px;
+              }
+
               display: flex;
               justify-content: center;
               align-items: center;
@@ -577,7 +662,7 @@ export default function Editor() {
               background: #ebecf0;
               border-radius: 21px;
               cursor: pointer;
-              margin-right: 70px;
+              margin-right: 3em;
               ${imgFile &&
               css`
                 background: url(${imgFile});
@@ -625,7 +710,8 @@ export default function Editor() {
           />
           <div
             css={css`
-              height: 426px;
+              // width: 100%;
+              height: 10em;
               display: flex;
               flex-direction: column;
               row-gap: 0.7em;
@@ -683,8 +769,17 @@ export default function Editor() {
               setSDate={setSDate}
               setEDate={setEDate}
             />
-            <Map />
           </div>
+        </div>
+        <div
+          css={css`
+            display: flex;
+            flex-direction: column;
+            height: 30em;
+          `}
+        >
+          <Label text="이벤트 위치" />
+          <Map />
         </div>
         <div
           css={css`
@@ -885,7 +980,8 @@ export default function Editor() {
             justify-content: center;
             align-items: center;
 
-            margin-top: 58px;
+            margin-top: 4em;
+            margin-bottom: 4em;
           `}
         >
           <Button text="이벤트 발행하기" onClick={handleSubmit} />

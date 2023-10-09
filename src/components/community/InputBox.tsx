@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { css } from "@emotion/react";
 import API from "../../utils/api";
 import axios from "axios";
@@ -24,6 +24,8 @@ export default function ChatBox({
   const [cookies, setCookie] = useCookies(["WF_ID"]);
   const navigate = useNavigate();
   const form = new FormData();
+  const contactRef = useRef<HTMLTextAreaElement | null>(null);
+  const contentRef = useRef<HTMLTextAreaElement | null>(null);
 
   function toggleChange() {
     setChecked(!checked);
@@ -36,7 +38,9 @@ export default function ChatBox({
       | React.ChangeEvent<HTMLInputElement>
   ) {
     if (event.target.name && event.target.name === "연락처") {
-      setEmail(event.target.value);
+      if (event.target && event.target.value.length < 30) {
+        setEmail(event.target.value);
+      }
     }
     if (event.target.name && event.target.name === "내용") {
       if (event.target && currentLength < 200) {
@@ -48,6 +52,23 @@ export default function ChatBox({
         setValidation(true);
       } else {
         setValidation(false);
+      }
+    }
+  }
+
+  function handleFocus(event: React.FocusEvent<HTMLTextAreaElement>) {
+    if (event.target.name && event.target.name === "연락처") {
+      if (event.target && event.target.value.length === 0) {
+        if (contactRef.current) {
+          contactRef.current.scrollTop = 0;
+        }
+      }
+    }
+    if (event.target.name && event.target.name === "내용") {
+      if (event.target && event.target.value.length === 0) {
+        if (contentRef.current) {
+          contentRef.current.scrollTop = 0;
+        }
       }
     }
   }
@@ -65,6 +86,10 @@ export default function ChatBox({
         setCurrentLength(0);
         changeTrigger(!trigger);
         setCompleteLoad(false);
+        if (contactRef.current && contentRef.current) {
+          contactRef.current.scrollTop = 0;
+          contentRef.current.scrollTop = 0;
+        }
       })
       .catch((error) => {
         if (
@@ -160,7 +185,7 @@ export default function ChatBox({
           width: 100%;
           background-color: #ffffff;
           border-radius: 1em;
-          height: 19.5em;
+          height: 21.5em;
 
           display: flex;
           flex-direction: column;
@@ -205,15 +230,18 @@ export default function ChatBox({
         >
           이벤트 참여 정보
         </span>
-        <input
+        <textarea
           css={css`
             border: none;
             font-size: 16px;
             font-family: "Pretendard-Regular";
             padding: 0;
+            resize: none;
+            line-height: 1.5em;
 
             @media (max-width: 479px) {
               font-size: 13px;
+              padding-bottom: 3em;
             }
             @media all and (min-width: 480px) and (max-width: 767px) {
               font-size: 14px;
@@ -228,18 +256,39 @@ export default function ChatBox({
             &:focus {
               outline: none;
             }
+
+            ::-webkit-scrollbar-track {
+              background-color: transparent;
+            }
+
+            ::-webkit-scrollbar-thumb {
+              height: 56px;
+              border-radius: 8px;
+              border: 4px solid transparent;
+              background-clip: content-box;
+              background-color: rgba(0, 0, 0, 0.1);
+            }
+
+            ::-webkit-scrollbar-thumb:hover {
+              background-color: rgba(0, 0, 0, 0.4);
+            }
+
+            ::-webkit-scrollbar-thumb:active {
+              background-color: rgba(0, 0, 0, 0.6);
+            }
           `}
           value={email}
           name="연락처"
-          placeholder="이벤트를 참여하고 싶다면 이메일 또는 번호를 적어주세요, 정보는 우리만 알고 있을게요!"
+          placeholder="이벤트를 참여하고 싶다면 연락처를 적어주세요, 정보는 안전하게 우리만 알고 있을게요!"
           onChange={handleChange}
+          onFocus={handleFocus}
+          ref={contactRef}
         />
         <span
           css={css`
             display: block;
             font-family: "Pretendard-Bold";
             font-size: 16px;
-            margin-top: 0.5em;
 
             @media (max-width: 479px) {
               font-size: 13px;
@@ -262,7 +311,9 @@ export default function ChatBox({
           placeholder="우리 학교 대나무 숲에 남길 메세지를 입력해주세요&#10;대나무 숲 취지에 맞지 않는 내용은 삭제 및 IP 제한이 있을 수 있습니다."
           maxLength={200}
           onChange={handleChange}
+          onFocus={handleFocus}
           value={value}
+          ref={contentRef}
           name="내용"
           css={css`
             border: none;
@@ -297,6 +348,26 @@ export default function ChatBox({
 
             &:focus {
               outline: none;
+            }
+
+            ::-webkit-scrollbar-track {
+              background-color: transparent;
+            }
+
+            ::-webkit-scrollbar-thumb {
+              height: 56px;
+              border-radius: 8px;
+              border: 4px solid transparent;
+              background-clip: content-box;
+              background-color: rgba(0, 0, 0, 0.1);
+            }
+
+            ::-webkit-scrollbar-thumb:hover {
+              background-color: rgba(0, 0, 0, 0.4);
+            }
+
+            ::-webkit-scrollbar-thumb:active {
+              background-color: rgba(0, 0, 0, 0.6);
             }
           `}
         />
