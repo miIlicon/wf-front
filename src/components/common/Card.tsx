@@ -21,13 +21,13 @@ export const Thumb = ({ thumb, status }: CardProps) => {
         border-radius: 11px;
 
         @media (max-width: 479px) {
-          font-size: 10px;
+          font-size: 8px;
         }
         @media all and (min-width: 480px) and (max-width: 767px) {
-          font-size: 12px;
+          font-size: 10px;
         }
         @media all and (min-width: 768px) and (max-width: 1099px) {
-          font-size: 14px;
+          font-size: 13px;
         }
         @media all and (min-width: 1100px) {
           font-size: 16px;
