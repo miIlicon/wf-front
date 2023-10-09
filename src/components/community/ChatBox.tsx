@@ -53,7 +53,7 @@ export default function ChatBox({
         box-sizing: border-box;
       `}
     >
-      {cookies.WF_ID.AT && cookies.WF_ID.RT && (
+      {cookies.WF_ID && cookies.WF_ID.AT && cookies.WF_ID.RT && (
         <Close
           css={css`
             position: absolute;
