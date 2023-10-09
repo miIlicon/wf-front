@@ -11,7 +11,7 @@ const Menu = ({ onClick }: ClickEventProps) => {
   return (
     <img
       css={css`
-        height: 15px;
+        height: 1.7em;
       `}
       src={menu}
       alt="카테고리"
@@ -125,6 +125,19 @@ export default function Header() {
               width: 6em;
               cursor: pointer;
               transition: 0.4s all;
+
+              @media (max-width: 479px) {
+                font-size: 14px;
+              }
+              @media all and (min-width: 480px) and (max-width: 767px) {
+                font-size: 15px;
+              }
+              @media all and (min-width: 768px) and (max-width: 1099px) {
+                font-size: 16px;
+              }
+              @media all and (min-width: 1100px) {
+                font-size: 17px;
+              }
 
               &:hover {
                 opacity: 70%;
