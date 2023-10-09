@@ -12,9 +12,10 @@ import CurrentEvent from "../../components/main/CurrentEvent";
 import PopularEvent from "../../components/main/EventTemplate";
 import EventTemplate from "../../components/main/EventTemplate";
 import CalendarNotice from "../../components/common/CalendarNotice";
+import API from "../../utils/api";
 
 export default function Index() {
-  console.log(artistData);
+  // console.log(artistData);
   const date = new Date();
   const [artist, setArtist] = useState("");
 
@@ -28,6 +29,10 @@ export default function Index() {
           }
         }
       }
+    });
+
+    API.get(`/api/v2/view-count`).then((res) => {
+      console.log(`성공적으로 연결되었어요 =)`);
     });
   }, []);
 
