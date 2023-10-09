@@ -22,8 +22,9 @@ export default function Error() {
         row-gap: 0.5em;
         font-size: 14px;
 
-        &:span {
+        span {
           display: block;
+          text-align: center;
         }
       `}
     >

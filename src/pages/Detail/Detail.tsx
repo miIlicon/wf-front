@@ -8,10 +8,11 @@ import ContentSubTitle from "../../components/common/ContentSubTitle";
 import Map from "../../components/common/Map";
 import ContentCards from "../../components/common/ContentCards";
 import { DetailThumb } from "../../components/common/DetailCard";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import API from "../../utils/api";
 import axios from "axios";
 import Welcome from "../../components/common/Welcome";
+import { useCookies } from "react-cookie";
 
 export default function Detail() {
   const location = useLocation();
@@ -33,8 +34,14 @@ export default function Detail() {
 
   const category = new URLSearchParams(location.search).get("category");
   const id = new URLSearchParams(location.search).get("id");
+  const [cookies, setCookie] = useCookies(["WF_ID"]);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (!category || !id) {
+      navigate("/error");
+    }
+
     window.livereOptions = {
       refer: window.location.href,
     };
