@@ -145,7 +145,15 @@ const Content = ({ text }: contentTextProps) => {
   );
 };
 
-const NoticeBox = ({ icon, id, name, date, content, trigger, changeTrigger }: NoticeProps) => {
+const NoticeBox = ({
+  icon,
+  id,
+  name,
+  date,
+  content,
+  trigger,
+  changeTrigger,
+}: NoticeProps) => {
   const navigate = useNavigate();
   const [cookies, setCookie] = useCookies(["WF_ID"]);
 
@@ -156,13 +164,13 @@ const NoticeBox = ({ icon, id, name, date, content, trigger, changeTrigger }: No
           accessToken: `Bearer ${cookies.WF_ID.AT}`,
         },
       })
-      .then(() => {
-        alert("성공적으로 삭제되었어요");
-        changeTrigger(!trigger);
-      })
-      .catch(() => {
-        alert(`알 수 없는 오류가 발생했어요!`);
-      });
+        .then(() => {
+          alert("성공적으로 삭제되었어요");
+          changeTrigger(!trigger);
+        })
+        .catch(() => {
+          alert(`알 수 없는 오류가 발생했어요!`);
+        });
     }
   }
 
@@ -191,7 +199,7 @@ const NoticeBox = ({ icon, id, name, date, content, trigger, changeTrigger }: No
               width: 50px;
               font-family: "Pretendard-Medium";
               border: none;
-              border-radius: 5px; 
+              border-radius: 5px;
               background-color: #ea5656;
               color: white;
               transform: translate(-8px, 15px);
@@ -339,12 +347,14 @@ export default function Notice() {
       headers: {
         accessToken: `Bearer ${cookies.WF_ID.AT}`,
       },
-    }).then((res) => {
-      setContent("");
-      setTrigger(!trigger);
-    }).catch(() => {
-      alert(`알 수 없는 오류가 발생했어요!`);
-    });
+    })
+      .then((res) => {
+        setContent("");
+        setTrigger(!trigger);
+      })
+      .catch(() => {
+        alert(`알 수 없는 오류가 발생했어요!`);
+      });
   };
 
   useEffect(() => {

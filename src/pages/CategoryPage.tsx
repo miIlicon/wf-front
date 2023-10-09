@@ -33,7 +33,7 @@ const SubCategory = ({ text, onClick }: SubCategoryProps) => {
         justify-content: space-between;
         align-items: center;
         font-size: 15px;
-        color: #4E5968;
+        color: #4e5968;
         margin-bottom: 20px;
       `}
       onClick={onClick}
