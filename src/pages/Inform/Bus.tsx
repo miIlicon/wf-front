@@ -128,10 +128,9 @@ const SubImage = ({ text, onClick } : TextProps) => {
 export default function Bus() {
   const [idx, setIdx] = useState<number>(0);
   const images = [
-    "https://cdn.discordapp.com/attachments/1065535933941813290/1147737906774024293/IMG_6507.png",
-    "https://cdn.discordapp.com/attachments/1065535933941813290/1147737907092803614/IMG_6508.png",
-    "https://cdn.discordapp.com/attachments/1065535933941813290/1147737907382194176/IMG_6509.png",
-    "https://cdn.discordapp.com/attachments/1065535933941813290/1147737907747115008/IMG_6510.png"
+    "https://media.discordapp.net/attachments/1065535933941813290/1160943287629254706/386552697_17996348381508065_2745014566809019925_n.jpg",
+    "https://media.discordapp.net/attachments/1065535933941813290/1160943286958174258/387190181_17996348390508065_2627984631801396995_n.jpg",
+    "https://media.discordapp.net/attachments/1065535933941813290/1160943287889309697/386781315_17996348399508065_4343797327713096628_n.jpg"
   ]
   
   const changeMain = (i : number) => {

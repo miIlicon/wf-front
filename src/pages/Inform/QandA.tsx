@@ -61,6 +61,7 @@ const QuestionBox = ({ text, onClick }: TextProps) => {
       </p>
       <p
         css={css`
+          text-align: left;
           word-break: keep-all;
 
           @media (max-width: 479px) {
@@ -138,6 +139,7 @@ const AnswerBox = ({ text }: TextProps) => {
       </p>
       <p
         css={css`
+          text-align: left;
           word-break: keep-all;
 
           @media (max-width: 479px) {
