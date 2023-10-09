@@ -156,12 +156,19 @@ const NoticeBox = ({
 }: NoticeProps) => {
   const navigate = useNavigate();
   const [cookies, setCookie] = useCookies(["WF_ID"]);
+  let AT: string | null = null;
+  let RT: string | null = null;
+
+  if (cookies.WF_ID) {
+    AT = cookies.WF_ID.AT;
+    RT = cookies.WF_ID.RT;
+  }
 
   function deleteNotice() {
     if (window.confirm("공지사항을 정말 삭제하시겠어요?")) {
       API.delete(`/api/v2/guide/${id}`, {
         headers: {
-          accessToken: `Bearer ${cookies.WF_ID.AT}`,
+          accessToken: `Bearer ${AT}`,
         },
       })
         .then(() => {
@@ -180,7 +187,7 @@ const NoticeBox = ({
             ) {
               API.get(`/api/v2/member/rotate`, {
                 headers: {
-                  refreshToken: `Bearer ${cookies.WF_ID.RT}`,
+                  refreshToken: `Bearer ${RT}`,
                 },
               })
                 .then((res) => {
@@ -188,6 +195,8 @@ const NoticeBox = ({
                     AT: res.data.accessToken,
                     RT: res.data.refreshToken,
                   });
+                  AT = res.data.accessToken;
+                  RT = res.data.refreshToken;
                   return deleteNotice();
                 })
                 .catch(() => {
@@ -414,10 +423,10 @@ export default function Notice() {
             trigger={trigger}
             changeTrigger={setTrigger}
           />
-        ))) : (
-          <Inform text="아직 등록된 공지사항이 없어요" />
-        )
-      }
+        ))
+      ) : (
+        <Inform text="아직 등록된 공지사항이 없어요" />
+      )}
     </div>
   );
 }
