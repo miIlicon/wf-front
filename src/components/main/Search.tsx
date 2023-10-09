@@ -18,7 +18,7 @@ const Result = ({
   subTitle,
   mainFilePath,
   status,
-  onClick
+  onClick,
 }: SearchResultProps) => {
   return (
     <div
@@ -206,11 +206,11 @@ export default function Search() {
     }).then((res) => {
       setNotice(res.data.guideResList);
     });
-  }
+  };
 
   const createResult = () => {
-    const arr : any[] = [];
-    program.map((data) => (
+    const arr: any[] = [];
+    program.map((data) =>
       arr.push(
         <Result
           id={data.id}
@@ -221,8 +221,8 @@ export default function Search() {
           onClick={() => navigate(`/detail?category=program&id=${data.id}`)}
         />
       )
-    ))
-    booth.map((data) => (
+    );
+    booth.map((data) =>
       arr.push(
         <Result
           id={data.id}
@@ -233,9 +233,9 @@ export default function Search() {
           onClick={() => navigate(`/detail?category=booth&id=${data.id}`)}
         />
       )
-    ))
+    );
     return arr;
-  }
+  };
 
   useEffect(() => {
     if (keyword.length > 0) {
@@ -269,12 +269,25 @@ export default function Search() {
           width: 100%;
           height: 4em;
           background-color: ${path === "/category" ? "#FFFFFF" : "#ebecf0"};
-          border-radius: 13px;
+          border-radius: 0.8em;
           display: flex;
           justify-content: center;
           align-items: center;
           padding: 1.3em;
           box-sizing: border-box;
+
+          @media (max-width: 479px) {
+            font-size: 13px;
+          }
+          @media all and (min-width: 480px) and (max-width: 767px) {
+            font-size: 15px;
+          }
+          @media all and (min-width: 768px) and (max-width: 1099px) {
+            font-size: 16px;
+          }
+          @media all and (min-width: 1100px) {
+            font-size: 17px;
+          }
         `}
       >
         <img
@@ -317,10 +330,10 @@ export default function Search() {
           }}
         />
         {keyword.length > 0 && (
-          <ResultModal
-            path={path}
-          >
-            {result.length > 0 ? (result) : (
+          <ResultModal path={path}>
+            {result.length > 0 ? (
+              result
+            ) : (
               <p
                 css={css`
                   font-family: "Pretendard-Medium";
@@ -334,7 +347,11 @@ export default function Search() {
           </ResultModal>
         )}
       </div>
-      {path === "/" && <RecentNotice text={notice.length > 0 ? notice[0] : "아직 등록된 공지사항이 없어요"} />}
+      {path === "/" && (
+        <RecentNotice
+          text={notice.length > 0 ? notice[0] : "아직 등록된 공지사항이 없어요"}
+        />
+      )}
     </div>
   );
 }

@@ -9,7 +9,7 @@ import { ReactComponent as Rocket } from "../images/rocket.svg";
 import category from "../data/category.json";
 import Search from "../components/main/Search";
 
-const MainCategory = ({ text } : contentTextProps) => {
+const MainCategory = ({ text }: contentTextProps) => {
   return (
     <p
       css={css`
@@ -22,10 +22,10 @@ const MainCategory = ({ text } : contentTextProps) => {
     >
       {text}
     </p>
-  )
-}
+  );
+};
 
-const SubCategory = ({ text, onClick } : SubCategoryProps) => {
+const SubCategory = ({ text, onClick }: SubCategoryProps) => {
   return (
     <div
       css={css`
@@ -33,7 +33,7 @@ const SubCategory = ({ text, onClick } : SubCategoryProps) => {
         justify-content: space-between;
         align-items: center;
         font-size: 17px;
-        color: #4E5968;
+        color: #4e5968;
         margin-bottom: 20px;
       `}
       onClick={onClick}
@@ -55,10 +55,10 @@ const SubCategory = ({ text, onClick } : SubCategoryProps) => {
         alt=""
       />
     </div>
-  )
-}
+  );
+};
 
-const Menu = ({ main, sub, onClick } : MenuProps) => {
+const Menu = ({ main, sub, onClick }: MenuProps) => {
   return (
     <div
       css={css`
@@ -72,11 +72,13 @@ const Menu = ({ main, sub, onClick } : MenuProps) => {
           flex: 1;
         `}
       >
-        {sub.map((menu) => <SubCategory text={menu} onClick={() => onClick(main, menu)} />)}
+        {sub.map((menu) => (
+          <SubCategory text={menu} onClick={() => onClick(main, menu)} />
+        ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
 const Banner = () => {
   return (
@@ -93,7 +95,7 @@ const Banner = () => {
         css={css`
           font-size: 13px;
           font-weight: 700;
-          color: #FFFFFF;
+          color: #ffffff;
           margin-right: 15px;
         `}
       >
@@ -106,16 +108,15 @@ const Banner = () => {
         `}
       />
     </div>
-  )
-}
+  );
+};
 
 export default function CategoryPage() {
   const navigate = useNavigate();
   const categoryList = JSON.parse(JSON.stringify(category));
 
-
-  const handleClick = (main : string, sub : string) => {
-    navigate(`/${categoryList[main]}`, {state: { menu: categoryList[sub] }});
+  const handleClick = (main: string, sub: string) => {
+    navigate(`/${categoryList[main]}`, { state: { menu: categoryList[sub] } });
   };
 
   return (
@@ -127,9 +128,9 @@ export default function CategoryPage() {
         top: 1;
         font-family: "Pretendard-Medium";
         margin: 0;
-        background-color: #E5E8EF;
+        background-color: #e5e8ef;
         overflow: hidden;
-        overflow-x :  hidden;
+        overflow-x: hidden;
         z-index: 999;
       `}
     >
@@ -144,6 +145,9 @@ export default function CategoryPage() {
           src={backButton}
           alt=""
           onClick={() => navigate(-1)}
+          css={css`
+            width: 0.6em;
+          `}
         />
         <p
           css={css`
@@ -170,12 +174,24 @@ export default function CategoryPage() {
           <Search />
         </div>
         <div>
-          <Menu main="프로그램" sub={["학교주최 이벤트", "경기 일정/결과"]} onClick={handleClick} />
-          <Menu main="축제부스" sub={["축제주점", "플리마켓", "푸드트럭"]} onClick={handleClick} />
-          <Menu main="안내사항" sub={["Q&A", "공지사항", "달구지"]} onClick={handleClick} />
+          <Menu
+            main="프로그램"
+            sub={["학교주최 이벤트", "경기 일정/결과"]}
+            onClick={handleClick}
+          />
+          <Menu
+            main="축제부스"
+            sub={["축제주점", "플리마켓", "푸드트럭"]}
+            onClick={handleClick}
+          />
+          <Menu
+            main="안내사항"
+            sub={["Q&A", "공지사항", "달구지"]}
+            onClick={handleClick}
+          />
           <Menu main="대나무숲" sub={["대나무숲"]} onClick={handleClick} />
         </div>
       </div>
     </div>
-  )
+  );
 }
