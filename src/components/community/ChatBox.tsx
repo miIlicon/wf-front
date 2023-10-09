@@ -16,12 +16,20 @@ export default function ChatBox({
 }: chatBoxProps) {
   const navigate = useNavigate();
   const [cookies, setCookie] = useCookies(["WF_ID"]);
+  let AT: string | null = null;
+  let RT: string | null = null;
+
+  if (cookies.WF_ID) {
+    AT = cookies.WF_ID.AT;
+    RT = cookies.WF_ID.RT;
+  }
 
   function deleteChat() {
+    console.log("AT " + AT, "RT " + RT);
     if (window.confirm(`${id}번째 외침을 정말 삭제하시겠어요?`)) {
       API.delete(`/api/v2/bambooforest/${id}`, {
         headers: {
-          accessToken: `Bearer ${cookies.WF_ID.AT}`,
+          accessToken: `Bearer ${AT}`,
         },
       })
         .then(() => {
@@ -42,7 +50,7 @@ export default function ChatBox({
             ) {
               API.get(`/api/v2/member/rotate`, {
                 headers: {
-                  refreshToken: `Bearer ${cookies.WF_ID.RT}`,
+                  refreshToken: `Bearer ${RT}`,
                 },
               })
                 .then((res) => {
@@ -50,6 +58,8 @@ export default function ChatBox({
                     AT: res.data.accessToken,
                     RT: res.data.refreshToken,
                   });
+                  AT = res.data.accessToken;
+                  RT = res.data.refreshToken;
                   return deleteChat();
                 })
                 .catch(() => {
