@@ -30,8 +30,33 @@ export default function ChatBox({
           }
           alert("성공적으로 삭제되었어요");
         })
-        .catch(() => {
-          navigate("/error");
+        .catch((error) => {
+          if (
+            error.response &&
+            error.response.data &&
+            error.response.data.errorMessage
+          ) {
+            if (
+              error.response.data.errorMessage ===
+              "기한이 만료된 AccessToken입니다."
+            ) {
+              API.get(`/api/v2/member/rotate`, {
+                headers: {
+                  refreshToken: `Bearer ${cookies.WF_ID.RT}`,
+                },
+              })
+                .then((res) => {
+                  setCookie("WF_ID", {
+                    AT: res.data.accessToken,
+                    RT: res.data.refreshToken,
+                  });
+                  return deleteChat();
+                })
+                .catch(() => {
+                  navigate("/error");
+                });
+            }
+          }
         });
     }
   }
