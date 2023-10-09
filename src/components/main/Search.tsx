@@ -180,7 +180,7 @@ const RecentNotice = ({ text }: contentTextProps) => {
 export default function Search() {
   const path = useLocation().pathname;
   const navigate = useNavigate();
-  const [notice, setNotice] = useState<string[]>([]);
+  const [notice, setNotice] = useState<string>("");
   const [keyword, setKeyword] = useState<string>("");
   const [program, setProgram] = useState<SearchResultProps[]>([]);
   const [booth, setBooth] = useState<SearchResultProps[]>([]);
@@ -204,7 +204,9 @@ export default function Search() {
     await API.get(`/api/v2/guide/list`, {
       params: { page: 0, size: 1 },
     }).then((res) => {
-      setNotice(res.data.guideResList);
+      if (res.data.guideResList.length > 0) {
+        setNotice(res.data.guideResList[0].content);
+      }
     });
   };
 
@@ -349,7 +351,7 @@ export default function Search() {
       </div>
       {path === "/" && (
         <RecentNotice
-          text={notice.length > 0 ? notice[0] : "아직 등록된 공지사항이 없어요"}
+          text={notice.length > 0 ? notice : "아직 등록된 공지사항이 없어요"}
         />
       )}
     </div>
