@@ -20,7 +20,6 @@ export default function Login() {
   data.append("password", password);
 
   const handleSubmit = () => {
-    console.log(id, password);
     API.post(`/api/v2/member/login`, data, {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -28,7 +27,7 @@ export default function Login() {
       },
     })
       .then((res) => {
-        alert("로그인을 성공적으로 했어요!");
+        alert("로그인을 성공적으로 했어요, 메인 페이지로 이동할게요");
         navigate("/");
         setCookie("WF_ID", {
           AT: res.data.accessToken,
@@ -38,7 +37,8 @@ export default function Login() {
         // sessionStorage.setItem("refreshToken", res.data.accessToken);
       })
       .catch((error) => {
-        alert(`알 수 없는 오류가 발생했어요!`);
+        console.log(error);
+        alert("오류가 발생했는데, 오류를 콘솔 창에 출력했어요");
         // console.log(error);
       });
   };
