@@ -11,6 +11,7 @@ import { DetailThumb } from "../../components/common/DetailCard";
 import { useLocation } from "react-router-dom";
 import API from "../../utils/api";
 import axios from "axios";
+import Welcome from "../../components/common/Welcome";
 
 export default function Detail() {
   const location = useLocation();
@@ -119,7 +120,7 @@ export default function Detail() {
         <article
           css={css`
             display: flex;
-            height: 25em;
+            height: 20em;
             column-gap: 4.43em;
             box-sizing: border-box;
 
@@ -166,9 +167,25 @@ export default function Detail() {
             <ContentTitle text={detailData.title} />
             <ContentSubTitle text={detailData.subTitle} />
             <EventStatusButton status={detailData.operateStatus} />
-            <Map lat={detailData.latitude} lon={detailData.longitude} />
+            <Welcome />
           </div>
         </article>
+        <div
+          css={css`
+            display: flex;
+            flex-direction: column;
+            align-items: left;
+            text-align: left;
+            row-gap: 2.2em;
+            width: 100%;
+            overflow: auto;
+            white-space: nowrap;
+            height: 30em;
+          `}
+        >
+          <ContentTitle text="이벤트 위치" />
+          <Map lat={detailData.latitude} lon={detailData.longitude} />
+        </div>
         <div
           css={css`
             display: flex;
@@ -232,15 +249,17 @@ export default function Detail() {
             align-items: left;
             text-align: left;
             row-gap: 2.3em;
+            line-height: 1.5em;
+            white-space: pre-wrap;
 
             @media (max-width: 479px) {
-              font-size: 10px;
+              font-size: 13px;
             }
             @media all and (min-width: 480px) and (max-width: 767px) {
-              font-size: 12px;
+              font-size: 14px;
             }
             @media all and (min-width: 768px) and (max-width: 1099px) {
-              font-size: 14px;
+              font-size: 15px;
             }
             @media all and (min-width: 1100px) {
               font-size: 16px;
