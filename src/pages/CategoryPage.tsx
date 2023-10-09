@@ -14,7 +14,7 @@ const MainCategory = ({ text } : contentTextProps) => {
     <p
       css={css`
         font-family: "Pretendard-Medium";
-        font-size: 22px;
+        font-size: 17px;
         font-weight: 700;
         color: #000000;
         margin: 0 20px 0 0;
@@ -32,7 +32,7 @@ const SubCategory = ({ text, onClick } : SubCategoryProps) => {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        font-size: 17px;
+        font-size: 15px;
         color: #4E5968;
         margin-bottom: 20px;
       `}
@@ -147,8 +147,8 @@ export default function CategoryPage() {
         />
         <p
           css={css`
+            font-family: "Pretendard-Bold";
             font-size: 18px;
-            font-weight: 700;
             margin: 0;
           `}
         >
@@ -156,7 +156,7 @@ export default function CategoryPage() {
         </p>
         <div></div>
       </div>
-      <Banner />
+      {/* <Banner /> */}
       <div
         css={css`
           padding: 0 20px;
