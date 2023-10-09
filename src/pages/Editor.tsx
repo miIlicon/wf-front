@@ -409,7 +409,7 @@ export default function Editor() {
       navigate("/404");
     }
 
-    if (!(cookies.WF_ID.AT && cookies.WF_ID.RT)) {
+    if (!(cookies.WF_ID && cookies.WF_ID.AT && cookies.WF_ID.RT)) {
       navigate("/admin");
     }
 
