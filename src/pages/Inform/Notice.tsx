@@ -168,8 +168,33 @@ const NoticeBox = ({
           alert("성공적으로 삭제되었어요");
           changeTrigger(!trigger);
         })
-        .catch(() => {
-          alert(`알 수 없는 오류가 발생했어요!`);
+        .catch((error) => {
+          if (
+            error.response &&
+            error.response.data &&
+            error.response.data.errorMessage
+          ) {
+            if (
+              error.response.data.errorMessage ===
+              "기한이 만료된 AccessToken입니다."
+            ) {
+              API.get(`/api/v2/member/rotate`, {
+                headers: {
+                  refreshToken: `Bearer ${cookies.WF_ID.RT}`,
+                },
+              })
+                .then((res) => {
+                  setCookie("WF_ID", {
+                    AT: res.data.accessToken,
+                    RT: res.data.refreshToken,
+                  });
+                  return deleteNotice();
+                })
+                .catch(() => {
+                  navigate("/error");
+                });
+            }
+          }
         });
     }
   }
