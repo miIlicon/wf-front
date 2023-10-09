@@ -37,7 +37,7 @@ export const DetailThumb = ({ thumb }: CardProps) => {
           border-radius: 0.5em;
 
           @media (max-width: 479px) {
-            font-size: 8px;
+            font-size: 10px;
           }
           @media all and (min-width: 480px) and (max-width: 767px) {
             font-size: 12px;

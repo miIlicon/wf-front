@@ -19,6 +19,7 @@ export default function ChatList({
   const [pageSize, setPageSize] = useState<number>(10);
   const [dataSize, setDataSize] = useState<number>(0);
   const [keepUpdateTrigger, setKeepUpdateTrigger] = useState<boolean>(false);
+  const [isMoreData, setIsMoreData] = useState<boolean>(false);
 
   function moreChat() {
     if (dataSize > pageSize) {
@@ -37,7 +38,13 @@ export default function ChatList({
       setChatData(res.data.forestResList);
       if (res.data.forestResList && res.data.forestResList.length) {
         // 대나무 숲 데이터의 마지막 번호가 몇 번인지 가져옵니다.
-        setDataSize(res.data.forestResList[0].id);
+        setDataSize(res.data.totalCount);
+
+        if (pageSize > dataSize) {
+          setIsMoreData(false);
+        } else {
+          setIsMoreData(true);
+        }
       }
     });
   }, [trigger]);
@@ -52,7 +59,13 @@ export default function ChatList({
           setChatData(res.data.forestResList);
           if (res.data.forestResList && res.data.forestResList.length) {
             // 대나무 숲 데이터의 마지막 번호가 몇 번인지 가져옵니다.
-            setDataSize(res.data.forestResList[0].id);
+            setDataSize(res.data.totalCount);
+
+            if (pageSize > dataSize) {
+              setIsMoreData(false);
+            } else {
+              setIsMoreData(true);
+            }
           }
         });
       }, 4000);
@@ -146,7 +159,7 @@ export default function ChatList({
         )}
       </div>
 
-      {dataSize > 10 && (
+      {dataSize > 10 && isMoreData && (
         <div
           css={css`
             width: 100%;
