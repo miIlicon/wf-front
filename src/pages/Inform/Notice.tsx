@@ -13,6 +13,7 @@ import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import profile from "../../data/profile.json";
 import { ReactComponent as Plane } from "../../images/emoji/plane.svg";
+import Inform from "../../components/common/Notice";
 import API from "../../utils/api";
 
 const Icon = ({ src }: ImageProps) => {
@@ -377,17 +378,21 @@ export default function Notice() {
           }}
         />
       )}
-      {noticeData.map((data: any) => (
-        <NoticeBox
-          icon={icons[data.username]}
-          id={data.id}
-          name={data.username}
-          date={data.createdDateTime}
-          content={data.content}
-          trigger={trigger}
-          changeTrigger={setTrigger}
-        />
-      ))}
+      {noticeData.length > 0 ? (
+        noticeData.map((data: any) => (
+          <NoticeBox
+            icon={icons[data.username]}
+            id={data.id}
+            name={data.username}
+            date={data.createdDateTime}
+            content={data.content}
+            trigger={trigger}
+            changeTrigger={setTrigger}
+          />
+        ))) : (
+          <Inform text="아직 등록된 공지사항이 없어요" />
+        )
+      }
     </div>
   );
 }
