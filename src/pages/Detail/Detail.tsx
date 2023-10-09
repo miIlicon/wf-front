@@ -311,7 +311,7 @@ export default function Detail() {
             css={css`
               display: flex;
               width: 100%;
-              height: 20em;
+              height: 100%;
               column-gap: 2em;
               box-sizing: border-box;
               border-radius: 0.5em;
