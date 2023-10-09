@@ -182,7 +182,11 @@ const QandABox = ({ Q, A }: QandAProps) => {
 
 export default function QandA() {
   return (
-    <div>
+    <div
+      css={css`
+        padding-bottom: 40px;
+      `}
+    >
       {QandAData.map((item) => (
         <QandABox Q={item.Q} A={item.A} />
       ))}
