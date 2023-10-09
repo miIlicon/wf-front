@@ -185,3 +185,8 @@ export interface EventTemplateProps {
   text: string;
   type: string;
 }
+
+export interface ModalPortalProps {
+  children: JSX.Element;
+  closePortal: () => void;
+}
