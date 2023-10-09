@@ -164,6 +164,7 @@ export interface SearchResultProps {
   subTitle: string;
   mainFilePath: string;
   status: string;
+  onClick?: () => void;
 }
 
 export interface ClickEventProps {
@@ -178,7 +179,7 @@ export interface NoticeSubmitProps {
 
 export interface SearchModalProps {
   path: string;
-  dataList: SearchResultProps[];
+  children: React.ReactNode;
 }
 
 export interface EventTemplateProps {

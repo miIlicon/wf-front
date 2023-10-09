@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import React, { useEffect, useState } from "react";
 import { css } from "@emotion/react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import search from "../../images/main/search.png";
 import EventStatusButton from "../common/EventStatusButton";
 import {
@@ -18,6 +18,7 @@ const Result = ({
   subTitle,
   mainFilePath,
   status,
+  onClick
 }: SearchResultProps) => {
   return (
     <div
@@ -33,6 +34,7 @@ const Result = ({
           opacity: 0.8;
         }
       `}
+      onClick={onClick}
     >
       <img
         css={css`
@@ -111,13 +113,13 @@ const Result = ({
         >
           {subTitle}
         </p>
-        <EventStatusButton status={status === "OPERATE"} />
+        <EventStatusButton status={status} />
       </div>
     </div>
   );
 };
 
-const ResultModal = ({ dataList, path }: SearchModalProps) => {
+const ResultModal = ({ children, path }: SearchModalProps) => {
   return (
     <div
       css={css`
@@ -132,27 +134,7 @@ const ResultModal = ({ dataList, path }: SearchModalProps) => {
         padding: 4px 30px;
       `}
     >
-      {dataList.length > 0 ? (
-        dataList.map((data) => (
-          <Result
-            id={data.id}
-            title={data.title}
-            subTitle={data.subTitle}
-            status={data.status}
-            mainFilePath={data.mainFilePath}
-          />
-        ))
-      ) : (
-        <p
-          css={css`
-            font-family: "Pretendard-Medium";
-            text-align: center;
-            color: #4e5968;
-          `}
-        >
-          일치하는 검색 결과가 없어요
-        </p>
-      )}
+      {children}
     </div>
   );
 };
@@ -197,33 +179,79 @@ const RecentNotice = ({ text }: contentTextProps) => {
 
 export default function Search() {
   const path = useLocation().pathname;
-  const [notice, setNotice] = useState<string>(
-    "금일 우천으로 인해 가수 초청 공연은 진행되지 않습니다."
-  );
+  const navigate = useNavigate();
+  const [notice, setNotice] = useState<string[]>([]);
   const [keyword, setKeyword] = useState<string>("");
-  const [result, setResult] = useState<SearchResultProps[]>([]);
+  const [program, setProgram] = useState<SearchResultProps[]>([]);
+  const [booth, setBooth] = useState<SearchResultProps[]>([]);
+  const [result, setResult] = useState<any[]>([]);
 
   const getResult = async () => {
-    const data: SearchResultProps[] = [];
     await API.get(`/api/v2/program/search`, {
       params: { keyword: keyword },
     }).then((res) => {
-      data.push(...res.data);
+      setProgram(res.data);
     });
 
     await API.get(`/api/v2/booth/search`, {
       params: { keyword: keyword },
     }).then((res) => {
-      data.push(...res.data);
+      setBooth(res.data);
     });
-    setResult(data);
   };
+
+  const getNotice = async () => {
+    await API.get(`/api/v2/guide/list`, {
+      params: { page: 0, size: 1 },
+    }).then((res) => {
+      setNotice(res.data.guideResList);
+    });
+  }
+
+  const createResult = () => {
+    const arr : any[] = [];
+    program.map((data) => (
+      arr.push(
+        <Result
+          id={data.id}
+          title={data.title}
+          subTitle={data.subTitle}
+          status={data.status}
+          mainFilePath={data.mainFilePath}
+          onClick={() => navigate(`/detail?category=program&id=${data.id}`)}
+        />
+      )
+    ))
+    booth.map((data) => (
+      arr.push(
+        <Result
+          id={data.id}
+          title={data.title}
+          subTitle={data.subTitle}
+          status={data.status}
+          mainFilePath={data.mainFilePath}
+          onClick={() => navigate(`/detail?category=booth&id=${data.id}`)}
+        />
+      )
+    ))
+    return arr;
+  }
 
   useEffect(() => {
     if (keyword.length > 0) {
       getResult();
     }
   }, [keyword]);
+
+  useEffect(() => {
+    if (path === "/") {
+      getNotice();
+    }
+  }, []);
+
+  useEffect(() => {
+    setResult(createResult());
+  }, [program, booth]);
 
   return (
     <div
@@ -288,9 +316,25 @@ export default function Search() {
             setKeyword(event.target.value);
           }}
         />
-        {keyword.length > 0 && <ResultModal dataList={result} path={path} />}
+        {keyword.length > 0 && (
+          <ResultModal
+            path={path}
+          >
+            {result.length > 0 ? (result) : (
+              <p
+                css={css`
+                  font-family: "Pretendard-Medium";
+                  text-align: center;
+                  color: #4e5968;
+                `}
+              >
+                일치하는 검색 결과가 없어요
+              </p>
+            )}
+          </ResultModal>
+        )}
       </div>
-      {path === "/" && <RecentNotice text={notice} />}
+      {path === "/" && <RecentNotice text={notice.length > 0 ? notice[0] : "아직 등록된 공지사항이 없어요"} />}
     </div>
   );
 }
