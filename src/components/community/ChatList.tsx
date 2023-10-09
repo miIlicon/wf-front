@@ -40,7 +40,7 @@ export default function ChatList({
         // 대나무 숲 데이터의 마지막 번호가 몇 번인지 가져옵니다.
         setDataSize(res.data.totalCount);
 
-        if (pageSize > dataSize) {
+        if (pageSize > res.data.totalCount) {
           setIsMoreData(false);
         } else {
           setIsMoreData(true);
@@ -61,7 +61,7 @@ export default function ChatList({
             // 대나무 숲 데이터의 마지막 번호가 몇 번인지 가져옵니다.
             setDataSize(res.data.totalCount);
 
-            if (pageSize > dataSize) {
+            if (pageSize > res.data.totalCount) {
               setIsMoreData(false);
             } else {
               setIsMoreData(true);
