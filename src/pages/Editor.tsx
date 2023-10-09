@@ -464,6 +464,13 @@ export default function Editor() {
   const currentTime = moment();
   let requestURL: string | null = null;
   let category: string | null = null;
+  let AT: string | null = null;
+  let RT: string | null = null;
+
+  if (cookies.WF_ID) {
+    AT = cookies.WF_ID.AT;
+    RT = cookies.WF_ID.RT;
+  }
 
   // 파라미터로 넘어오는 타입 값을 통해 API 요청 값을 유동적으로 변동해줍니다.
   if (type === "EVENT" || type === "GAME") {
@@ -505,7 +512,7 @@ export default function Editor() {
     if (requestURL) {
       API.post(requestURL, data, {
         headers: {
-          accessToken: `Bearer ${cookies.WF_ID.AT}`,
+          accessToken: `Bearer ${AT}`,
           "Content-Type": "multipart/form-data",
           "Access-Control-Allow-Origin": "*",
         },
@@ -529,7 +536,7 @@ export default function Editor() {
             ) {
               API.get(`/api/v2/member/rotate`, {
                 headers: {
-                  refreshToken: `Bearer ${cookies.WF_ID.RT}`,
+                  refreshToken: `Bearer ${RT}`,
                 },
               })
                 .then((res) => {
@@ -537,6 +544,8 @@ export default function Editor() {
                     AT: res.data.accessToken,
                     RT: res.data.refreshToken,
                   });
+                  AT = res.data.accessToken;
+                  RT = res.data.refreshToken;
                   return requestData();
                 })
                 .catch(() => {

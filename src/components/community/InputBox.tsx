@@ -91,34 +91,10 @@ export default function ChatBox({
           contentRef.current.scrollTop = 0;
         }
       })
-      .catch((error) => {
-        if (
-          error.response &&
-          error.response.data &&
-          error.response.data.errorMessage
-        ) {
-          console.log(error.response.data.errorMessage);
-          if (
-            error.response.data.errorMessage ===
-            "기한이 만료된 AccessToken입니다."
-          ) {
-            API.get(`/api/v2/member/rotate`, {
-              headers: {
-                refreshToken: `Bearer ${cookies.WF_ID.RT}`,
-              },
-            })
-              .then((res) => {
-                setCookie("WF_ID", {
-                  AT: res.data.accessToken,
-                  RT: res.data.refreshToken,
-                });
-                return requestData();
-              })
-              .catch(() => {
-                navigate("/error");
-              });
-          }
-        }
+      .catch(() => {
+        alert("오류가 발생했어요, 관리자에게 문의해주세요");
+        window.location.reload();
+        // navigate("/error");
       });
   }
 
