@@ -9,6 +9,8 @@ import {
   ImageProps,
 } from "../../@types/typs";
 import axios from "axios";
+import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 import profile from "../../data/profile.json";
 import { ReactComponent as Plane } from "../../images/emoji/plane.svg";
 import API from "../../utils/api";
@@ -119,6 +121,8 @@ const Content = ({ text }: contentTextProps) => {
   return (
     <p
       css={css`
+        max-width: 800px;
+        font-family: "Pretendard-Medium";
         word-break: keep-all;
 
         @media (max-width: 479px) {
@@ -140,7 +144,27 @@ const Content = ({ text }: contentTextProps) => {
   );
 };
 
-const NoticeBox = ({ icon, name, date, content }: NoticeProps) => {
+const NoticeBox = ({ icon, id, name, date, content, trigger, changeTrigger }: NoticeProps) => {
+  const navigate = useNavigate();
+  const [cookies, setCookie] = useCookies(["WF_ID"]);
+
+  function deleteNotice() {
+    if (window.confirm("공지사항을 정말 삭제하시겠어요?")) {
+      API.delete(`/api/v2/guide/${id}`, {
+        headers: {
+          accessToken: `Bearer ${cookies.WF_ID.AT}`,
+        },
+      })
+      .then(() => {
+        alert("성공적으로 삭제되었어요");
+        changeTrigger(!trigger);
+      })
+      .catch(() => {
+        alert(`알 수 없는 오류가 발생했어요!`);
+      });
+    }
+  }
+
   return (
     <div
       css={css`
@@ -152,7 +176,33 @@ const NoticeBox = ({ icon, name, date, content }: NoticeProps) => {
         text-align: left;
       `}
     >
-      <Icon src={icon} />
+      <div
+        css={css`
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        `}
+      >
+        <Icon src={icon} />
+        {cookies.WF_ID && cookies.WF_ID.AT && cookies.WF_ID.RT && (
+          <button
+            css={css`
+              width: 50px;
+              font-family: "Pretendard-Medium";
+              border: none;
+              border-radius: 5px; 
+              background-color: #ea5656;
+              color: white;
+              transform: translate(-8px, 15px);
+              padding: 2px 10px;
+              cursor: pointer;
+            `}
+            onClick={deleteNotice}
+          >
+            삭제
+          </button>
+        )}
+      </div>
       <div>
         <Profile name={name} date={date} />
         <Content text={content} />
@@ -266,7 +316,9 @@ const InputBox = ({ value, onChange, onClick }: NoticeSubmitProps) => {
 };
 
 export default function Notice() {
+  const [cookies, setCookie] = useCookies(["WF_ID"]);
   const icons = JSON.parse(JSON.stringify(profile));
+  const [trigger, setTrigger] = useState<boolean>(false);
   const [content, setContent] = useState<string>("");
   const [noticeData, setNoticeData] = useState<any>([]);
 
@@ -284,16 +336,19 @@ export default function Notice() {
   const handleClick = () => {
     API.post(`/api/v2/guide`, data, {
       headers: {
-        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+        accessToken: `Bearer ${cookies.WF_ID.AT}`,
       },
     }).then((res) => {
       setContent("");
+      setTrigger(!trigger);
+    }).catch(() => {
+      alert(`알 수 없는 오류가 발생했어요!`);
     });
   };
 
   useEffect(() => {
     getNotice();
-  }, []);
+  }, [trigger]);
 
   return (
     <div
@@ -303,7 +358,7 @@ export default function Notice() {
         flex-direction: column;
       `}
     >
-      {sessionStorage.getItem("accessToken") && (
+      {cookies.WF_ID && cookies.WF_ID.AT && cookies.WF_ID.RT && (
         <InputBox
           value={content}
           onClick={handleClick}
@@ -315,9 +370,12 @@ export default function Notice() {
       {noticeData.map((data: any) => (
         <NoticeBox
           icon={icons[data.username]}
+          id={data.id}
           name={data.username}
-          date={data.date}
+          date={data.createdDateTime}
           content={data.content}
+          trigger={trigger}
+          changeTrigger={setTrigger}
         />
       ))}
     </div>

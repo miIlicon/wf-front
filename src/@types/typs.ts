@@ -133,10 +133,13 @@ export interface ProfileProps {
 }
 
 export interface NoticeProps {
+  id: number;
   icon: string;
   name: string;
   date: string;
   content: string;
+  trigger: boolean;
+  changeTrigger: Dispatch<SetStateAction<boolean>>;
 }
 
 export interface ImageProps {
