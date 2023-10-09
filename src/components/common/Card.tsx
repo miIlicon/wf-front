@@ -19,6 +19,19 @@ export const Thumb = ({ thumb, status }: CardProps) => {
         width: 18.8em;
         // height: 26.6em;
         border-radius: 11px;
+
+        @media (max-width: 479px) {
+          font-size: 10px;
+        }
+        @media all and (min-width: 480px) and (max-width: 767px) {
+          font-size: 12px;
+        }
+        @media all and (min-width: 768px) and (max-width: 1099px) {
+          font-size: 14px;
+        }
+        @media all and (min-width: 1100px) {
+          font-size: 16px;
+        }
         filter: ${status ? "grayscale(0)" : "grayscale(100%)"};
       `}
       src={thumb}

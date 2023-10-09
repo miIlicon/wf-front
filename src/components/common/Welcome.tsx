@@ -11,8 +11,8 @@ export default function Welcome() {
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        padding-top: 3em;
-        padding-bottom: 3em;
+        padding-top: 2em;
+        padding-bottom: 2em;
         box-sizing: border-box;
         row-gap: 1em;
         color: #404040;
@@ -20,7 +20,7 @@ export default function Welcome() {
         padding-right: 1em;
 
         box-shadow: 4px 12px 30px 6px rgba(0, 0, 0, 0.09);
-        border-radius: 14px;
+        border-radius: 0.8em;
       `}
     >
       <div
@@ -35,13 +35,13 @@ export default function Welcome() {
             font-family: "Pretendard-Bold";
 
             @media (max-width: 479px) {
-              font-size: 12px;
+              font-size: 10px;
             }
             @media all and (min-width: 480px) and (max-width: 767px) {
-              font-size: 15px;
+              font-size: 13px;
             }
             @media all and (min-width: 768px) and (max-width: 1099px) {
-              font-size: 17px;
+              font-size: 16px;
             }
             @media all and (min-width: 1100px) {
               font-size: 20px;

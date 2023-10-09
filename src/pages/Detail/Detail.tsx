@@ -120,8 +120,10 @@ export default function Detail() {
         <article
           css={css`
             display: flex;
-            height: 20em;
+            height: 16.7em;
             column-gap: 4.43em;
+            box-sizing: border-box;
+            margin-bottom: 4em;
             box-sizing: border-box;
 
             @media (max-width: 479px) {
@@ -315,6 +317,10 @@ export default function Detail() {
               border-radius: 0.5em;
 
               #taboola-livere {
+                display: none;
+              }
+
+              .livere-logo-top {
                 display: none;
               }
             `}

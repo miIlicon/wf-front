@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React from "react";
+import React, { useEffect } from "react";
 import { css } from "@emotion/react";
 import logo from "./logo.svg";
 import "./App.css";
@@ -20,8 +20,19 @@ import ProgramPage from "./pages/ProgramPage";
 import InformPage from "./pages/InformPage";
 import CategoryPage from "./pages/CategoryPage";
 import Error from "./pages/404/Error";
+import ChannelService from "./utils/ChannelService";
 
 function App() {
+  useEffect(() => {
+    const pluginKey = process.env.REACT_APP_TALK_CODE;
+
+    if (pluginKey) {
+      ChannelService.boot({
+        pluginKey: pluginKey, // fill your plugin key
+      });
+    }
+  }, []);
+
   return (
     <div className="App">
       <BrowserRouter>
