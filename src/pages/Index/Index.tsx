@@ -20,16 +20,16 @@ export default function Index() {
   const [artist, setArtist] = useState("");
 
   useEffect(() => {
-    artistData.map((item) => {
-      const festivalDate = new Date(item.date);
-      if (date.getFullYear() === festivalDate.getFullYear()) {
-        if (date.getMonth() === festivalDate.getMonth()) {
-          if (date.getDay() === festivalDate.getDay()) {
-            setArtist(item.name);
-          }
-        }
-      }
-    });
+    // artistData.map((item) => {
+    //   const festivalDate = new Date(item.date);
+    //   if (date.getFullYear() === festivalDate.getFullYear()) {
+    //     if (date.getMonth() === festivalDate.getMonth()) {
+    //       if (date.getDay() === festivalDate.getDay()) {
+    //         setArtist(item.name);
+    //       }
+    //     }
+    //   }
+    // });
 
     API.get(`/api/v2/view-count`).then((res) => {
       console.log(`성공적으로 연결되었어요 =)`);

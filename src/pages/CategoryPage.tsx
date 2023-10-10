@@ -181,7 +181,7 @@ export default function CategoryPage() {
           />
           <Menu
             main="축제부스"
-            sub={["축제주점", "플리마켓", "푸드트럭"]}
+            sub={["플리마켓", "푸드트럭", "축제주점"]}
             onClick={handleClick}
           />
           <Menu

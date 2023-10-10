@@ -29,9 +29,8 @@ export default function ProgramPage() {
 
   const getProgramInfo = async () => {
     await API.get(`/api/v2/program/list`, {
-      params: { page: 0, type: selectMenu, size: 6 },
+      params: { page: 0, type: selectMenu, size: 50 },
     }).then((res) => {
-      console.log(res);
       setProgramList(res.data.programList);
     });
   };

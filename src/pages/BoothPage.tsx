@@ -19,7 +19,7 @@ export default function BoothPage() {
   const [BoothList, setFleamarketList] = useState<any>([]);
   const [cookies, setCookie] = useCookies(["WF_ID"]);
   const [selectMenu, setSelectMenu] = useState<string>(
-    state ? state.menu : "PUB"
+    state ? state.menu : "FLEA_MARKET"
   );
   const [notice, setNotice] = useState<string>("진행 중인 축제 주점이 없어요");
 
@@ -29,7 +29,7 @@ export default function BoothPage() {
 
   const getFleamarket = async () => {
     await API.get("/api/v2/booth/list", {
-      params: { page: 0, type: selectMenu, size: 6 },
+      params: { page: 0, type: selectMenu, size: 50 },
     }).then((res) => {
       setFleamarketList(res.data.boothResList);
     });
@@ -51,7 +51,7 @@ export default function BoothPage() {
   }, [selectMenu]);
 
   useEffect(() => {
-    setSelectMenu(state ? state.menu : "PUB");
+    setSelectMenu(state ? state.menu : "FLEA_MARKET");
   }, [state]);
 
   return (
@@ -67,12 +67,6 @@ export default function BoothPage() {
         `}
       >
         <DefaultButton
-          text="축제 주점"
-          isSelect={"PUB" === selectMenu}
-          value="PUB"
-          onClick={onClickButton}
-        />
-        <DefaultButton
           text="플리마켓"
           isSelect={"FLEA_MARKET" === selectMenu}
           value="FLEA_MARKET"
@@ -82,6 +76,12 @@ export default function BoothPage() {
           text="푸드트럭"
           isSelect={"FOOD_TRUCK" === selectMenu}
           value="FOOD_TRUCK"
+          onClick={onClickButton}
+        />
+        <DefaultButton
+          text="축제 주점"
+          isSelect={"PUB" === selectMenu}
+          value="PUB"
           onClick={onClickButton}
         />
       </div>
