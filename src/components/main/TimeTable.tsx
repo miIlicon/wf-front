@@ -31,6 +31,7 @@ export default function TimeTable() {
 				flex-direction: column;
 				align-items: center;
 
+				overflow-x: hidden;
 				overflow-y: scroll;
 				::-webkit-scrollbar {
 					width: 5px;
@@ -98,7 +99,8 @@ export default function TimeTable() {
 			</div>
 			<img
 				css={css`
-					width: 380px;
+					width: 25em;
+					/* overflow-x: hidden; */
 					transform: translate(0px, -15px);
 				`}
 				src={timetable[dateData[selected].date]}
