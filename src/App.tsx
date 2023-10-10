@@ -31,10 +31,6 @@ function App() {
         pluginKey: pluginKey, // fill your plugin key
       });
     }
-
-    if (process.env.REACT_APP_ABUSE_DB) {
-      console.log(process.env.REACT_APP_ABUSE_DB);
-    }
   }, []);
 
   return (
