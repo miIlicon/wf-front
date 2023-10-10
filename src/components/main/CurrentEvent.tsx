@@ -1,11 +1,27 @@
 /** @jsxImportSource @emotion/react */
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { css } from "@emotion/react";
 import Title from "./Title";
 import SlideCard from "./SlideCard";
 import ViewTimeTable from "./ViewTimeTable";
+import artistData from "../../data/artist.json";
 
 export default function CurrentEvent() {
+  const date = new Date();
+  const [artist, setArtist] = useState<string[]>([]);
+
+  useEffect(() => {
+    artistData.map((item) => {
+      const festivalDate = new Date(item.date);
+      if (date.getFullYear() === festivalDate.getFullYear()) {
+        if (date.getMonth() === festivalDate.getMonth()) {
+          if (date.getDay() === festivalDate.getDay()) {
+            setArtist(item.name);
+          }
+        }
+      }
+    });
+  }, []);
   return (
     <div
       css={css`
@@ -16,10 +32,10 @@ export default function CurrentEvent() {
         margin-top: 3em;
       `}
     >
-      <Title text="현재 진행되고 있는 이벤트" used="main" />
-      <SlideCard eventName="스테이씨" eventType="축제 초청 가수" />
-      <SlideCard eventName="귀신의 집" eventType="공식 축제 이벤트" />
-      <SlideCard eventName="람브를 찾아라" eventType="공식 축제 이벤트" />
+      <Title text="오늘의 아티스트" used="main" />
+      {artist.map((name) => 
+        <SlideCard eventName={name} eventType="축제 초청 가수" />
+      )}
       <ViewTimeTable />
     </div>
   );
