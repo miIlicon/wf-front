@@ -24,10 +24,10 @@ export default function DetailSectionBtn(props: any) {
         transition: 0.4s all;
 
         @media (max-width: 479px) {
-          font-size: 10px;
+          font-size: 12px;
         }
         @media all and (min-width: 480px) and (max-width: 767px) {
-          font-size: 12px;
+          font-size: 13px;
         }
         @media all and (min-width: 768px) and (max-width: 1099px) {
           font-size: 14px;
