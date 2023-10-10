@@ -8,6 +8,7 @@ import { Link, Outlet, useNavigate } from "react-router-dom";
 import axios from "axios";
 import API from "../../utils/api";
 import { useCookies } from "react-cookie";
+import jwt_decode from "jwt-decode";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -29,10 +30,20 @@ export default function Login() {
       .then((res) => {
         alert("로그인을 성공적으로 했어요, 메인 페이지로 이동할게요");
         navigate("/");
-        setCookie("WF_ID", {
-          AT: res.data.accessToken,
-          RT: res.data.refreshToken,
-        });
+        const tokenInfo: any = jwt_decode(res.data.accessToken);
+        setCookie(
+          "WF_ID",
+          {
+            AT: res.data.accessToken,
+            RT: res.data.refreshToken,
+            EXPIRE: tokenInfo.exp,
+          },
+          {
+            path: "/",
+            secure: false,
+          }
+        );
+
         // sessionStorage.setItem("accessToken", res.data.accessToken);
         // sessionStorage.setItem("refreshToken", res.data.accessToken);
       })

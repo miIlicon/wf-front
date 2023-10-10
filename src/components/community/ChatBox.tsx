@@ -7,6 +7,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import API from "../../utils/api";
+import { isExpirationToken } from "../../utils/cookies";
+import jwt_decode from "jwt-decode";
 
 export default function ChatBox({
   id,
@@ -16,20 +18,12 @@ export default function ChatBox({
 }: chatBoxProps) {
   const navigate = useNavigate();
   const [cookies, setCookie] = useCookies(["WF_ID"]);
-  let AT: string | null = null;
-  let RT: string | null = null;
 
-  if (cookies.WF_ID) {
-    AT = cookies.WF_ID.AT;
-    RT = cookies.WF_ID.RT;
-  }
-
-  function deleteChat() {
-    console.log("AT " + AT, "RT " + RT);
+  function deleteData() {
     if (window.confirm(`${id}번째 외침을 정말 삭제하시겠어요?`)) {
       API.delete(`/api/v2/bambooforest/${id}`, {
         headers: {
-          accessToken: `Bearer ${AT}`,
+          accessToken: `Bearer ${cookies.WF_ID.AT}`,
         },
       })
         .then(() => {
@@ -38,36 +32,40 @@ export default function ChatBox({
           }
           alert("성공적으로 삭제되었어요");
         })
-        .catch((error) => {
-          if (
-            error.response &&
-            error.response.data &&
-            error.response.data.errorMessage
-          ) {
-            if (
-              error.response.data.errorMessage ===
-              "기한이 만료된 AccessToken입니다."
-            ) {
-              API.get(`/api/v2/member/rotate`, {
-                headers: {
-                  refreshToken: `Bearer ${RT}`,
-                },
-              })
-                .then((res) => {
-                  setCookie("WF_ID", {
-                    AT: res.data.accessToken,
-                    RT: res.data.refreshToken,
-                  });
-                  AT = res.data.accessToken;
-                  RT = res.data.refreshToken;
-                  deleteChat();
-                })
-                .catch(() => {
-                  // navigate("/error");
-                });
-            }
-          }
+        .catch(() => {
+          navigate("/error");
         });
+    }
+  }
+
+  function handleClick() {
+    if (isExpirationToken("WF_ID")) {
+      API.get(`/api/v2/member/rotate`, {
+        headers: {
+          refreshToken: `Bearer ${cookies.WF_ID.RT}`,
+        },
+      })
+        .then((res) => {
+          const tokenInfo: any = jwt_decode(res.data.accessToken);
+          setCookie(
+            "WF_ID",
+            {
+              AT: res.data.accessToken,
+              RT: res.data.refreshToken,
+              EXPIRE: tokenInfo.exp,
+            },
+            {
+              path: "/",
+              secure: false,
+            }
+          );
+          alert("인증 정보가 갱신되었어요, 다시 요청해주세요");
+        })
+        .catch(() => {
+          navigate("/admin");
+        });
+    } else {
+      deleteData();
     }
   }
 
@@ -103,7 +101,7 @@ export default function ChatBox({
               fill: #404040;
             }
           `}
-          onClick={deleteChat}
+          onClick={handleClick}
         />
       )}
       <span
