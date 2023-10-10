@@ -165,6 +165,7 @@ export default function Detail() {
           flex-direction: column;
           row-gap: 0.7em;
           margin-bottom: 2em;
+          margin-top: -1em;
         `}
       >
         <div
@@ -306,7 +307,7 @@ export default function Detail() {
             text-align: left;
             row-gap: 2.2em;
             width: 85vw;
-            overflow: auto;
+            overflow: hidden;
             white-space: nowrap;
 
             @media (max-width: 479px) {
@@ -329,6 +330,11 @@ export default function Detail() {
               display: flex;
               width: 100%;
               column-gap: 2em;
+              overflow-x: auto;
+
+              &::-webkit-scrollbar {
+                display: none;
+              }
 
               @media (max-width: 479px) {
                 font-size: 10px;
@@ -383,7 +389,8 @@ export default function Detail() {
             css={css`
               display: flex;
               width: 100%;
-              height: 20em;
+              height: 100%;
+              min-height: 20em;
               column-gap: 2em;
               background-color: #f8f8f8;
               box-sizing: border-box;
