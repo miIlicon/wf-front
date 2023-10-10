@@ -1,16 +1,18 @@
 /** @jsxImportSource @emotion/react */
 import React, { useState } from "react";
 import { css } from "@emotion/react";
+import timetableData from "../../data/timetable.json";
 
 export default function TimeTable() {
+	const timetable = JSON.parse(JSON.stringify(timetableData));
 	const [selected, setSelected] = useState<number>(0);
 	const dateData = [
 		{
-			date: 11,
+			date: "11",
 			day: "수요일"
 		}, 
 		{
-			date: 12,
+			date: "12",
 			day: "목요일"
 		}
 	]
@@ -40,7 +42,8 @@ export default function TimeTable() {
 		>
 			<div
 				css={css`
-					margin: 15px 0;
+					margin-top: 15px;
+					/* margin: 15px 0; */
 				`}
 			>
 				<div
@@ -95,10 +98,11 @@ export default function TimeTable() {
 			</div>
 			<img
 				css={css`
-					width: 250px;
+					width: 380px;
+					transform: translate(0px, -15px);
 				`}
-				src=""
-				alt=""
+				src={timetable[dateData[selected].date]}
+				alt="시간표이미지"
 			/>
 		</div>
 	);
