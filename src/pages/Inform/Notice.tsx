@@ -15,7 +15,7 @@ import profile from "../../data/profile.json";
 import { ReactComponent as Plane } from "../../images/emoji/plane.svg";
 import Inform from "../../components/common/Notice";
 import API from "../../utils/api";
-import { isExpirationToken } from "../../utils/cookies";
+import { isExpirationToken, removeCookie } from "../../utils/cookies";
 import jwt_decode from "jwt-decode";
 
 const Icon = ({ src }: ImageProps) => {
@@ -415,6 +415,7 @@ export default function Notice() {
           alert("인증 정보가 갱신되었어요, 다시 요청해주세요");
         })
         .catch(() => {
+          removeCookie("WF_ID");
           navigate("/admin");
         });
     } else {
