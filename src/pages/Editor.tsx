@@ -23,7 +23,7 @@ import Calendar from "react-calendar";
 import moment from "moment";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import { isExpirationToken } from "../utils/cookies";
+import { isExpirationToken, removeCookie } from "../utils/cookies";
 import jwt_decode from "jwt-decode";
 
 const TitleInput = ({ onChange }: InputProps) => {
@@ -527,6 +527,7 @@ export default function Editor() {
           alert("인증 정보가 갱신되었어요, 다시 요청해주세요");
         })
         .catch(() => {
+          removeCookie("WF_ID");
           navigate("/admin");
         });
     } else {
