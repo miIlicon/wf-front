@@ -60,10 +60,10 @@ export default function ChatBox({
                   });
                   AT = res.data.accessToken;
                   RT = res.data.refreshToken;
-                  return deleteChat();
+                  deleteChat();
                 })
                 .catch(() => {
-                  navigate("/error");
+                  // navigate("/error");
                 });
             }
           }
