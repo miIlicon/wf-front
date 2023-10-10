@@ -26,6 +26,11 @@ export default function ChatBox({
   const form = new FormData();
   const contactRef = useRef<HTMLTextAreaElement | null>(null);
   const contentRef = useRef<HTMLTextAreaElement | null>(null);
+  const submitRef = useRef<HTMLButtonElement | null>(null);
+  let abuseList: string[] | null = null;
+  if (process.env.REACT_APP_ABUSE_DB) {
+    abuseList = process.env.REACT_APP_ABUSE_DB.split(",");
+  }
 
   function toggleChange() {
     setChecked(!checked);
@@ -74,28 +79,53 @@ export default function ChatBox({
   }
 
   function requestData() {
-    API.post("/api/v2/bambooforest", form, {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-      },
-    })
-      .then(() => {
-        setValue("");
-        setEmail("");
-        setValidation(false);
-        setCurrentLength(0);
-        changeTrigger(!trigger);
-        setCompleteLoad(false);
-        if (contactRef.current && contentRef.current) {
-          contactRef.current.scrollTop = 0;
-          contentRef.current.scrollTop = 0;
+    let abuseState = false;
+    if (abuseList && abuseList.length) {
+      if (submitRef.current) {
+        submitRef.current.textContent = "필터링 중..";
+        setValidation(true);
+      }
+
+      for (let i = 0; i < abuseList.length; i++) {
+        let abuseWord = abuseList[i].trim();
+        if (value.indexOf(abuseWord) !== -1) {
+          setCompleteLoad(false);
+          abuseState = true;
+          if (submitRef.current) {
+            submitRef.current.textContent = "등록";
+            setValidation(false);
+            setValue("");
+          }
+          alert("비속어가 포함되어있어요");
+          break;
         }
+      }
+    }
+
+    if (!abuseState) {
+      API.post("/api/v2/bambooforest", form, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+        },
       })
-      .catch(() => {
-        alert("오류가 발생했어요, 관리자에게 문의해주세요");
-        window.location.reload();
-        // navigate("/error");
-      });
+        .then(() => {
+          setValue("");
+          setEmail("");
+          setValidation(false);
+          setCurrentLength(0);
+          changeTrigger(!trigger);
+          setCompleteLoad(false);
+          if (contactRef.current && contentRef.current) {
+            contactRef.current.scrollTop = 0;
+            contentRef.current.scrollTop = 0;
+          }
+        })
+        .catch(() => {
+          alert("오류가 발생했어요, 관리자에게 문의해주세요");
+          window.location.reload();
+          // navigate("/error");
+        });
+    }
   }
 
   function handleClick() {
@@ -390,6 +420,7 @@ export default function ChatBox({
             `}
             onClick={handleClick}
             disabled={completeLoad || !validation}
+            ref={submitRef}
           >
             {completeLoad ? "작성 중.." : "등록"}
           </button>
