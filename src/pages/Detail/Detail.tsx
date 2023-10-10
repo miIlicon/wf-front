@@ -13,6 +13,9 @@ import API from "../../utils/api";
 import axios from "axios";
 import Welcome from "../../components/common/Welcome";
 import { useCookies } from "react-cookie";
+import DetailSectionBtn from "../../components/common/DetailSectionBtn";
+import { isExpirationToken, removeCookie } from "../../utils/cookies";
+import jwt_decode from "jwt-decode";
 
 export default function Detail() {
   const location = useLocation();
@@ -97,12 +100,112 @@ export default function Detail() {
       });
   };
 
+  function Back() {
+    navigate(-1);
+  }
+
+  function handleClick() {
+    if (isExpirationToken("WF_ID")) {
+      API.get(`/api/v2/member/rotate`, {
+        headers: {
+          refreshToken: `Bearer ${cookies.WF_ID.RT}`,
+        },
+      })
+        .then((res) => {
+          const tokenInfo: any = jwt_decode(res.data.accessToken);
+          setCookie(
+            "WF_ID",
+            {
+              AT: res.data.accessToken,
+              RT: res.data.refreshToken,
+              EXPIRE: tokenInfo.exp,
+            },
+            {
+              path: "/",
+              secure: false,
+            }
+          );
+          alert("인증 정보가 갱신되었어요, 다시 요청해주세요");
+        })
+        .catch(() => {
+          removeCookie("WF_ID");
+          navigate("/admin");
+        });
+    } else {
+      deleteData();
+    }
+  }
+
+  function deleteData() {
+    if (window.confirm(`해당 게시글을 정말 삭제하시겠어요?`)) {
+      API.delete(`/api/v2/${category}/${id}`, {
+        headers: {
+          accessToken: `Bearer ${cookies.WF_ID.AT}`,
+        },
+      })
+        .then(() => {
+          alert("성공적으로 삭제되었어요");
+          navigate(-1);
+        })
+        .catch(() => {
+          navigate("/error");
+        });
+    }
+  }
+
   useEffect(() => {
     getDetailInfo();
   }, []);
 
   return (
     <Section>
+      <div
+        css={css`
+          display: flex;
+          flex-direction: column;
+          row-gap: 0.7em;
+          margin-bottom: 2em;
+        `}
+      >
+        <div
+          css={css`
+            display: flex;
+            align-items: center;
+            justify-content: left;
+            column-gap: 0.5em;
+          `}
+        >
+          <DetailSectionBtn text="뒤로 가기" onClick={Back} />
+          {cookies.WF_ID && cookies.WF_ID.AT && cookies.WF_ID.RT && (
+            <DetailSectionBtn text="게시글 삭제" onClick={handleClick} />
+          )}
+        </div>
+        <div
+          css={css`
+            width: 100%;
+            border: solid;
+            border-top: 1;
+            border-left: 0;
+            border-right: 0;
+            border-bottom: 0;
+            border: 0.07em solid;
+            border-color: #e3e3e3;
+
+            @media (max-width: 479px) {
+              font-size: 10px;
+            }
+            @media all and (min-width: 480px) and (max-width: 767px) {
+              font-size: 12px;
+            }
+            @media all and (min-width: 768px) and (max-width: 1099px) {
+              font-size: 14px;
+            }
+            @media all and (min-width: 1100px) {
+              font-size: 16px;
+            }
+          `}
+        ></div>
+      </div>
       <div
         css={css`
           width: 100%;
