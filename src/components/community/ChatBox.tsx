@@ -7,7 +7,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import API from "../../utils/api";
-import { isExpirationToken } from "../../utils/cookies";
+import { isExpirationToken, removeCookie } from "../../utils/cookies";
 import jwt_decode from "jwt-decode";
 
 export default function ChatBox({
@@ -62,6 +62,7 @@ export default function ChatBox({
           alert("인증 정보가 갱신되었어요, 다시 요청해주세요");
         })
         .catch(() => {
+          removeCookie("WF_ID");
           navigate("/admin");
         });
     } else {
