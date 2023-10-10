@@ -91,6 +91,11 @@ export default function EventTemplate({ text, type }: EventTemplateProps) {
           display: grid;
           grid-template-columns: 1fr 1fr 1fr;
           column-gap: 1.8em;
+          overflow: auto;
+
+          &::-webkit-scrollbar {
+            display: none;
+          }
         `}
       >
         {dataList.length ? (
