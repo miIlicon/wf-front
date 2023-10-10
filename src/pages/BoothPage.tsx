@@ -29,7 +29,7 @@ export default function BoothPage() {
 
   const getFleamarket = async () => {
     await API.get("/api/v2/booth/list", {
-      params: { page: 0, type: selectMenu, size: 6 },
+      params: { page: 0, type: selectMenu, size: 50 },
     }).then((res) => {
       setFleamarketList(res.data.boothResList);
     });

@@ -367,7 +367,7 @@ export default function Notice() {
 
   const getNotice = async () => {
     await API.get(`/api/v2/guide/list`, {
-      params: { page: 0, size: 20 },
+      params: { page: 0, size: 50 },
     }).then((res) => {
       setNoticeData(res.data.guideResList);
     });
