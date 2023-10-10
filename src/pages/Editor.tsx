@@ -23,6 +23,8 @@ import Calendar from "react-calendar";
 import moment from "moment";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import { isExpirationToken } from "../utils/cookies";
+import jwt_decode from "jwt-decode";
 
 const TitleInput = ({ onChange }: InputProps) => {
   return (
@@ -464,13 +466,6 @@ export default function Editor() {
   const currentTime = moment();
   let requestURL: string | null = null;
   let category: string | null = null;
-  let AT: string | null = null;
-  let RT: string | null = null;
-
-  if (cookies.WF_ID) {
-    AT = cookies.WF_ID.AT;
-    RT = cookies.WF_ID.RT;
-  }
 
   // 파라미터로 넘어오는 타입 값을 통해 API 요청 값을 유동적으로 변동해줍니다.
   if (type === "EVENT" || type === "GAME") {
@@ -508,11 +503,42 @@ export default function Editor() {
     }
   }, [sDate, eDate]);
 
+  function handleClick() {
+    if (isExpirationToken("WF_ID")) {
+      API.get(`/api/v2/member/rotate`, {
+        headers: {
+          refreshToken: `Bearer ${cookies.WF_ID.RT}`,
+        },
+      })
+        .then((res) => {
+          const tokenInfo: any = jwt_decode(res.data.accessToken);
+          setCookie(
+            "WF_ID",
+            {
+              AT: res.data.accessToken,
+              RT: res.data.refreshToken,
+              EXPIRE: tokenInfo.exp,
+            },
+            {
+              path: "/",
+              secure: false,
+            }
+          );
+          alert("인증 정보가 갱신되었어요, 다시 요청해주세요");
+        })
+        .catch(() => {
+          navigate("/admin");
+        });
+    } else {
+      requestData();
+    }
+  }
+
   function requestData() {
     if (requestURL) {
       API.post(requestURL, data, {
         headers: {
-          accessToken: `Bearer ${AT}`,
+          accessToken: `Bearer ${cookies.WF_ID.AT}`,
           "Content-Type": "multipart/form-data",
           "Access-Control-Allow-Origin": "*",
         },
@@ -523,36 +549,8 @@ export default function Editor() {
             navigate(`/detail?category=${category}&id=${res.data}`);
           }
         })
-        .catch((error) => {
-          if (
-            error.response &&
-            error.response.data &&
-            error.response.data.errorMessage
-          ) {
-            console.log(error.response.data.errorMessage);
-            if (
-              error.response.data.errorMessage ===
-              "기한이 만료된 AccessToken입니다."
-            ) {
-              API.get(`/api/v2/member/rotate`, {
-                headers: {
-                  refreshToken: `Bearer ${RT}`,
-                },
-              })
-                .then((res) => {
-                  setCookie("WF_ID", {
-                    AT: res.data.accessToken,
-                    RT: res.data.refreshToken,
-                  });
-                  AT = res.data.accessToken;
-                  RT = res.data.refreshToken;
-                  return requestData();
-                })
-                .catch(() => {
-                  navigate("/error");
-                });
-            }
-          }
+        .catch(() => {
+          navigate("/error");
         });
     }
   }
@@ -582,7 +580,7 @@ export default function Editor() {
     });
     data.append("startDate", moment(sDate).format("YYYY-MM-DD").toString());
     data.append("endDate", moment(eDate).format("YYYY-MM-DD").toString());
-    requestData();
+    handleClick();
   };
 
   const tempImgFile = (e: React.FormEvent<HTMLInputElement>) => {

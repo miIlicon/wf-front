@@ -15,6 +15,8 @@ import profile from "../../data/profile.json";
 import { ReactComponent as Plane } from "../../images/emoji/plane.svg";
 import Inform from "../../components/common/Notice";
 import API from "../../utils/api";
+import { isExpirationToken } from "../../utils/cookies";
+import jwt_decode from "jwt-decode";
 
 const Icon = ({ src }: ImageProps) => {
   return (
@@ -156,19 +158,43 @@ const NoticeBox = ({
 }: NoticeProps) => {
   const navigate = useNavigate();
   const [cookies, setCookie] = useCookies(["WF_ID"]);
-  let AT: string | null = null;
-  let RT: string | null = null;
 
-  if (cookies.WF_ID) {
-    AT = cookies.WF_ID.AT;
-    RT = cookies.WF_ID.RT;
+  function handleClick() {
+    if (isExpirationToken("WF_ID")) {
+      API.get(`/api/v2/member/rotate`, {
+        headers: {
+          refreshToken: `Bearer ${cookies.WF_ID.RT}`,
+        },
+      })
+        .then((res) => {
+          const tokenInfo: any = jwt_decode(res.data.accessToken);
+          setCookie(
+            "WF_ID",
+            {
+              AT: res.data.accessToken,
+              RT: res.data.refreshToken,
+              EXPIRE: tokenInfo.exp,
+            },
+            {
+              path: "/",
+              secure: false,
+            }
+          );
+          alert("인증 정보가 갱신되었어요, 다시 요청해주세요");
+        })
+        .catch(() => {
+          navigate("/admin");
+        });
+    } else {
+      deleteNotice();
+    }
   }
 
   function deleteNotice() {
     if (window.confirm("공지사항을 정말 삭제하시겠어요?")) {
       API.delete(`/api/v2/guide/${id}`, {
         headers: {
-          accessToken: `Bearer ${AT}`,
+          accessToken: `Bearer ${cookies.WF_ID.AT}`,
         },
       })
         .then(() => {
@@ -176,34 +202,7 @@ const NoticeBox = ({
           changeTrigger(!trigger);
         })
         .catch((error) => {
-          if (
-            error.response &&
-            error.response.data &&
-            error.response.data.errorMessage
-          ) {
-            if (
-              error.response.data.errorMessage ===
-              "기한이 만료된 AccessToken입니다."
-            ) {
-              API.get(`/api/v2/member/rotate`, {
-                headers: {
-                  refreshToken: `Bearer ${RT}`,
-                },
-              })
-                .then((res) => {
-                  setCookie("WF_ID", {
-                    AT: res.data.accessToken,
-                    RT: res.data.refreshToken,
-                  });
-                  AT = res.data.accessToken;
-                  RT = res.data.refreshToken;
-                  return deleteNotice();
-                })
-                .catch(() => {
-                  navigate("/error");
-                });
-            }
-          }
+          navigate("/error");
         });
     }
   }
@@ -240,7 +239,7 @@ const NoticeBox = ({
               padding: 2px 10px;
               cursor: pointer;
             `}
-            onClick={deleteNotice}
+            onClick={handleClick}
           >
             삭제
           </button>
@@ -364,6 +363,7 @@ export default function Notice() {
   const [trigger, setTrigger] = useState<boolean>(false);
   const [content, setContent] = useState<string>("");
   const [noticeData, setNoticeData] = useState<any>([]);
+  const navigate = useNavigate();
 
   const getNotice = async () => {
     await API.get(`/api/v2/guide/list`, {
@@ -373,10 +373,10 @@ export default function Notice() {
     });
   };
 
-  const data = new FormData();
-  data.append("content", content);
+  function requestData() {
+    const data = new FormData();
+    data.append("content", content);
 
-  const handleClick = () => {
     API.post(`/api/v2/guide`, data, {
       headers: {
         accessToken: `Bearer ${cookies.WF_ID.AT}`,
@@ -387,9 +387,40 @@ export default function Notice() {
         setTrigger(!trigger);
       })
       .catch(() => {
-        alert(`알 수 없는 오류가 발생했어요!`);
+        navigate("/error");
       });
-  };
+  }
+
+  function handleClick() {
+    if (isExpirationToken("WF_ID")) {
+      API.get(`/api/v2/member/rotate`, {
+        headers: {
+          refreshToken: `Bearer ${cookies.WF_ID.RT}`,
+        },
+      })
+        .then((res) => {
+          const tokenInfo: any = jwt_decode(res.data.accessToken);
+          setCookie(
+            "WF_ID",
+            {
+              AT: res.data.accessToken,
+              RT: res.data.refreshToken,
+              EXPIRE: tokenInfo.exp,
+            },
+            {
+              path: "/",
+              secure: false,
+            }
+          );
+          alert("인증 정보가 갱신되었어요, 다시 요청해주세요");
+        })
+        .catch(() => {
+          navigate("/admin");
+        });
+    } else {
+      requestData();
+    }
+  }
 
   useEffect(() => {
     getNotice();

@@ -8,6 +8,7 @@ import Toggle from "./Toggle";
 import Required from "./Required";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
+import { isExpirationToken } from "../../utils/cookies";
 
 export default function ChatBox({
   changeTrigger,
@@ -96,7 +97,7 @@ export default function ChatBox({
             setValidation(false);
             setValue("");
           }
-          alert("비속어가 포함되어있어요");
+          alert("대나무 숲에서 사용할 수 없는 단어가 검출 되었어요");
           break;
         }
       }
