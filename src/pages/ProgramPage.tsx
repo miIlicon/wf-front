@@ -18,7 +18,8 @@ export default function ProgramPage() {
   const state = location.state as { menu: string };
   const [cookies, setCookie] = useCookies(["WF_ID"]);
   const [programList, setProgramList] = useState<any>([]);
-  const [notice, setNotice] = useState<string>("진행 중인 이벤트가 없어요");
+  const [notice, setNotice] =
+    useState<string>("아직 등록된 축제 안내가 없어요");
   const [selectMenu, setSelectMenu] = useState<string>(
     state ? state.menu : "EVENT"
   );
@@ -38,7 +39,7 @@ export default function ProgramPage() {
   useEffect(() => {
     getProgramInfo();
     if (selectMenu === "EVENT") {
-      setNotice("아직 등록된 이벤트가 없어요");
+      setNotice("아직 등록된 축제 안내가 없어요");
     } else if (selectMenu === "GAME") {
       setNotice("아직 등록된 경기 일정이 없어요");
     }
@@ -50,8 +51,8 @@ export default function ProgramPage() {
 
   return (
     <Section>
-      <PageTitle text="프로그램" />
-      <PageSubTitle text="프로그램에서 지금 현재 진행되고 있는 축제에 대한 다양한 정보를 얻을 수 있어요" />
+      <PageTitle text="축제 정보" />
+      <PageSubTitle text="축제 정보에서 지금 현재 진행되고 있는 축제에 대한 다양한 정보를 얻을 수 있어요" />
       <div
         css={css`
           display: flex;
@@ -61,7 +62,7 @@ export default function ProgramPage() {
         `}
       >
         <DefaultButton
-          text="학교 주최 이벤트"
+          text="축제 안내"
           isSelect={"EVENT" === selectMenu}
           value="EVENT"
           onClick={onClickButton}

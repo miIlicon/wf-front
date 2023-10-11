@@ -174,7 +174,7 @@ export default function Header() {
             ) : (
               <>
                 <Link to={"program"} tabIndex={-1}>
-                  프로그램
+                  축제정보
                 </Link>
                 <Link to={"booth"} tabIndex={-1}>
                   축제부스
