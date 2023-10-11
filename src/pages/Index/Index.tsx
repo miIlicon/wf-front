@@ -207,7 +207,7 @@ export default function Index() {
         <CalendarNotice />
         <CurrentEvent />
         <EventTemplate text="지금 현재 인기있는 축제 정보" type="EVENT" />
-        <EventTemplate text="지금 현재 인기있는 플리 마켓" type="FLEA_MARKET" />
+        <EventTemplate text="지금 현재 인기있는 축제 부스" type="FLEA_MARKET" />
         <EventTemplate text="지금 현재 인기있는 푸드 트럭" type="FOOD_TRUCK" />
         {/* <img
           src={location}

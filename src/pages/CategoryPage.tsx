@@ -175,13 +175,13 @@ export default function CategoryPage() {
         </div>
         <div>
           <Menu
-            main="프로그램"
-            sub={["학교주최 이벤트", "경기 일정/결과"]}
+            main="축제정보"
+            sub={["축제 안내", "경기 일정/결과"]}
             onClick={handleClick}
           />
           <Menu
             main="축제부스"
-            sub={["플리마켓", "푸드트럭", "축제주점"]}
+            sub={["축제 부스", "푸드트럭", "축제주점"]}
             onClick={handleClick}
           />
           <Menu

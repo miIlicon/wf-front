@@ -1,14 +1,14 @@
 {
-    "프로그램": "program",
-    "축제부스": "booth",
-    "안내사항": "inform",
-    "대나무숲": "community",
-    "학교주최 이벤트": "EVENT",
-    "경기 일정/결과": "GAME",
-    "축제주점": "PUB",
-    "플리마켓": "FLEA_MARKET",
-    "푸드트럭": "FOOD_TRUCK",
-    "Q&A": "Q&A",
-    "공지사항": "notice",
-    "달구지": "bus"
+  "축제정보": "program",
+  "축제부스": "booth",
+  "안내사항": "inform",
+  "대나무숲": "community",
+  "축제 안내": "EVENT",
+  "경기 일정/결과": "GAME",
+  "축제주점": "PUB",
+  "축제 부스": "FLEA_MARKET",
+  "푸드트럭": "FOOD_TRUCK",
+  "Q&A": "Q&A",
+  "공지사항": "notice",
+  "달구지": "bus"
 }

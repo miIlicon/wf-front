@@ -21,7 +21,7 @@ export default function BoothPage() {
   const [selectMenu, setSelectMenu] = useState<string>(
     state ? state.menu : "FLEA_MARKET"
   );
-  const [notice, setNotice] = useState<string>("진행 중인 축제 주점이 없어요");
+  const [notice, setNotice] = useState<string>("진행 중인 축제 부스가 없어요");
 
   const onClickButton = (value: string) => {
     setSelectMenu(value);
@@ -42,7 +42,7 @@ export default function BoothPage() {
         setNotice("아직 등록된 축제 주점이 없어요");
         break;
       case "FLEA_MARKET":
-        setNotice("아직 등록된 플리마켓이 없어요");
+        setNotice("아직 등록된 축제 부스가 없어요");
         break;
       case "FOOD_TRUCK":
         setNotice("아직 등록된 푸드트럭이 없어요");
@@ -67,7 +67,7 @@ export default function BoothPage() {
         `}
       >
         <DefaultButton
-          text="플리마켓"
+          text="축제 부스"
           isSelect={"FLEA_MARKET" === selectMenu}
           value="FLEA_MARKET"
           onClick={onClickButton}
