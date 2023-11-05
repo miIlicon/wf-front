@@ -8,28 +8,32 @@ import { EventTemplateProps } from "../../@types/typs";
 import Card from "../common/Card";
 import { useNavigate } from "react-router-dom";
 import NotData from "../common/NotData";
-import API from "../../utils/api";
+import API, { CACHE_TIME, STALE_TIME } from "../../utils/api";
+import { useQuery } from "react-query";
 
 export default function EventTemplate({ text, type }: EventTemplateProps) {
   const navigate = useNavigate();
-  const [dataList, setDataList] = useState<any>([]);
+  // const [dataList, setDataList] = useState<any>([]);
   const category = type === "EVENT" ? "program" : "booth";
+  let dataList = null;
 
-  const getInfo = async () => {
-    await API.get(`/api/v2/${category}/list`, {
-      params: { page: 0, type: type, size: 3 },
-    }).then((res) => {
-      if (type === "EVENT") {
-        setDataList(res.data.programList);
-      } else {
-        setDataList(res.data.boothResList);
-      }
-    });
-  };
+  const { isLoading, error, data } = useQuery({
+    queryKey: [category, type],
+    queryFn: () =>
+      API.get(`/api/v2/${category}/list`, {
+        params: { page: 0, type: type, size: 3 },
+      }),
+    staleTime: STALE_TIME,
+    cacheTime: CACHE_TIME,
+  });
 
-  useEffect(() => {
-    getInfo();
-  }, []);
+  if (!isLoading) {
+    if (type === "EVENT") {
+      dataList = data?.data.programList;
+    } else {
+      dataList = data?.data.boothResList;
+    }
+  }
 
   return (
     <div
@@ -98,7 +102,7 @@ export default function EventTemplate({ text, type }: EventTemplateProps) {
           }
         `}
       >
-        {dataList.length ? (
+        {dataList ? (
           dataList.map((data: any) => (
             <Card
               id={data.id}

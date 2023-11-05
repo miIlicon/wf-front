@@ -1,5 +1,8 @@
 import axios from "axios";
 
+export const STALE_TIME = 1000 * 60 * 5; // 5m
+export const CACHE_TIME = 1000 * 60 * 5; // 5m
+
 const API = axios.create({
   // 로컬 방식에서 사용을 할 때는 아래 API를 이용해주세요
   baseURL: process.env.REACT_APP_SERVER_CODE,
