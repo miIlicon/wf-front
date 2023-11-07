@@ -10,7 +10,8 @@ import {
   SearchModalProps,
 } from "../../@types/typs";
 import axios from "axios";
-import API from "../../utils/api";
+import API, { CACHE_TIME, STALE_TIME } from "../../utils/api";
+import { useQuery } from "react-query";
 
 const Result = ({
   id,
@@ -180,7 +181,7 @@ const RecentNotice = ({ text }: contentTextProps) => {
 export default function Search() {
   const path = useLocation().pathname;
   const navigate = useNavigate();
-  const [notice, setNotice] = useState<string>("");
+  let notice = null;
   const [keyword, setKeyword] = useState<string>("");
   const [program, setProgram] = useState<SearchResultProps[]>([]);
   const [booth, setBooth] = useState<SearchResultProps[]>([]);
@@ -200,15 +201,22 @@ export default function Search() {
     });
   };
 
-  const getNotice = async () => {
-    await API.get(`/api/v2/guide/list`, {
+  const getNotice = () => {
+    return API.get(`/api/v2/guide/list`, {
       params: { page: 0, size: 1 },
-    }).then((res) => {
-      if (res.data.guideResList.length > 0) {
-        setNotice(res.data.guideResList[0].content);
-      }
     });
   };
+
+  const noticeData = useQuery({
+    queryKey: ["notice"],
+    queryFn: getNotice,
+    staleTime: STALE_TIME,
+    cacheTime: CACHE_TIME,
+  });
+
+  if (!noticeData.isLoading) {
+    notice = noticeData.data?.data.guideResList[0].content;
+  }
 
   const createResult = () => {
     const arr: any[] = [];
@@ -244,12 +252,6 @@ export default function Search() {
       getResult();
     }
   }, [keyword]);
-
-  useEffect(() => {
-    if (path === "/") {
-      getNotice();
-    }
-  }, []);
 
   useEffect(() => {
     setResult(createResult());
@@ -349,10 +351,10 @@ export default function Search() {
           </ResultModal>
         )}
       </div>
-      {path === "/" && (
-        <RecentNotice
-          text={notice.length > 0 ? notice : "아직 등록된 공지사항이 없어요"}
-        />
+      {path === "/" && notice ? (
+        <RecentNotice text={notice} />
+      ) : (
+        <RecentNotice text={"아직 등록된 공지사항이 없어요"} />
       )}
     </div>
   );
