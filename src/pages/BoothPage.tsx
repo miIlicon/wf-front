@@ -4,51 +4,23 @@ import { css } from "@emotion/react";
 import { Link, useLocation } from "react-router-dom";
 import PageTitle from "../components/common/PageTitle";
 import PageSubTitle from "../components/common/PageSubTitle";
-import CardList from "../components/common/CardList";
 import DefaultButton from "../components/common/DefaultButton";
-import API from "../utils/api";
-import Notice from "../components/common/Notice";
 import { Section } from "../components/common/components";
 import CreateSection from "../components/common/CreateSection";
-import axios from "axios";
 import { useCookies } from "react-cookie";
+import BoothList from "./Booth/BoothList";
 
 export default function BoothPage() {
   const location = useLocation();
   const state = location.state as { menu: string };
-  const [BoothList, setFleamarketList] = useState<any>([]);
   const [cookies, setCookie] = useCookies(["WF_ID"]);
   const [selectMenu, setSelectMenu] = useState<string>(
     state ? state.menu : "FLEA_MARKET"
   );
-  const [notice, setNotice] = useState<string>("진행 중인 축제 부스가 없어요");
 
   const onClickButton = (value: string) => {
     setSelectMenu(value);
   };
-
-  const getFleamarket = async () => {
-    await API.get("/api/v2/booth/list", {
-      params: { page: 0, type: selectMenu, size: 50 },
-    }).then((res) => {
-      setFleamarketList(res.data.boothResList);
-    });
-  };
-
-  useEffect(() => {
-    getFleamarket();
-    switch (selectMenu) {
-      case "PUB":
-        setNotice("아직 등록된 축제 주점이 없어요");
-        break;
-      case "FLEA_MARKET":
-        setNotice("아직 등록된 축제 부스가 없어요");
-        break;
-      case "FOOD_TRUCK":
-        setNotice("아직 등록된 푸드트럭이 없어요");
-        break;
-    }
-  }, [selectMenu]);
 
   useEffect(() => {
     setSelectMenu(state ? state.menu : "FLEA_MARKET");
@@ -90,11 +62,9 @@ export default function BoothPage() {
           <CreateSection />
         </Link>
       )}
-      {BoothList.length ? (
-        <CardList dataList={BoothList} category="booth" />
-      ) : (
-        <Notice text={notice} />
-      )}
+      {selectMenu === "FLEA_MARKET" && <BoothList type="FLEA_MARKET" />}
+      {selectMenu === "FOOD_TRUCK" && <BoothList type="FOOD_TRUCK" />}
+      {selectMenu === "PUB" && <BoothList type="PUB" />}
     </Section>
   );
 }
