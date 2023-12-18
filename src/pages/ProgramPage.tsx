@@ -4,22 +4,16 @@ import { css } from "@emotion/react";
 import { Link, useLocation } from "react-router-dom";
 import PageTitle from "../components/common/PageTitle";
 import PageSubTitle from "../components/common/PageSubTitle";
-import CardList from "../components/common/CardList";
 import DefaultButton from "../components/common/DefaultButton";
-import API from "../utils/api";
-import Notice from "../components/common/Notice";
 import { Section } from "../components/common/components";
 import CreateSection from "../components/common/CreateSection";
-import axios from "axios";
 import { useCookies } from "react-cookie";
+import ProgramList from "./Program/ProgramList";
 
 export default function ProgramPage() {
   const location = useLocation();
   const state = location.state as { menu: string };
   const [cookies, setCookie] = useCookies(["WF_ID"]);
-  const [programList, setProgramList] = useState<any>([]);
-  const [notice, setNotice] =
-    useState<string>("아직 등록된 축제 안내가 없어요");
   const [selectMenu, setSelectMenu] = useState<string>(
     state ? state.menu : "EVENT"
   );
@@ -27,23 +21,6 @@ export default function ProgramPage() {
   const onClickButton = (value: string) => {
     setSelectMenu(value);
   };
-
-  const getProgramInfo = async () => {
-    await API.get(`/api/v2/program/list`, {
-      params: { page: 0, type: selectMenu, size: 50 },
-    }).then((res) => {
-      setProgramList(res.data.programList);
-    });
-  };
-
-  useEffect(() => {
-    getProgramInfo();
-    if (selectMenu === "EVENT") {
-      setNotice("아직 등록된 축제 안내가 없어요");
-    } else if (selectMenu === "GAME") {
-      setNotice("아직 등록된 경기 일정이 없어요");
-    }
-  }, [selectMenu]);
 
   useEffect(() => {
     setSelectMenu(state ? state.menu : "EVENT");
@@ -80,11 +57,8 @@ export default function ProgramPage() {
           <CreateSection />
         </Link>
       )}
-      {programList.length ? (
-        <CardList dataList={programList} category="program" />
-      ) : (
-        <Notice text={notice} />
-      )}
+      {selectMenu === "EVENT" && <ProgramList type="EVENT" />}
+      {selectMenu === "GAME" && <ProgramList type="GAME" />}
     </Section>
   );
 }

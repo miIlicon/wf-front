@@ -4,6 +4,19 @@ export interface WrapperProps {
   children: React.ReactNode;
 }
 
+export interface CardType {
+  id: number;
+  title: string;
+  subTitle: string;
+  content: string;
+  latitude: number;
+  longtitude: number;
+  mainFilePath: string;
+  subFilePaths: string[];
+  operateStatus: string;
+  type: string;
+}
+
 export interface CardProps {
   id?: number;
   category?: string;
@@ -19,6 +32,10 @@ export interface CardListProps {
   category: string;
   status?: string | boolean;
   isRunning?: boolean;
+}
+
+export interface ListProps {
+  type: string;
 }
 
 export interface VideoProps {
@@ -176,8 +193,8 @@ export interface ClickEventProps {
 
 export interface NoticeSubmitProps {
   value: string;
-	onClick: () => void;
-	onChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  onClick: () => void;
+  onChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
 export interface SearchModalProps {
