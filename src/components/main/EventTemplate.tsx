@@ -9,7 +9,7 @@ import Card from "../common/Card";
 import { useNavigate } from "react-router-dom";
 import NotData from "../common/NotData";
 import API, { CACHE_TIME, STALE_TIME } from "../../utils/api";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 
 export default function EventTemplate({ text, type }: EventTemplateProps) {
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ export default function EventTemplate({ text, type }: EventTemplateProps) {
         params: { page: 0, type: type, size: 3 },
       }),
     staleTime: STALE_TIME,
-    cacheTime: CACHE_TIME,
+    gcTime: CACHE_TIME,
   });
 
   if (!isLoading) {

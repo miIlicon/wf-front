@@ -11,7 +11,7 @@ import {
 } from "../../@types/typs";
 import axios from "axios";
 import API, { CACHE_TIME, STALE_TIME } from "../../utils/api";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 
 const Result = ({
   id,
@@ -211,7 +211,7 @@ export default function Search() {
     queryKey: ["notice"],
     queryFn: getNotice,
     staleTime: STALE_TIME,
-    cacheTime: CACHE_TIME,
+    gcTime: CACHE_TIME,
   });
 
   if (!noticeData.isLoading) {
